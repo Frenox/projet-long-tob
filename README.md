@@ -1,2 +1,2 @@
-# projet-long-tob
-Projet long Technologie OBjet (TOB) - 1ere annee ENSEEIHT
+# Projet long TOB - 1A ENSEEHIT
+Jeu idle/tycoon de pêche en Java
