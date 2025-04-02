@@ -4,8 +4,8 @@ import java.util.Map;
 public class ZoneArctique extends Zone {
 
     public ZoneArctique() {
-       ajouterSousZone(new SousZoneArctiqueBP());
-       ajouterSousZone(new SousZoneArctiqueSousGlace());
-       ajouterSousZone(new SousZoneArctiqueLac());
+       ajouterSousZone(new SousZoneArctiqueBP(false));
+       ajouterSousZone(new SousZoneArctiqueSousGlace(false));
+       ajouterSousZone(new SousZoneArctiqueLac(false));
     }
 }

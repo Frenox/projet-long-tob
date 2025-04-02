@@ -4,8 +4,8 @@ import java.util.Map;
 public class ZoneOcean extends Zone {
 
     public ZoneOcean() {
-       ajouterSousZone(new SousZoneOceanBP());
-       ajouterSousZone(new SousZoneOceanHP());
-       ajouterSousZone(new SousZoneOceanAbysses());
+       ajouterSousZone(new SousZoneOceanBP(false));
+       ajouterSousZone(new SousZoneOceanHP(false));
+       ajouterSousZone(new SousZoneOceanAbysses(false));
     }
 }

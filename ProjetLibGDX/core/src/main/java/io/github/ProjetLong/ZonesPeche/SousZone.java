@@ -7,6 +7,9 @@ public abstract class SousZone {
     protected boolean estDebloquee;
     protected Map<Poisson, Float> poissonsDispo = new HashMap<>();
 
+    public SousZone(boolean estDebloquee) {
+        this.estDebloquee = estDebloquee;
+    }
 
     public Poisson getRandPoisson() {
         return null;
@@ -14,7 +17,7 @@ public abstract class SousZone {
     public boolean getEstDebloquee() {
         return this.estDebloquee;
     }
-    
+
     /**
      * Debloque la sous zone
      */
