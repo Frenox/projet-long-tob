@@ -26,7 +26,10 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-/** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
+/**
+ * {@link com.badlogic.gdx.ApplicationListener} implementation shared by all
+ * platforms.
+ */
 public class Main extends ApplicationAdapter {
     private Skin skin;
     private Stage stage;
@@ -37,11 +40,11 @@ public class Main extends ApplicationAdapter {
 
     private Sprite fishSprite;
     private ProgressBar jauge;
-    
+
     @Override
-    public void create () {
+    public void create() {
         skin = new Skin(Gdx.files.internal("metalui/metal-ui.json"));
-        
+
         viewport = new FitViewport(8, 8);
         spriteBatch = new SpriteBatch();
 
@@ -59,16 +62,16 @@ public class Main extends ApplicationAdapter {
         fishSprite = new Sprite(poisson);
         fishSprite.setSize(0.5f, 0.5f);
         fishSprite.setPosition(2, 5);
-        
+
     }
-    
+
     @Override
-    public void render () {
+    public void render() {
         input();
         logic();
         draw();
     }
-    
+
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
@@ -81,7 +84,7 @@ public class Main extends ApplicationAdapter {
     public void input() {
         if (Gdx.input.isKeyJustPressed(Keys.P)) {
             float reussite = (float) (0.7 + Math.sin(t) / 4);
-            
+
             if (reussite < 0.5) {
                 System.out.println("Dommage : Poisson non capturé !");
             } else {
@@ -94,12 +97,13 @@ public class Main extends ApplicationAdapter {
         float x_limit_min = 2;
         float x_limit_max = 3;
         float speed = 0.01f;
-        
+
         fishSprite.translateX(speed * sens);
 
-        if (fishSprite.getX() < x_limit_min || fishSprite.getX() > x_limit_max){
+        if (fishSprite.getX() < x_limit_min || fishSprite.getX() > x_limit_max) {
             sens *= -1;
-            fishSprite.flip(true, false);;
+            fishSprite.flip(true, false);
+            ;
         }
 
         fishSprite.translateY((float) Math.sin(t) / 20);
@@ -117,13 +121,13 @@ public class Main extends ApplicationAdapter {
         spriteBatch.begin();
 
         fishSprite.draw(spriteBatch);
-        
+
         spriteBatch.end();
 
     }
-    
+
     @Override
-    public void dispose () {
+    public void dispose() {
         skin.dispose();
         stage.dispose();
     }

@@ -5,34 +5,37 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 
 /**
  * {@link com.badlogic.gdx.ApplicationListener} implementation shared by all
  * platforms.
  */
 public class Jeu extends Game {
-    private SpriteBatch batch;
-    private Texture image;
+    public SpriteBatch batch;
+    public FitViewport viewport;
 
     @Override
     public void create() {
         batch = new SpriteBatch();
-        image = new Texture("cregut.png");
+
+        viewport = new FitViewport(512, 288);
+        // lance l'écran de peche active
+        this.setScreen(new PecheActiveScreen(this));
     }
 
     @Override
     public void render() {
-        ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
-        batch.begin();
-        batch.draw(image, 190, 150);
-        batch.end();
+        super.render();
+
     }
 
     @Override
     public void dispose() {
         batch.dispose();
-        image.dispose();
+
     }
 }
