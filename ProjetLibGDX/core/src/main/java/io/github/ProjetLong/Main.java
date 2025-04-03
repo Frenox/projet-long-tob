@@ -1,4 +1,4 @@
-package minijeu.Content;
+package io.github.ProjetLong;
 
 import org.w3c.dom.Text;
 
