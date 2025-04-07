@@ -1,10 +1,14 @@
+HebertSansBold.fnt
+HebertSansBold.png
 bg_actif.png
 bg_fishing_1.png
 bg_inventory.png
+boat1.png
 boat_tab_inventory.png
 contour_fishing.png
 cregut.png
 fish_tab_inventory.png
+fishing_rod_1_lvl1.png
 libgdx.png
 metalui/font-export.fnt
 metalui/metal-ui.atlas
@@ -18,3 +22,4 @@ minigame2_arrow_left_fishing.png
 minigame2_arrow_right_fishing.png
 minigame2_arrow_up_fishing.png
 poisson.png
+stockage_lvl1.png
