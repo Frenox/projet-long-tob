@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
+import io.github.ProjetLong.ZonesPeche.Poisson;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +18,9 @@ public class AffichageInventaire implements Minijeu {
     private Texture tabStock;
     private Texture tabMod;
     private boolean whichTab;
+    private Texture fishInv;
     final private List<Vector2> slotsCoordonnees;
-
+    private int page;
     double time;
 
     public AffichageInventaire(Bateau bateau) {
@@ -27,6 +30,8 @@ public class AffichageInventaire implements Minijeu {
         tabStock = new Texture("fish_tab_inventory.png");
         whichTab = false;
         time = 0;
+        page = 0;
+        fishInv = new Texture("fish_tab_fish.png");
         // ajout de coordonnées de slots pour les textures
         slotsCoordonnees = new ArrayList<Vector2>();
         slotsCoordonnees.add(new Vector2(369, 158));
@@ -47,6 +52,14 @@ public class AffichageInventaire implements Minijeu {
                 whichTab = true;
             } else if (356 < mouseCoor.x && mouseCoor.x < 425 && 246 < mouseCoor.y && mouseCoor.y < 265) {
                 whichTab = false;
+            } else if (436 < mouseCoor.x && mouseCoor.x < 451 && 32 < mouseCoor.y && mouseCoor.y < 44) {
+                if ((page < (bateau.getContenu().size() / 9))) {
+                    page++;
+                }
+            } else if (399 < mouseCoor.x && mouseCoor.x < 414 && 32 < mouseCoor.y && mouseCoor.y < 44) {
+                if (page > 0) {
+                    page--;
+                }
             }
         }
 
@@ -64,6 +77,20 @@ public class AffichageInventaire implements Minijeu {
         // stock
         if (whichTab) {
             screen.jeu.batch.draw(tabStock, 356, 25);
+            // Draw inventaire
+            List<Poisson> temp = bateau.getContenu();
+            int len = temp.size();
+            for (int i = (page * 9); i != (9 * (page + 1)); i++) {
+                if (i < len) {
+                    screen.jeu.batch.draw(fishInv, 362, 199 - ((i % 9) * 19));
+                    screen.jeu.HebertBold.draw(screen.jeu.batch, temp.get(i).getNom(), 368f, 210.5f - ((i % 9) * 19));
+                }
+            }
+            // print le nb de page
+            screen.jeu.HebertBold.draw(screen.jeu.batch, Integer.toString(page + 1), 419.5f, 43f);
+            screen.jeu.HebertBold.draw(screen.jeu.batch, "/", 423.6f, 42f);
+            screen.jeu.HebertBold.draw(screen.jeu.batch, Integer.toString((len / 9) + 1), 426.75f, 40f);
+
             // modules
         } else {
             screen.jeu.batch.draw(tabMod, 356, 25);

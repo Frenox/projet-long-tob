@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import com.badlogic.gdx.graphics.Texture;
 
+import io.github.ProjetLong.ZonesPeche.Poisson;
+
 public class Stockage implements ModuleBateau {
     private int TailleDisponible;
     private int Niveau;
@@ -12,9 +14,14 @@ public class Stockage implements ModuleBateau {
 
     public Stockage(int Niveau) {
         Contenu = new ArrayList<Poisson>();
-        if (Niveau == 1) {
+        if (Niveau == 1 || Niveau == 2) {
             stockageTexture = new Texture("stockage_lvl1.png");
         }
+        TailleDisponible = (int) Math.pow(2, (2 + Niveau));
+    }
+
+    public int getTailleMax() {
+        return (int) Math.pow(2, (2 + Niveau));
     }
 
     public Texture getTexture() {
@@ -36,10 +43,12 @@ public class Stockage implements ModuleBateau {
 
     public void addPoisson(Poisson poisson) {
         Contenu.add(poisson);
+        TailleDisponible -= 1;
     }
 
     public void removePoisson(Poisson poisson) {
         Contenu.remove(poisson);
+        TailleDisponible += 1;
     }
 
 }

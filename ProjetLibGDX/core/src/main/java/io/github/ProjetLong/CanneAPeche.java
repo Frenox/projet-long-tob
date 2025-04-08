@@ -2,6 +2,9 @@ package io.github.ProjetLong;
 
 import com.badlogic.gdx.graphics.Texture;
 
+import io.github.ProjetLong.ZonesPeche.Poisson;
+import io.github.ProjetLong.ZonesPeche.SousZone;
+
 public class CanneAPeche implements ModuleBateau {
     private int Niveau;
     private SousZone zone;

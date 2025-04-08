@@ -6,6 +6,8 @@ import java.util.List;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
+import io.github.ProjetLong.ZonesPeche.Poisson;
+
 public class Bateau {
     private int TailleDispo;
     private int TailleMax;
@@ -13,6 +15,8 @@ public class Bateau {
     private List<Stockage> Stockage;
     private List<CanneAPeche> Cannes;
     private List<ModuleBateau> Modules;
+    private int TailleStockage;
+    private int StockageDispo;
 
     public Bateau(int taille) {
         this.TailleMax = taille;
@@ -20,10 +24,34 @@ public class Bateau {
         Stockage = new ArrayList<Stockage>();
         Cannes = new ArrayList<CanneAPeche>();
         Modules = new ArrayList<ModuleBateau>();
+        TailleStockage = 0;
+        StockageDispo = 0;
+    }
+
+    public int getTailleStockage() {
+        return TailleStockage;
+    }
+
+    public void setTailleStockage(int tailleStockage) {
+        TailleStockage = tailleStockage;
     }
 
     public List<ModuleBateau> getModules() {
         return Modules;
+    }
+
+    public void addPoisson(Poisson poisson) {
+        for (Stockage stock : Stockage) {
+            if (stock.getTailleDisponible() > 0) {
+                stock.addPoisson(poisson);
+                StockageDispo -= 1;
+                break;
+            }
+        }
+    }
+
+    public int getStockageDispo() {
+        return StockageDispo;
     }
 
     public void equipCanne(int i) {
@@ -49,6 +77,8 @@ public class Bateau {
     public boolean addStockage(Stockage stock) {
         if (TailleDispo > 0) {
             this.Stockage.add(stock);
+            TailleStockage += stock.getTailleMax();
+            StockageDispo += stock.getTailleMax();
             TailleDispo -= 1;
             majModules();
             return true;

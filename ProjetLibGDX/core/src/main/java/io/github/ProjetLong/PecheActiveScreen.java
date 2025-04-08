@@ -33,6 +33,7 @@ public class PecheActiveScreen implements Screen {
         actualMinigameBg = minigameBg1;
         actualMinigame = new Minijeu1();
         inventaire = new AffichageInventaire(new Barque());
+
     }
 
     @Override
@@ -104,6 +105,7 @@ public class PecheActiveScreen implements Screen {
 
             inventaire.draw(this);
         }
+
         String text = Integer.toString(Gdx.graphics.getFramesPerSecond());
         jeu.HebertBold.getData().setScale(0.25f);
         layout.setText(jeu.HebertBold, text);
