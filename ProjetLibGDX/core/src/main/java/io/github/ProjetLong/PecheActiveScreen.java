@@ -31,7 +31,7 @@ public class PecheActiveScreen implements Screen {
         minigameShow = true;
         inventaireShow = true;
         actualMinigameBg = minigameBg1;
-        actualMinigame = new Minijeu1();
+        actualMinigame = new Minijeu2();
         inventaire = new AffichageInventaire(new Barque());
 
     }
