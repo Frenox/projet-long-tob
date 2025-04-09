@@ -1,10 +1,11 @@
-package main.java.io.github.ProjetLong.ZonesPeche;
+package io.github.ProjetLong.ZonesPeche;
+
 import java.util.Map;
 import java.util.Random;
 import java.util.HashMap;
 
 public abstract class SousZone {
-    
+
     protected boolean estDebloquee;
     protected Map<Poisson, Float> poissonsDispo = new HashMap<>();
 
@@ -12,8 +13,12 @@ public abstract class SousZone {
         this.estDebloquee = estDebloquee;
     }
 
-    /**Renvoie un poisson aleatoire dans la liste de poissons disponibles
+    /**
+     * Renvoie un nouveau poisson aleatoire dans la liste de poissons disponibles
      * en ponderant par les probabilites de chaque poisson
+     * PROBAS ET POISSONS A SETUP DANS CONSTRUCTEURS DES SOUS ZONES
+     * Le calcul de la taille du poisson (autre facteur random en plus de rarete)
+     * est faite dans la classe poisson
      */
     public Poisson getRandPoisson() {
         float probaTotale = 0.0f;
@@ -27,7 +32,7 @@ public abstract class SousZone {
         for (Map.Entry<Poisson, Float> entry : poissonsDispo.entrySet()) {
             probaCumul += entry.getValue();
             if (randomVal <= probaCumul) {
-                return entry.getKey();
+                return new Poisson(entry.getKey().getId(), entry.getKey().getRarete(), true);
             }
         }
         return null;

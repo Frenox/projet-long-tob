@@ -1,7 +1,5 @@
 package io.github.ProjetLong;
 
-import com.badlogic.gdx.Screen;
-
 public interface Minijeu {
     // Instructions d'input du minijeu
     void input(PecheActiveScreen screen);

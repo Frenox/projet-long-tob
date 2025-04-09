@@ -1,12 +1,13 @@
 package io.github.ProjetLong;
 
-import javax.swing.text.html.HTMLDocument.HTMLReader.BlockAction;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class PecheActiveScreen implements Screen {
@@ -14,10 +15,13 @@ public class PecheActiveScreen implements Screen {
 
     public Texture backgroundTexture;
     public Texture minigameBorder;
-    public boolean minigameShow;
+    private boolean minigameShow;
+    private boolean inventaireShow;
     public Texture actualMinigameBg;
     public Texture minigameBg1;
     public Minijeu actualMinigame;
+    public AffichageInventaire inventaire;
+    private GlyphLayout layout = new GlyphLayout();
 
     public PecheActiveScreen(final Jeu jeu) {
         this.jeu = jeu;
@@ -25,8 +29,11 @@ public class PecheActiveScreen implements Screen {
         minigameBorder = new Texture("contour_fishing.png");
         minigameBg1 = new Texture("bg_fishing_1.png");
         minigameShow = true;
+        inventaireShow = true;
         actualMinigameBg = minigameBg1;
-        actualMinigame = new Minijeu1();
+        actualMinigame = new Minijeu2();
+        inventaire = new AffichageInventaire(new Barque());
+
     }
 
     @Override
@@ -51,11 +58,29 @@ public class PecheActiveScreen implements Screen {
                 Gdx.graphics.setFullscreenMode(currentMode);
         }
 
+        if (Gdx.input.isKeyJustPressed(Input.Keys.G)) {
+            if (minigameShow) {
+                minigameShow = false;
+            } else {
+                minigameShow = true;
+            }
+        }
+
+        // Permet d'afficher les coordonnées du clic souris gauche dans la console
+        // utile pour connaitre des coordonés à l'écran
+        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+            Vector3 mouseCoor = jeu.viewport.getCamera()
+                    .unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+            System.out.println(mouseCoor.x + " " + mouseCoor.y);
+        }
+
         actualMinigame.input(this);
+        inventaire.input(this);
     }
 
     public void logic() {
         actualMinigame.logic(this);
+        inventaire.logic(this);
     }
 
     public void draw() {
@@ -76,7 +101,15 @@ public class PecheActiveScreen implements Screen {
             jeu.batch.draw(actualMinigameBg, 25, 81);
             actualMinigame.draw(this);
         }
+        if (inventaireShow) {
 
+            inventaire.draw(this);
+        }
+
+        String text = Integer.toString(Gdx.graphics.getFramesPerSecond());
+
+        layout.setText(jeu.HebertBold, text);
+        jeu.HebertBold.draw(jeu.batch, text, 510f - layout.width, 287f);
         jeu.batch.end();
 
     }

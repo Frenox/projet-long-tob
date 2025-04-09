@@ -1,13 +1,9 @@
 package io.github.ProjetLong;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 /**
@@ -17,11 +13,14 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 public class Jeu extends Game {
     public SpriteBatch batch;
     public FitViewport viewport;
+    public BitmapFont HebertBold;
 
     @Override
     public void create() {
-        batch = new SpriteBatch();
 
+        batch = new SpriteBatch();
+        HebertBold = new BitmapFont(Gdx.files.internal("HebertSansBold.fnt"));
+        HebertBold.getData().setScale(0.15f);
         viewport = new FitViewport(512, 288);
         // lance l'écran de peche active
         this.setScreen(new PecheActiveScreen(this));
