@@ -31,7 +31,9 @@ public class Bateau {
     public int getTailleStockage() {
         return TailleStockage;
     }
-
+    public void setEquipedCanne(CanneAPeche equipedCanne) {
+        this.equipedCanne = equipedCanne;
+    }
     public void setTailleStockage(int tailleStockage) {
         TailleStockage = tailleStockage;
     }

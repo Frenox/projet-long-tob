@@ -17,8 +17,10 @@ public class Jeu extends Game {
 
     @Override
     public void create() {
+
         batch = new SpriteBatch();
         HebertBold = new BitmapFont(Gdx.files.internal("HebertSansBold.fnt"));
+        HebertBold.getData().setScale(0.15f);
         viewport = new FitViewport(512, 288);
         // lance l'écran de peche active
         this.setScreen(new PecheActiveScreen(this));

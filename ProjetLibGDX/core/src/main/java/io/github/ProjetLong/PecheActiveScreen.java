@@ -107,7 +107,7 @@ public class PecheActiveScreen implements Screen {
         }
 
         String text = Integer.toString(Gdx.graphics.getFramesPerSecond());
-        jeu.HebertBold.getData().setScale(0.25f);
+
         layout.setText(jeu.HebertBold, text);
         jeu.HebertBold.draw(jeu.batch, text, 510f - layout.width, 287f);
         jeu.batch.end();

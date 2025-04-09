@@ -10,8 +10,9 @@ public class Barque extends Bateau {
 
     public Barque() {
         super(2);
-        addStockage(new Stockage(2));
         addCannes(new CanneAPeche(1));
+        addStockage(new Stockage(2));
+
         boatSprite = new Sprite(new Texture("boat1.png"));
         boatSprite.setPosition(227, 118);
         addPoisson(new Poisson(1, 0));
