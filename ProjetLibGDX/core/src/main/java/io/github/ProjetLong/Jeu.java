@@ -23,7 +23,7 @@ public class Jeu extends Game {
         HebertBold.getData().setScale(0.15f);
         viewport = new FitViewport(512, 288);
         // lance l'écran de peche active
-        this.setScreen(new PecheActiveScreen(this));
+        this.setScreen(new PecheActiveScreen(this, new Barque()));
     }
 
     @Override

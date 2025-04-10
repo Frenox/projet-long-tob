@@ -20,10 +20,6 @@ public class Stockage implements ModuleBateau {
         TailleDisponible = (int) Math.pow(2, (2 + Niveau));
     }
 
-    public int getTailleMax() {
-        return (int) Math.pow(2, (2 + Niveau));
-    }
-
     public Texture getTexture() {
         return stockageTexture;
     }

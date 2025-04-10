@@ -15,6 +15,7 @@ cregut.png
 fish_tab_fish.png
 fish_tab_inventory.png
 fishing_rod_1_lvl1.png
+hover_alpha.png
 libgdx.png
 metalui/font-export.fnt
 metalui/metal-ui.atlas
@@ -27,6 +28,7 @@ minigame2_arrow_down_fishing.png
 minigame2_arrow_left_fishing.png
 minigame2_arrow_right_fishing.png
 minigame2_arrow_up_fishing.png
+mouse_hover_actif.png
 poisson.png
 poissons/fish_bar.png
 poissons/fish_bar_shiny.png
@@ -34,4 +36,10 @@ poissons/fish_maquereau.png
 poissons/fish_maquereau_shiny.png
 poissons/fish_rascasse.png
 poissons/fish_rascasse_shiny.png
+poissons/hover_bar.png
+poissons/hover_bar_shiny.png
+poissons/hover_maquereau.png
+poissons/hover_maquereau_shiny.png
+poissons/hover_rascasse.png
+poissons/hover_rascasse_shiny.png
 stockage_lvl1.png

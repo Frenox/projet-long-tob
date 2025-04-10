@@ -10,8 +10,8 @@ public class CanneAPeche implements ModuleBateau {
     private SousZone zone;
     private Texture canneAPechTexture;
 
-    public CanneAPeche(int Niveau) {
-
+    public CanneAPeche(int Niveau, SousZone zone) {
+        this.zone = zone;
         if (Niveau == 1) {
             canneAPechTexture = new Texture("fishing_rod_1_lvl1.png");
         }

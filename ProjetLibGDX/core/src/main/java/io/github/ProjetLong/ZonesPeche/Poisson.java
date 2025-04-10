@@ -1,5 +1,7 @@
 package io.github.ProjetLong.ZonesPeche;
 
+import java.util.Random;
+
 import com.badlogic.gdx.graphics.Texture;
 
 //FONCTIONNEMENT
@@ -23,13 +25,15 @@ public class Poisson {
     private final int rarete; // 0: Normal ; 1: Shiny
     private final float taille;
     private final Texture fishText;
+    private final Texture hoverText;
 
     public Poisson(int inId, int inRarete, boolean aUneTaille) {
         this.nom = getIDNom(inId, inRarete);
         this.id = inId;
         this.rarete = inRarete;
-        this.fishText = getiDTexture(inId, inRarete);
-        this.taille = getIDTaille(inId, inRarete);
+        fishText = getiDTexture(inId, inRarete);
+        taille = getIDTaille(inId, inRarete);
+        hoverText = getiDTextureHover(inId, inRarete);
 
     }
 
@@ -37,12 +41,18 @@ public class Poisson {
         this.nom = getIDNom(inId, inRarete);
         this.id = inId;
         this.rarete = inRarete;
-        this.fishText = getiDTexture(inId, inRarete);
-        this.taille = 0;
+        fishText = getiDTexture(inId, inRarete);
+        taille = 0;
+        hoverText = getiDTextureHover(inId, inRarete);
+
     }
 
     public String getNom() {
         return this.nom;
+    }
+
+    public Texture getHoverText() {
+        return hoverText;
     }
 
     public int getId() {
@@ -114,27 +124,70 @@ public class Poisson {
         }
     }
 
-    private float getIDTaille(int id, int rarete) {
+    public float getIDTaille(int id, int rarete) {
+        Random r = new Random();
+
         if (id == 1 && rarete == 0) {
-            return 1;
+            float min = 20;
+            float max = 80;
+            return min + r.nextFloat() * (max - min);
 
         } else if (id == 1 && rarete == 1) {
-            return 1;
+            float min = 40;
+            float max = 110;
+            return min + r.nextFloat() * (max - min);
 
         } else if (id == 2 && rarete == 0) {
-            return 1;
+            float min = 10;
+            float max = 40;
+            return min + r.nextFloat() * (max - min);
 
         } else if (id == 2 && rarete == 1) {
-            return 1;
+            float min = 15;
+            float max = 50;
+            return min + r.nextFloat() * (max - min);
 
         } else if (id == 3 && rarete == 0) {
-            return 1;
+            float min = 30;
+            float max = 70;
+            return min + r.nextFloat() * (max - min);
 
         } else if (id == 3 && rarete == 1) {
-            return 1;
+            float min = 30;
+            float max = 80;
+            return min + r.nextFloat() * (max - min);
 
         } else {
             return 0;
+        }
+    }
+
+    public Texture getiDTextureHover(int id, int rarete) {
+        // ID
+        // 1 = bar
+        // 2 = maquereau
+        // 3 = rascasse
+
+        if (id == 1 && rarete == 0) {
+            return new Texture("poissons/hover_bar.png");
+
+        } else if (id == 1 && rarete == 1) {
+            return new Texture("poissons/hover_bar_shiny.png");
+
+        } else if (id == 2 && rarete == 0) {
+            return new Texture("poissons/hover_maquereau.png");
+
+        } else if (id == 2 && rarete == 1) {
+            return new Texture("poissons/hover_maquereau_shiny.png");
+
+        } else if (id == 3 && rarete == 0) {
+            return new Texture("poissons/hover_rascasse.png");
+
+        } else if (id == 3 && rarete == 1) {
+            return new Texture("poissons/hover_rascasse_shiny.png");
+
+        } else {
+            return new Texture("cregut.png");
         }
     }
 }

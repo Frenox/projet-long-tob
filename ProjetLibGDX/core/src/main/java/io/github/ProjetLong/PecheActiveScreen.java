@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 public class PecheActiveScreen implements Screen {
     final Jeu jeu;
-
+    private Bateau bateau;
     public Texture backgroundTexture;
     public Texture minigameBorder;
     private boolean minigameShow;
@@ -23,8 +23,9 @@ public class PecheActiveScreen implements Screen {
     public AffichageInventaire inventaire;
     private GlyphLayout layout = new GlyphLayout();
 
-    public PecheActiveScreen(final Jeu jeu) {
+    public PecheActiveScreen(final Jeu jeu, Bateau bateau) {
         this.jeu = jeu;
+        this.bateau = bateau;
         backgroundTexture = new Texture("bg_actif.png");
         minigameBorder = new Texture("contour_fishing.png");
         minigameBg1 = new Texture("bg_fishing_1.png");
@@ -32,7 +33,7 @@ public class PecheActiveScreen implements Screen {
         inventaireShow = true;
         actualMinigameBg = minigameBg1;
         actualMinigame = new Minijeu2();
-        inventaire = new AffichageInventaire(new Barque());
+        inventaire = new AffichageInventaire(bateau);
 
     }
 
