@@ -8,6 +8,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
+import java.util.Random;
 
 public class PecheActiveScreen implements Screen {
     final Jeu jeu;
@@ -58,6 +59,51 @@ public class PecheActiveScreen implements Screen {
         actualMinigame.logic(this);
     }
 
+    public void attente() {
+        Random randomNumbers = new Random();
+        //Initialisation
+        boolean attente=True;
+        int n=3; // Nombre de minijeu
+        int NumeroMiniJeu;
+        CanneAPeche CanneAPecheActuel;
+        Stockage StockageActuel
+        while (attente) {
+            //Ouvrir l'inventaire quand on clique
+            Stockage.getTailleDisponible();
+            Stockage.getContenu();
+            Stockage.getNiveau();
+            Stockage.getTailleMax();
+            Stockage.getTailleDisponible();
+            //Change les statistiques de la canne à pêche
+            //CanneAPecheActuel=
+            if (commencerLaPeche) { //Clique sur le bouton pour commencer la peche
+                attente=False;
+            }
+        }
+    }
+    public void lancerMiniJeu() {
+        NumeroMiniJeu=randomNumbers.nextInt(n)+1; //Choisit un mini jeu random entre 1 et n
+        switch (NumeroMiniJeu) {
+            case 1:
+                //Minijeu1();
+                //Récupère la fin du mini jeu (succes ou non)
+                break;
+            case 2:
+                //Minijeu2();
+                //lancer le mini jeu 2 et récupère la fin
+                break;
+            default:
+                // lancer le mini jeu 3 et récupère la fin
+                break;
+        }
+        if (succes) {
+            //getpoisson
+            Stockage.addPoisson(Poisson poisson);
+        } else {
+            null
+        }
+    }
+        
     public void draw() {
         ScreenUtils.clear(Color.BLACK);
         jeu.viewport.apply();
