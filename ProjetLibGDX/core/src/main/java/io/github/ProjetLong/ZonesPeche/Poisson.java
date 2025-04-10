@@ -44,6 +44,7 @@ public class Poisson {
         fishText = getiDTexture(inId, inRarete);
         taille = 0;
         hoverText = getiDTextureHover(inId, inRarete);
+
     }
 
     public String getNom() {
@@ -63,14 +64,14 @@ public class Poisson {
     }
 
     public Texture getFishText() {
-        return fishText;
+        return this.fishText;
     }
 
     public float getTaille() {
-        return taille;
+        return this.taille;
     }
 
-    public Texture getiDTexture(int id, int rarete) {
+    private Texture getiDTexture(int id, int rarete) {
         // ID
         // 1 = bar
         // 2 = maquereau
@@ -99,7 +100,7 @@ public class Poisson {
         }
     }
 
-    public String getIDNom(int id, int rarete) {
+    private String getIDNom(int id, int rarete) {
         if (id == 1 && rarete == 0) {
             return "Bar";
 
@@ -125,6 +126,7 @@ public class Poisson {
 
     public float getIDTaille(int id, int rarete) {
         Random r = new Random();
+
         if (id == 1 && rarete == 0) {
             float min = 20;
             float max = 80;

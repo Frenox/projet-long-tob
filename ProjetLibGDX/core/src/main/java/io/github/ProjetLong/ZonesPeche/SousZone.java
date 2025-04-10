@@ -1,16 +1,34 @@
 package io.github.ProjetLong.ZonesPeche;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
-import java.util.HashMap;
+
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public abstract class SousZone {
 
     protected boolean estDebloquee;
+
+
+    protected Sprite background;
+
     private Map<Poisson, Float> poissonsDispo = new HashMap<>();
+
 
     public SousZone(boolean estDebloquee) {
         this.estDebloquee = estDebloquee;
+        this.poissonsDispo = new HashMap<>();
+    }
+
+    public SousZone(boolean estDebloquee,  Map<Poisson, Float> inPoissonsDispo) {
+        this.estDebloquee = estDebloquee;
+        this.poissonsDispo = inPoissonsDispo;
+    }
+
+    protected void setBackground(String backgroundPath) {
+        this.background = new Sprite(new Texture(backgroundPath));
     }
 
     /**
