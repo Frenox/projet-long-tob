@@ -11,6 +11,8 @@ import io.github.ProjetLong.ZonesPeche.Poisson;
 public class Bateau {
     private int TailleDispo;
     private int TailleMax;
+    private String name;
+    private String modeleName;
     private CanneAPeche equipedCanne;
     private List<Stockage> Stockage;
     private List<CanneAPeche> Cannes;
@@ -26,14 +28,34 @@ public class Bateau {
         Modules = new ArrayList<ModuleBateau>();
         TailleStockage = 0;
         StockageDispo = 0;
+        name = "Cregut";
+        modeleName = "Cregut";
+    }
+
+    public void setModeleName(String modeleName) {
+        this.modeleName = modeleName;
+    }
+
+    public String getModeleName() {
+        return modeleName;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public int getTailleStockage() {
         return TailleStockage;
     }
+
     public void setEquipedCanne(CanneAPeche equipedCanne) {
         this.equipedCanne = equipedCanne;
     }
+
     public void setTailleStockage(int tailleStockage) {
         TailleStockage = tailleStockage;
     }
@@ -64,6 +86,10 @@ public class Bateau {
         return equipedCanne;
     }
 
+    public List<CanneAPeche> getCannes() {
+        return Cannes;
+    }
+
     public void addSpriteX(float x) {
     }
 
@@ -79,8 +105,8 @@ public class Bateau {
     public boolean addStockage(Stockage stock) {
         if (TailleDispo > 0) {
             this.Stockage.add(stock);
-            TailleStockage += stock.getTailleMax();
-            StockageDispo += stock.getTailleMax();
+            TailleStockage += stock.getTailleDisponible();
+            StockageDispo += stock.getTailleDisponible();
             TailleDispo -= 1;
             majModules();
             return true;

@@ -7,7 +7,7 @@ import java.util.HashMap;
 public abstract class SousZone {
 
     protected boolean estDebloquee;
-    protected Map<Poisson, Float> poissonsDispo = new HashMap<>();
+    private Map<Poisson, Float> poissonsDispo = new HashMap<>();
 
     public SousZone(boolean estDebloquee) {
         this.estDebloquee = estDebloquee;
@@ -25,7 +25,6 @@ public abstract class SousZone {
         for (float probaPoisson : poissonsDispo.values()) {
             probaTotale += probaPoisson;
         }
-
         float randomVal = new Random().nextFloat() * probaTotale;
         float probaCumul = 0.0f;
 
@@ -47,5 +46,9 @@ public abstract class SousZone {
      */
     public void debloquer() {
         this.estDebloquee = true;
+    }
+
+    public void addPoissonDispo(Poisson poisson, float proba) {
+        poissonsDispo.put(poisson, proba);
     }
 }

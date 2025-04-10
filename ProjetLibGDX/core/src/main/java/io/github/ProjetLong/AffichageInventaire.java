@@ -19,20 +19,30 @@ public class AffichageInventaire implements Minijeu {
     private Texture tabMod;
     private boolean whichTab;
     private Texture fishInv;
+    private Texture hoverGradienTexture;
     private Texture selecCanneTexture;
     final private List<Vector2> slotsCoordonnees;
     private int page;
+    private Texture hoverTexture;
     double time;
     private int caseCanne;
+    private int timer;
+    private Vector3 mouseCoor;
+    private Vector2 hoverCoord;
+    private int whichHover;
 
     public AffichageInventaire(Bateau bateau) {
         this.bateau = bateau;
+        whichHover = 0;
         fondInventaire = new Texture("bg_inventory.png");
         tabMod = new Texture("boat_tab_inventory.png");
         tabStock = new Texture("fish_tab_inventory.png");
         selecCanneTexture = new Texture("contour_slot.png");
         whichTab = false;
         time = 0;
+        hoverCoord = new Vector2();
+        hoverTexture = new Texture("mouse_hover_actif.png");
+        hoverGradienTexture = new Texture("hover_alpha.png");
         page = 0;
         caseCanne = 0;
         fishInv = new Texture("fish_tab_fish.png");
@@ -48,10 +58,9 @@ public class AffichageInventaire implements Minijeu {
 
     @Override
     public void input(PecheActiveScreen screen) {
-
+        mouseCoor = screen.jeu.viewport.getCamera()
+                .unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-            Vector3 mouseCoor = screen.jeu.viewport.getCamera()
-                    .unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
             if (425 < mouseCoor.x && mouseCoor.x < 494 && 246 < mouseCoor.y && mouseCoor.y < 265) {
                 whichTab = true;
             } else if (356 < mouseCoor.x && mouseCoor.x < 425 && 246 < mouseCoor.y && mouseCoor.y < 265) {
@@ -99,6 +108,114 @@ public class AffichageInventaire implements Minijeu {
             }
 
         }
+        // CHECK DE POSITION POUR LE HOVER
+        if (370 < mouseCoor.x && mouseCoor.x < 419 && 158 < mouseCoor.y && mouseCoor.y < 209
+                && bateau.getModules().size() >= 1 && whichTab == false) {
+            if (timer > 0) {
+                timer--;
+                hoverCoord.set(mouseCoor.x, mouseCoor.y);
+            }
+        } else if (370 < mouseCoor.x && mouseCoor.x < 419 && 98 < mouseCoor.y && mouseCoor.y < 149
+                && bateau.getModules().size() >= 3 && whichTab == false) {
+            if (timer > 0) {
+                timer--;
+                hoverCoord.set(mouseCoor.x, mouseCoor.y);
+            }
+        } else if (370 < mouseCoor.x && mouseCoor.x < 419 && 38 < mouseCoor.y && mouseCoor.y < 89
+                && bateau.getModules().size() >= 5 && whichTab == false) {
+            if (timer > 0) {
+                timer--;
+                hoverCoord.set(mouseCoor.x, mouseCoor.y);
+            }
+        } else if (430 < mouseCoor.x && mouseCoor.x < 481 && 158 < mouseCoor.y && mouseCoor.y < 209
+                && bateau.getModules().size() >= 2 && whichTab == false) {
+            if (timer > 0) {
+                timer--;
+                hoverCoord.set(mouseCoor.x, mouseCoor.y);
+            }
+        } else if (430 < mouseCoor.x && mouseCoor.x < 481 && 98 < mouseCoor.y && mouseCoor.y < 149
+                && bateau.getModules().size() >= 4 && whichTab == false) {
+            if (timer > 0) {
+                timer--;
+                hoverCoord.set(mouseCoor.x, mouseCoor.y);
+            }
+        } else if (430 < mouseCoor.x && mouseCoor.x < 481 && 38 < mouseCoor.y && mouseCoor.y < 89
+                && bateau.getModules().size() >= 6 && whichTab == false) {
+            if (timer > 0) {
+                timer--;
+                hoverCoord.set(mouseCoor.x, mouseCoor.y);
+            }
+            // TEST STOCKAGE HOVER
+            //
+            //
+            //
+        } else if (362 < mouseCoor.x && mouseCoor.x < 488 && 199 < mouseCoor.y && mouseCoor.y < 216
+                && bateau.getContenu().size() >= 1 + 9 * page && whichTab == true) {
+            if (timer > 0) {
+                timer--;
+                hoverCoord.set(mouseCoor.x, mouseCoor.y);
+                whichHover = 1;
+            }
+        } else if (362 < mouseCoor.x && mouseCoor.x < 488 && 199 - 19 * 1 < mouseCoor.y && mouseCoor.y < 216 - 19 * 1
+                && bateau.getContenu().size() >= 2 + 9 * page && whichTab == true) {
+            if (timer > 0) {
+                timer--;
+                hoverCoord.set(mouseCoor.x, mouseCoor.y);
+                whichHover = 2;
+            }
+        } else if (362 < mouseCoor.x && mouseCoor.x < 488 && 199 - 19 * 2 < mouseCoor.y && mouseCoor.y < 216 - 19 * 2
+                && bateau.getContenu().size() >= 3 + 9 * page && whichTab == true) {
+            if (timer > 0) {
+                timer--;
+                hoverCoord.set(mouseCoor.x, mouseCoor.y);
+                whichHover = 3;
+            }
+        } else if (362 < mouseCoor.x && mouseCoor.x < 488 && 199 - 19 * 3 < mouseCoor.y && mouseCoor.y < 216 - 19 * 3
+                && bateau.getContenu().size() >= 4 + 9 * page && whichTab == true) {
+            if (timer > 0) {
+                timer--;
+                hoverCoord.set(mouseCoor.x, mouseCoor.y);
+                whichHover = 4;
+            }
+        } else if (362 < mouseCoor.x && mouseCoor.x < 488 && 199 - 19 * 4 < mouseCoor.y && mouseCoor.y < 216 - 19 * 4
+                && bateau.getContenu().size() >= 5 + 9 * page && whichTab == true) {
+            if (timer > 0) {
+                timer--;
+                hoverCoord.set(mouseCoor.x, mouseCoor.y);
+                whichHover = 5;
+            }
+        } else if (362 < mouseCoor.x && mouseCoor.x < 488 && 199 - 19 * 5 < mouseCoor.y && mouseCoor.y < 216 - 19 * 5
+                && bateau.getContenu().size() >= 6 + 9 * page && whichTab == true) {
+            if (timer > 0) {
+                timer--;
+                hoverCoord.set(mouseCoor.x, mouseCoor.y);
+                whichHover = 6;
+            }
+        } else if (362 < mouseCoor.x && mouseCoor.x < 488 && 199 - 19 * 6 < mouseCoor.y && mouseCoor.y < 216 - 19 * 6
+                && bateau.getContenu().size() >= 7 + 9 * page && whichTab == true) {
+            if (timer > 0) {
+                timer--;
+                hoverCoord.set(mouseCoor.x, mouseCoor.y);
+                whichHover = 7;
+            }
+        } else if (362 < mouseCoor.x && mouseCoor.x < 488 && 199 - 19 * 7 < mouseCoor.y && mouseCoor.y < 216 - 19 * 7
+                && bateau.getContenu().size() >= 8 + 9 * page && whichTab == true) {
+            if (timer > 0) {
+                timer--;
+                hoverCoord.set(mouseCoor.x, mouseCoor.y);
+                whichHover = 8;
+            }
+        } else if (362 < mouseCoor.x && mouseCoor.x < 488 && 199 - 19 * 8 < mouseCoor.y && mouseCoor.y < 216 - 19 * 8
+                && bateau.getContenu().size() >= 9 + 9 * page && whichTab == true) {
+            if (timer > 0) {
+                timer--;
+                hoverCoord.set(mouseCoor.x, mouseCoor.y);
+                whichHover = 9;
+            }
+        } else {
+            timer = 45;
+            whichHover = 0;
+        }
 
     }
 
@@ -130,6 +247,9 @@ public class AffichageInventaire implements Minijeu {
             screen.jeu.HebertBold.draw(screen.jeu.batch, "/", 423.6f, 42f);
             screen.jeu.HebertBold.draw(screen.jeu.batch, Integer.toString((len / 9) + 1), 426f, 40f);
 
+            screen.jeu.HebertBold.draw(screen.jeu.batch, "Utilise : " + Integer.toString(bateau.getContenu().size())
+                    + "/" + Integer.toString(bateau.getTailleStockage()), 362f, 236f);
+
             // modules
         } else {
             screen.jeu.batch.draw(tabMod, 356, 25);
@@ -148,10 +268,29 @@ public class AffichageInventaire implements Minijeu {
                 screen.jeu.batch.draw(selecCanneTexture, 369 + 61 * colonne,
                         158 - ((caseCanne - 10 * colonne) - 1) * 60);
             }
-        }
+            screen.jeu.HebertBold.draw(screen.jeu.batch, "Nom : \n" + bateau.getName(), 362f, 242f);
+            screen.jeu.HebertBold.draw(screen.jeu.batch, "Modele : \n" + bateau.getModeleName(), 425f, 242f);
 
+        }
         // draw Bateau
         bateau.getSprite().draw(screen.jeu.batch);
+        // draw hover tab
+        if (timer < 1) {
+            screen.jeu.batch.draw(hoverTexture, hoverCoord.x - 106, hoverCoord.y);
+            if (whichTab) {
+                screen.jeu.batch.draw(bateau.getContenu().get(whichHover + 9 * page - 1).getHoverText(),
+                        hoverCoord.x - 105, hoverCoord.y + 1);
+                screen.jeu.batch.draw(hoverGradienTexture, hoverCoord.x - 106, hoverCoord.y);
+                screen.jeu.HebertBold.draw(screen.jeu.batch,
+                        bateau.getContenu().get(whichHover + 9 * page - 1).getNom(), hoverCoord.x - 101.5f,
+                        hoverCoord.y + 60);
+                screen.jeu.HebertBold.draw(screen.jeu.batch, "Taille : " + Float.toString(
+                        (float) ((int) (bateau.getContenu().get(whichHover + 9 * page - 1).getTaille() * 10)) / 10)
+                        + "cm", hoverCoord.x - 101.5f,
+                        hoverCoord.y + 45);
+            }
+        }
+
     }
 
 }
