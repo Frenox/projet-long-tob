@@ -4,6 +4,10 @@ HebertSansBold.png
 HebertSansBold1.png
 HebertSansBold2.png
 HebertSansBold3.png
+Menu_bg.png
+Menu_options.png
+Menu_quitter.png
+Menu_reprendre.png
 bg_actif.png
 bg_fishing_1.png
 bg_inventory.png

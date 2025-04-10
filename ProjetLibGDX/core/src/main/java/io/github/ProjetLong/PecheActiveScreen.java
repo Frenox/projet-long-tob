@@ -17,11 +17,13 @@ public class PecheActiveScreen implements Screen {
     public Texture minigameBorder;
     private boolean minigameShow;
     private boolean inventaireShow;
+    public boolean menuShow;
     public Texture actualMinigameBg;
     public Texture minigameBg1;
     public Minijeu actualMinigame;
     public AffichageInventaire inventaire;
     private GlyphLayout layout = new GlyphLayout();
+    private AffichagePause menu = new AffichagePause();
 
     public PecheActiveScreen(final Jeu jeu, Bateau bateau) {
         this.jeu = jeu;
@@ -31,6 +33,7 @@ public class PecheActiveScreen implements Screen {
         minigameBg1 = new Texture("bg_fishing_1.png");
         minigameShow = true;
         inventaireShow = true;
+        menuShow = false;
         actualMinigameBg = minigameBg1;
         actualMinigame = new Minijeu2();
         inventaire = new AffichageInventaire(bateau);
@@ -75,13 +78,23 @@ public class PecheActiveScreen implements Screen {
             System.out.println(mouseCoor.x + " " + mouseCoor.y);
         }
 
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            menuShow = true;
+        }
+
         actualMinigame.input(this);
         inventaire.input(this);
+        if (menuShow) {
+            menu.input(this);
+        }
     }
 
     public void logic() {
         actualMinigame.logic(this);
         inventaire.logic(this);
+        if (menuShow) {
+            menu.logic(this);
+        }
     }
 
     public void draw() {
@@ -106,7 +119,9 @@ public class PecheActiveScreen implements Screen {
 
             inventaire.draw(this);
         }
-
+        if (menuShow) {
+            menu.draw(this);
+        }
         String text = Integer.toString(Gdx.graphics.getFramesPerSecond());
 
         layout.setText(jeu.HebertBold, text);
