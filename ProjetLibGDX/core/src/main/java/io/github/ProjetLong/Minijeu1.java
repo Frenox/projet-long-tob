@@ -2,14 +2,11 @@ package io.github.ProjetLong;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class Minijeu1 implements Minijeu {
@@ -18,7 +15,7 @@ public class Minijeu1 implements Minijeu {
     private Stage stage;
 
     private Texture poisson;
-
+    private int State = 0;
     private Sprite fishSprite;
     private ProgressBar jauge;
 
@@ -44,6 +41,12 @@ public class Minijeu1 implements Minijeu {
 
     int sens = 1;
     double t = 0;
+
+    @Override
+    public int getState() {
+
+        return State;
+    }
 
     @Override
     public void input(PecheActiveScreen screen) {

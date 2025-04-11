@@ -1,32 +1,56 @@
 package io.github.ProjetLong;
 
-import javax.swing.text.html.HTMLDocument.HTMLReader.BlockAction;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
+
+import io.github.NoMinigame;
+import io.github.ProjetLong.ZonesPeche.Poisson;
+
+import java.util.Random;
 
 public class PecheActiveScreen implements Screen {
     final Jeu jeu;
-
+    private Bateau bateau;
     public Texture backgroundTexture;
     public Texture minigameBorder;
-    public boolean minigameShow;
+    private boolean minigameShow;
+    private boolean inventaireShow;
+    private boolean priseShow;
+    public boolean menuShow;
     public Texture actualMinigameBg;
     public Texture minigameBg1;
     public Minijeu actualMinigame;
+    public AffichageInventaire inventaire;
+    private GlyphLayout layout = new GlyphLayout();
+    private AffichagePause menu = new AffichagePause();
+    private double time;
+    private Poisson lastPrise;
+    private int timerPrise;
 
-    public PecheActiveScreen(final Jeu jeu) {
+    public PecheActiveScreen(final Jeu jeu, Bateau bateau) {
         this.jeu = jeu;
+        this.bateau = bateau;
         backgroundTexture = new Texture("bg_actif.png");
         minigameBorder = new Texture("contour_fishing.png");
         minigameBg1 = new Texture("bg_fishing_1.png");
-        minigameShow = true;
+        minigameShow = false;
+        inventaireShow = true;
+        menuShow = false;
+        priseShow = false;
+        time = 0;
+        lastPrise = new Poisson(0, 0);
         actualMinigameBg = minigameBg1;
-        actualMinigame = new Minijeu1();
+        actualMinigame = new NoMinigame();
+        inventaire = new AffichageInventaire(bateau);
+        timerPrise = 0;
+
     }
 
     @Override
@@ -51,11 +75,76 @@ public class PecheActiveScreen implements Screen {
                 Gdx.graphics.setFullscreenMode(currentMode);
         }
 
+        if (Gdx.input.isKeyJustPressed(Input.Keys.I)) {
+            if (inventaireShow) {
+                inventaireShow = false;
+            } else {
+                inventaireShow = true;
+            }
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.G) && minigameShow == false && bateau.getStockageDispo() > 0) {
+            lancerMiniJeu();
+        }
+
+        // Permet d'afficher les coordonnées du clic souris gauche dans la console
+        // utile pour connaitre des coordonés à l'écran
+        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+            Vector3 mouseCoor = jeu.viewport.getCamera()
+                    .unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+            System.out.println(mouseCoor.x + " " + mouseCoor.y);
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            menuShow = true;
+        }
+
         actualMinigame.input(this);
+        inventaire.input(this);
+        if (menuShow) {
+            menu.input(this);
+        }
+
     }
 
     public void logic() {
+        if (actualMinigame.getState() == 2 && bateau.getStockageDispo() > 0) {
+            actualMinigame = new NoMinigame();
+            lastPrise = bateau.getEquipedCanne().getZone().getRandPoisson();
+            bateau.addPoisson(lastPrise);
+            minigameShow = false;
+            priseShow = true;
+            timerPrise = 300;
+        }
         actualMinigame.logic(this);
+        inventaire.logic(this);
+        if (menuShow) {
+            menu.logic(this);
+        }
+        bateau.addSpriteY((float) (Math.sin(time) / 50));
+        time += 0.02;
+        if (timerPrise < 0) {
+            priseShow = false;
+        }
+        timerPrise--;
+
+    }
+
+    public void lancerMiniJeu() {
+        Random rn = new Random();
+        switch (rn.nextInt(1)) {
+            case 3:
+                // Minijeu1();
+                // Récupère la fin du mini jeu (succes ou non)
+                break;
+            case 2:
+                // Minijeu2();
+                // lancer le mini jeu 2 et récupère la fin
+                break;
+            default:
+                actualMinigame = new Minijeu2();
+                minigameShow = true;
+                break;
+        }
     }
 
     public void draw() {
@@ -76,7 +165,30 @@ public class PecheActiveScreen implements Screen {
             jeu.batch.draw(actualMinigameBg, 25, 81);
             actualMinigame.draw(this);
         }
+        // draw Bateau
+        bateau.getSprite().draw(jeu.batch);
+        if (inventaireShow) {
 
+            inventaire.draw(this);
+        }
+
+        String text = Integer.toString(Gdx.graphics.getFramesPerSecond());
+
+        layout.setText(jeu.HebertBold, text);
+        jeu.HebertBold.draw(jeu.batch, text, 510f - layout.width, 287f);
+
+        // montrer resultat minijeu
+        if (priseShow == true) {
+            jeu.batch.draw(lastPrise.getFishText(), 129, 137);
+            layout.setText(jeu.HebertBold, lastPrise.getNom());
+            jeu.HebertBold.draw(jeu.batch, layout, 256 - (layout.width / 2), 140 + (layout.height / 2));
+            layout.setText(jeu.HebertBold, Float.toString((float) ((int) (lastPrise.getTaille() * 10)) / 10) + "cm");
+            jeu.HebertBold.draw(jeu.batch, layout, 256 - (layout.width / 2), 128 + (layout.height / 2));
+        }
+
+        if (menuShow) {
+            menu.draw(this);
+        }
         jeu.batch.end();
 
     }
