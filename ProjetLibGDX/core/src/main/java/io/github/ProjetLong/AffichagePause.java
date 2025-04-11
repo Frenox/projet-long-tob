@@ -5,7 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 
-public class AffichagePause implements Minijeu {
+public class AffichagePause implements SousFenetre {
     private int state;
     private Texture BG = new Texture("Menu_bg.png");
     private Texture reprendre;

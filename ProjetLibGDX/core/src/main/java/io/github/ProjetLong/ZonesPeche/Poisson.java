@@ -138,8 +138,8 @@ public class Poisson {
             return min + r.nextFloat() * (max - min);
 
         } else if (id == 2 && rarete == 0) {
-            float min = 10;
-            float max = 40;
+            float min = 5;
+            float max = 35;
             return min + r.nextFloat() * (max - min);
 
         } else if (id == 2 && rarete == 1) {

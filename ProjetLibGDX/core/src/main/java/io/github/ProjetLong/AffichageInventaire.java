@@ -12,7 +12,7 @@ import java.util.List;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
-public class AffichageInventaire implements Minijeu {
+public class AffichageInventaire implements SousFenetre {
     private Bateau bateau;
     private Texture fondInventaire;
     private Texture tabStock;
@@ -24,7 +24,6 @@ public class AffichageInventaire implements Minijeu {
     final private List<Vector2> slotsCoordonnees;
     private int page;
     private Texture hoverTexture;
-    double time;
     private int caseCanne;
     private int timer;
     private Vector3 mouseCoor;
@@ -39,7 +38,6 @@ public class AffichageInventaire implements Minijeu {
         tabStock = new Texture("fish_tab_inventory.png");
         selecCanneTexture = new Texture("contour_slot.png");
         whichTab = false;
-        time = 0;
         hoverCoord = new Vector2();
         hoverTexture = new Texture("mouse_hover_actif.png");
         hoverGradienTexture = new Texture("hover_alpha.png");
@@ -54,6 +52,30 @@ public class AffichageInventaire implements Minijeu {
         slotsCoordonnees.add(new Vector2(430, 98));
         slotsCoordonnees.add(new Vector2(369, 38));
         slotsCoordonnees.add(new Vector2(430, 38));
+        int canneequip = bateau.getModules().indexOf(bateau.getEquipedCanne());
+        switch (canneequip) {
+            case 0:
+                caseCanne = 1;
+                break;
+            case 1:
+                caseCanne = 11;
+                break;
+            case 2:
+                caseCanne = 2;
+                break;
+            case 3:
+                caseCanne = 12;
+                break;
+            case 4:
+                caseCanne = 3;
+                break;
+            case 5:
+                caseCanne = 13;
+                break;
+            default:
+                break;
+        }
+
     }
 
     @Override
@@ -221,8 +243,6 @@ public class AffichageInventaire implements Minijeu {
 
     @Override
     public void logic(PecheActiveScreen screen) {
-        bateau.addSpriteY((float) (Math.sin(time) / 50));
-        time += 0.02;
     }
 
     @Override
@@ -272,8 +292,7 @@ public class AffichageInventaire implements Minijeu {
             screen.jeu.HebertBold.draw(screen.jeu.batch, "Modele : \n" + bateau.getModeleName(), 425f, 242f);
 
         }
-        // draw Bateau
-        bateau.getSprite().draw(screen.jeu.batch);
+
         // draw hover tab
         if (timer < 1) {
             screen.jeu.batch.draw(hoverTexture, hoverCoord.x - 106, hoverCoord.y);

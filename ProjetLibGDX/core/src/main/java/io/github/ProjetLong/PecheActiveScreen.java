@@ -9,6 +9,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
+
+import io.github.NoMinigame;
+import io.github.ProjetLong.ZonesPeche.Poisson;
+
 import java.util.Random;
 
 public class PecheActiveScreen implements Screen {
@@ -18,6 +22,7 @@ public class PecheActiveScreen implements Screen {
     public Texture minigameBorder;
     private boolean minigameShow;
     private boolean inventaireShow;
+    private boolean priseShow;
     public boolean menuShow;
     public Texture actualMinigameBg;
     public Texture minigameBg1;
@@ -25,6 +30,9 @@ public class PecheActiveScreen implements Screen {
     public AffichageInventaire inventaire;
     private GlyphLayout layout = new GlyphLayout();
     private AffichagePause menu = new AffichagePause();
+    private double time;
+    private Poisson lastPrise;
+    private int timerPrise;
 
     public PecheActiveScreen(final Jeu jeu, Bateau bateau) {
         this.jeu = jeu;
@@ -32,12 +40,16 @@ public class PecheActiveScreen implements Screen {
         backgroundTexture = new Texture("bg_actif.png");
         minigameBorder = new Texture("contour_fishing.png");
         minigameBg1 = new Texture("bg_fishing_1.png");
-        minigameShow = true;
+        minigameShow = false;
         inventaireShow = true;
         menuShow = false;
+        priseShow = false;
+        time = 0;
+        lastPrise = new Poisson(0, 0);
         actualMinigameBg = minigameBg1;
-        actualMinigame = new Minijeu2();
+        actualMinigame = new NoMinigame();
         inventaire = new AffichageInventaire(bateau);
+        timerPrise = 0;
 
     }
 
@@ -63,12 +75,15 @@ public class PecheActiveScreen implements Screen {
                 Gdx.graphics.setFullscreenMode(currentMode);
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.G)) {
-            if (minigameShow) {
-                minigameShow = false;
+        if (Gdx.input.isKeyJustPressed(Input.Keys.I)) {
+            if (inventaireShow) {
+                inventaireShow = false;
             } else {
-                minigameShow = true;
+                inventaireShow = true;
             }
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.G) && minigameShow == false && bateau.getStockageDispo() > 0) {
+            lancerMiniJeu();
         }
 
         // Permet d'afficher les coordonnées du clic souris gauche dans la console
@@ -88,61 +103,50 @@ public class PecheActiveScreen implements Screen {
         if (menuShow) {
             menu.input(this);
         }
+
     }
 
     public void logic() {
+        if (actualMinigame.getState() == 2 && bateau.getStockageDispo() > 0) {
+            actualMinigame = new NoMinigame();
+            lastPrise = bateau.getEquipedCanne().getZone().getRandPoisson();
+            bateau.addPoisson(lastPrise);
+            minigameShow = false;
+            priseShow = true;
+            timerPrise = 300;
+        }
         actualMinigame.logic(this);
         inventaire.logic(this);
         if (menuShow) {
             menu.logic(this);
         }
+        bateau.addSpriteY((float) (Math.sin(time) / 50));
+        time += 0.02;
+        if (timerPrise < 0) {
+            priseShow = false;
+        }
+        timerPrise--;
+
     }
 
-    public void attente() {
-        Random randomNumbers = new Random();
-        //Initialisation
-        boolean attente=True;
-        int n=3; // Nombre de minijeu
-        int NumeroMiniJeu;
-        CanneAPeche CanneAPecheActuel;
-        Stockage StockageActuel
-        while (attente) {
-            //Ouvrir l'inventaire quand on clique
-            Stockage.getTailleDisponible();
-            Stockage.getContenu();
-            Stockage.getNiveau();
-            Stockage.getTailleMax();
-            Stockage.getTailleDisponible();
-            //Change les statistiques de la canne à pêche
-            //CanneAPecheActuel=
-            if (commencerLaPeche) { //Clique sur le bouton pour commencer la peche
-                attente=False;
-            }
-        }
-    }
     public void lancerMiniJeu() {
-        NumeroMiniJeu=randomNumbers.nextInt(n)+1; //Choisit un mini jeu random entre 1 et n
-        switch (NumeroMiniJeu) {
-            case 1:
-                //Minijeu1();
-                //Récupère la fin du mini jeu (succes ou non)
+        Random rn = new Random();
+        switch (rn.nextInt(1)) {
+            case 3:
+                // Minijeu1();
+                // Récupère la fin du mini jeu (succes ou non)
                 break;
             case 2:
-                //Minijeu2();
-                //lancer le mini jeu 2 et récupère la fin
+                // Minijeu2();
+                // lancer le mini jeu 2 et récupère la fin
                 break;
             default:
-                // lancer le mini jeu 3 et récupère la fin
+                actualMinigame = new Minijeu2();
+                minigameShow = true;
                 break;
         }
-        if (succes) {
-            //getpoisson
-            Stockage.addPoisson(Poisson poisson);
-        } else {
-            null
-        }
     }
-        
+
     public void draw() {
         ScreenUtils.clear(Color.BLACK);
         jeu.viewport.apply();
@@ -161,17 +165,30 @@ public class PecheActiveScreen implements Screen {
             jeu.batch.draw(actualMinigameBg, 25, 81);
             actualMinigame.draw(this);
         }
+        // draw Bateau
+        bateau.getSprite().draw(jeu.batch);
         if (inventaireShow) {
 
             inventaire.draw(this);
         }
-        if (menuShow) {
-            menu.draw(this);
-        }
+
         String text = Integer.toString(Gdx.graphics.getFramesPerSecond());
 
         layout.setText(jeu.HebertBold, text);
         jeu.HebertBold.draw(jeu.batch, text, 510f - layout.width, 287f);
+
+        // montrer resultat minijeu
+        if (priseShow == true) {
+            jeu.batch.draw(lastPrise.getFishText(), 129, 137);
+            layout.setText(jeu.HebertBold, lastPrise.getNom());
+            jeu.HebertBold.draw(jeu.batch, layout, 256 - (layout.width / 2), 140 + (layout.height / 2));
+            layout.setText(jeu.HebertBold, Float.toString((float) ((int) (lastPrise.getTaille() * 10)) / 10) + "cm");
+            jeu.HebertBold.draw(jeu.batch, layout, 256 - (layout.width / 2), 128 + (layout.height / 2));
+        }
+
+        if (menuShow) {
+            menu.draw(this);
+        }
         jeu.batch.end();
 
     }

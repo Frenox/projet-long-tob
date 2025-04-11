@@ -15,7 +15,7 @@ public class Minijeu1 implements Minijeu {
     private Stage stage;
 
     private Texture poisson;
-
+    private int State = 0;
     private Sprite fishSprite;
     private ProgressBar jauge;
 
@@ -41,6 +41,12 @@ public class Minijeu1 implements Minijeu {
 
     int sens = 1;
     double t = 0;
+
+    @Override
+    public int getState() {
+
+        return State;
+    }
 
     @Override
     public void input(PecheActiveScreen screen) {
