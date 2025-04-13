@@ -8,7 +8,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 
 import io.github.ProjetLong.MiniJeu1.Impulsion;
 
@@ -33,7 +32,6 @@ public class Minijeu1 extends ApplicationAdapter implements Minijeu {
     private Texture poisson;
     private int State = 0;
     private Sprite fishSprite;
-    private ProgressBar jauge;
 
     private Sprite barBackgroundSprite;
     private Sprite barProgressSprite;
