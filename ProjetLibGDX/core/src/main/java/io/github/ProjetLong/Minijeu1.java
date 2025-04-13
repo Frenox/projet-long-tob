@@ -6,16 +6,9 @@ import java.util.Iterator;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture3D;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import io.github.ProjetLong.MiniJeu1.Impulsion;
 
@@ -30,7 +23,7 @@ public class Minijeu1 extends ApplicationAdapter implements Minijeu {
     final float MIN_REUSSITE = 20;
     final float MAX_REUSSITE = 100;
 
-    final float IMPULSION_DURATION = 100f;
+    final float IMPULSION_DURATION = 200f;
     final float IMPULSION_TIME_STEP = 1f;
     final float IMPULSION_MAX = 20f;
 
@@ -56,6 +49,7 @@ public class Minijeu1 extends ApplicationAdapter implements Minijeu {
     private float tMovement;
 
     private int sens = 1;
+    private float ecartTexture;
 
     public Minijeu1() {
         poisson = new Texture("poisson.png");
@@ -67,14 +61,16 @@ public class Minijeu1 extends ApplicationAdapter implements Minijeu {
         loadingBarBackground = new Texture("minigame1_bar_fishing.png");
         loadingBarProgress = new Texture("minigame1_indicator_fishing.png");
         fishFishing = new Texture("minigame1_fish_fishing.png");
-        
+
+        ecartTexture = (loadingBarBackground.getHeight() - loadingBarProgress.getHeight());
+
         barBackgroundSprite = new Sprite(loadingBarBackground);
         barBackgroundSprite.setPosition(BAR_X, BAR_Y);
-        barBackgroundSprite.setSize(MIN_REUSSITE, MAX_REUSSITE);
+        barBackgroundSprite.setSize(20, MAX_REUSSITE);
 
         barProgressSprite = new Sprite(loadingBarProgress);
-        barProgressSprite.setPosition(BAR_X, BAR_Y);
-        barProgressSprite.setSize(MIN_REUSSITE, MAX_REUSSITE);
+        barProgressSprite.setPosition(BAR_X + 3, BAR_Y + 3);
+        barProgressSprite.setSize(13, MIN_REUSSITE - ecartTexture);
 
         fishFishingSprite = new Sprite(fishFishing);
         fishFishingSprite.setPosition(BAR_X + 4, BAR_Y + 22);
@@ -141,12 +137,13 @@ public class Minijeu1 extends ApplicationAdapter implements Minijeu {
 
         fishSprite.setY(POISSON_Y + evolution + YMovement);
         fishFishingSprite.setY(BAR_Y + 22 + evolution + YMovement);
+        barProgressSprite.setSize(13, MIN_REUSSITE + evolution + YMovement - ecartTexture);
     }
 
     @Override
     public void draw(PecheActiveScreen screen) {
-        screen.jeu.batch.draw(barProgressSprite, BAR_X, BAR_Y, 20, MIN_REUSSITE + evolution + YMovement);
         barBackgroundSprite.draw(screen.jeu.batch);
+        barProgressSprite.draw(screen.jeu.batch);
         fishSprite.draw(screen.jeu.batch);
         fishFishingSprite.draw(screen.jeu.batch);
         
