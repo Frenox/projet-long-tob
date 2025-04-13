@@ -134,6 +134,8 @@ public class PecheActiveScreen implements Screen {
         switch (rn.nextInt(1)) {
             case 3:
                 // Minijeu1();
+                actualMinigame = new Minijeu1();
+                minigameShow = true;
                 // Récupère la fin du mini jeu (succes ou non)
                 break;
             case 2:
@@ -141,7 +143,7 @@ public class PecheActiveScreen implements Screen {
                 // lancer le mini jeu 2 et récupère la fin
                 break;
             default:
-                actualMinigame = new Minijeu2();
+                actualMinigame = new Minijeu1();
                 minigameShow = true;
                 break;
         }
