@@ -144,7 +144,7 @@ public class PecheActiveScreen implements Screen {
                 minigameShow = true;
                 break;
             default:
-                actualMinigame = new Minijeu3();
+                actualMinigame = new Minijeu4();
                 minigameShow = true;
                 break;
         }

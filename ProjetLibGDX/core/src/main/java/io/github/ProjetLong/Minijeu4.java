@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Array;
 
-public class Minijeu3 implements Minijeu {
+public class Minijeu4 implements Minijeu {
 
     private Array<Sprite> poissons;
     private Array<Float> directions; //  direction de chaque poisson 
@@ -27,7 +27,7 @@ public class Minijeu3 implements Minijeu {
     private final float CADRE_Y_MIN = 81.5f;
     private final float CADRE_Y_MAX = 211f;
 
-    public Minijeu3() {
+    public Minijeu4() {
         poissonTexture = new Texture("poisson.png");
         hameconTexture = new Texture("hamecon.png");  // image du hamecon
 
