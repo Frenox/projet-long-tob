@@ -19,6 +19,7 @@ cregut.png
 fish_tab_fish.png
 fish_tab_inventory.png
 fishing_rod_1_lvl1.png
+hamecon.png
 hover_alpha.png
 libgdx.png
 metalui/font-export.fnt
@@ -40,6 +41,7 @@ poissons/fish_maquereau.png
 poissons/fish_maquereau_shiny.png
 poissons/fish_rascasse.png
 poissons/fish_rascasse_shiny.png
+poissons/hamecon.png
 poissons/hover_bar.png
 poissons/hover_bar_shiny.png
 poissons/hover_maquereau.png
