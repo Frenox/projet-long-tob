@@ -1,5 +1,7 @@
 package io.github.ProjetLong;
 
+import java.util.Random;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Input;
@@ -12,8 +14,6 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 import io.github.NoMinigame;
 import io.github.ProjetLong.ZonesPeche.Poisson;
-
-import java.util.Random;
 
 public class PecheActiveScreen implements Screen {
     final Jeu jeu;
@@ -131,17 +131,17 @@ public class PecheActiveScreen implements Screen {
 
     public void lancerMiniJeu() {
         Random rn = new Random();
-        switch (rn.nextInt(1)) {
+        switch (rn.nextInt(3) + 1) {
             case 3:
-                // Minijeu1();
-                // Récupère la fin du mini jeu (succes ou non)
+                actualMinigame = new Minijeu3();
+                minigameShow = true;
                 break;
-            case 2:
-                // Minijeu2();
-                // lancer le mini jeu 2 et récupère la fin
-                break;
+            // case 2:
+            //     actualMinigame = new Minijeu2();
+            //     minigameShow = true;
+            //     break;
             default:
-                actualMinigame = new Minijeu2();
+                actualMinigame = new Minijeu1();
                 minigameShow = true;
                 break;
         }
