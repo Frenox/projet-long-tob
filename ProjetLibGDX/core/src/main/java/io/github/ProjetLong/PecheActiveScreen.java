@@ -131,10 +131,12 @@ public class PecheActiveScreen implements Screen {
 
     public void lancerMiniJeu() {
         Random rn = new Random();
-        switch (rn.nextInt(1)) {
-            case 3:
+        int n = rn.nextInt(2);
+        switch (n) {
+            case 1:
                 // Minijeu1();
-                // Récupère la fin du mini jeu (succes ou non)
+                actualMinigame = new Minijeu1();
+                minigameShow = true;
                 break;
             case 2:
                 // Minijeu2();

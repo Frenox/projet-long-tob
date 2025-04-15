@@ -43,8 +43,17 @@ public class Minijeu2 implements Minijeu {
         Random r = new Random();
         fishSprite.setPosition(r.nextInt(100) + 50, 100);
         bubbleSprite.setPosition(Gdx.input.getX(), Gdx.input.getY());
+        switch (r.nextInt(2)) {
+            case 1:
+                this.directionX = 1;
+                break;
 
-        this.directionX = 1;
+            default:
+                this.directionX = -1;
+                fishSprite.flip(true, false);
+                break;
+        }
+
         this.directionY = 0;
 
         this.State = 1;
