@@ -31,7 +31,9 @@ public class AffichagePause implements SousFenetre {
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.UP) && state != 1) {
             state -= 1;
         }
-
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            screen.menuShow = false;
+        }
         if (state == 3 && (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)
                 || (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && hover))) {
             Gdx.app.exit();

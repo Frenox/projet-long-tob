@@ -89,7 +89,7 @@ public class AffichageInventaire implements SousFenetre {
                 whichTab = false;
             } else if (436 < mouseCoor.x && mouseCoor.x < 451 && 32 < mouseCoor.y && mouseCoor.y < 44
                     && whichTab == true) {
-                if ((page < (bateau.getContenu().size() / 9))) {
+                if ((page < ((bateau.getContenu().size() - 1) / 9))) {
                     page++;
                 }
             } else if (399 < mouseCoor.x && mouseCoor.x < 414 && 32 < mouseCoor.y && mouseCoor.y < 44
@@ -265,7 +265,7 @@ public class AffichageInventaire implements SousFenetre {
             // TextureFilter.Linear);
             screen.jeu.HebertBold.draw(screen.jeu.batch, Integer.toString(page + 1), 419.5f, 43f);
             screen.jeu.HebertBold.draw(screen.jeu.batch, "/", 423.6f, 42f);
-            screen.jeu.HebertBold.draw(screen.jeu.batch, Integer.toString((len / 9) + 1), 426f, 40f);
+            screen.jeu.HebertBold.draw(screen.jeu.batch, Integer.toString(((len - 1) / 9) + 1), 426f, 40f);
 
             screen.jeu.HebertBold.draw(screen.jeu.batch, "Utilise : " + Integer.toString(bateau.getContenu().size())
                     + "/" + Integer.toString(bateau.getTailleStockage()), 362f, 236f);

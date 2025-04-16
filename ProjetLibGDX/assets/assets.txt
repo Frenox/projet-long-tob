@@ -19,6 +19,7 @@ cregut.png
 fish_tab_fish.png
 fish_tab_inventory.png
 fishing_rod_1_lvl1.png
+hamecon.png
 hover_alpha.png
 libgdx.png
 metalui/font-export.fnt
@@ -40,10 +41,16 @@ poissons/fish_maquereau.png
 poissons/fish_maquereau_shiny.png
 poissons/fish_rascasse.png
 poissons/fish_rascasse_shiny.png
+poissons/hamecon.png
 poissons/hover_bar.png
 poissons/hover_bar_shiny.png
 poissons/hover_maquereau.png
 poissons/hover_maquereau_shiny.png
 poissons/hover_rascasse.png
 poissons/hover_rascasse_shiny.png
+shaders/shader1.frag
+shaders/shaderEau.frag
+shaders/vertex.vert
 stockage_lvl1.png
+sun.png
+water.png

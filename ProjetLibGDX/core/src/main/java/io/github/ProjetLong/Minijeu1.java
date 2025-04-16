@@ -29,6 +29,8 @@ public class Minijeu1 extends ApplicationAdapter implements Minijeu {
     final float BAR_X = 160;
     final float BAR_Y = 90;
 
+    final float BAR_PROGRESSION_WIDTH = 13;
+
     private Texture poisson;
     private int State = 0;
     private Sprite fishSprite;
@@ -67,8 +69,8 @@ public class Minijeu1 extends ApplicationAdapter implements Minijeu {
         barBackgroundSprite.setSize(20, MAX_REUSSITE);
 
         barProgressSprite = new Sprite(loadingBarProgress);
-        barProgressSprite.setPosition(BAR_X + 3, BAR_Y + 3);
-        barProgressSprite.setSize(13, MIN_REUSSITE - ecartTexture);
+        barProgressSprite.setPosition(BAR_X + 4, BAR_Y + 3);
+        barProgressSprite.setSize(BAR_PROGRESSION_WIDTH, MIN_REUSSITE - ecartTexture);
 
         fishFishingSprite = new Sprite(fishFishing);
         fishFishingSprite.setPosition(BAR_X + 4, BAR_Y + 22);
@@ -89,9 +91,9 @@ public class Minijeu1 extends ApplicationAdapter implements Minijeu {
     @Override
     public void input(PecheActiveScreen screen) {
         if (Gdx.input.isKeyJustPressed(Keys.P)) {
-            float reussite = 20 + evolution;
+            float reussite = MIN_REUSSITE + evolution + YMovement;
 
-            if (reussite > 90) {
+            if (reussite > 80) {
                 System.out.println("Poisson capturé avec : " + reussite + " % de réussite");
                 this.State = 2;
             } else {
@@ -134,8 +136,8 @@ public class Minijeu1 extends ApplicationAdapter implements Minijeu {
         YMovement = (float) Math.sin(tMovement) * 5;
 
         fishSprite.setY(POISSON_Y + evolution + YMovement);
-        fishFishingSprite.setY(BAR_Y + 22 + evolution + YMovement);
-        barProgressSprite.setSize(13, MIN_REUSSITE + evolution + YMovement - ecartTexture);
+        fishFishingSprite.setY(BAR_Y + 19 + evolution + YMovement);
+        barProgressSprite.setSize(BAR_PROGRESSION_WIDTH, MIN_REUSSITE + evolution + YMovement - ecartTexture);
     }
 
     @Override
