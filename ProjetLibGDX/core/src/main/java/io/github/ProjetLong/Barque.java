@@ -11,7 +11,7 @@ public class Barque extends Bateau {
     public Barque() {
         super(2);
         addCannes(new CanneAPeche(1, new SousZoneCotePort()));
-        addStockage(new Stockage(1));
+        addStockage(new Stockage(3));
         setName("Barque");
         setModeleName("Barque");
         boatSprite = new Sprite(new Texture("boat1.png"));

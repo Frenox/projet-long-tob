@@ -1,22 +1,29 @@
 package io.github.ProjetLong;
 
 import java.util.Random;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.TimeUtils;
 
 import io.github.NoMinigame;
 import io.github.ProjetLong.ZonesPeche.Poisson;
 
 public class PecheActiveScreen implements Screen {
     final Jeu jeu;
+    private Sprite sun;
+    private Texture sunTexture;
     private Bateau bateau;
     public Texture backgroundTexture;
     public Texture minigameBorder;
@@ -33,6 +40,9 @@ public class PecheActiveScreen implements Screen {
     private double time;
     private Poisson lastPrise;
     private int timerPrise;
+    private ShaderProgram shader;
+    private ShaderProgram shaderEau;
+    private Texture water;
 
     public PecheActiveScreen(final Jeu jeu, Bateau bateau) {
         this.jeu = jeu;
@@ -50,6 +60,15 @@ public class PecheActiveScreen implements Screen {
         actualMinigame = new NoMinigame();
         inventaire = new AffichageInventaire(bateau);
         timerPrise = 0;
+        sunTexture = new Texture("sun.png");
+        sun = new Sprite(sunTexture);
+        sun.setPosition(256 - 25, 200 - 25);
+        water = new Texture("water.png");
+        ShaderProgram.pedantic = false;
+        shader = new ShaderProgram(Gdx.files.internal("shaders/vertex.vert"),
+                Gdx.files.internal("shaders/shader1.frag"));
+        shaderEau = new ShaderProgram(Gdx.files.internal("shaders/vertex.vert"),
+                Gdx.files.internal("shaders/shaderEau.frag"));
 
     }
 
@@ -93,16 +112,14 @@ public class PecheActiveScreen implements Screen {
                     .unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
             System.out.println(mouseCoor.x + " " + mouseCoor.y);
         }
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+        if (menuShow) {
+            menu.input(this);
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             menuShow = true;
         }
 
         actualMinigame.input(this);
         inventaire.input(this);
-        if (menuShow) {
-            menu.input(this);
-        }
 
     }
 
@@ -131,11 +148,13 @@ public class PecheActiveScreen implements Screen {
 
     public void lancerMiniJeu() {
         Random rn = new Random();
+
         switch (rn.nextInt(4)) {
             case 0:
                 actualMinigame = new Minijeu1();
                 minigameShow = true;// Minijeu1();
                 // Récupère la fin du mini jeu (succes ou non)
+
                 break;
             case 1:
                 // Minijeu2();
@@ -163,10 +182,26 @@ public class PecheActiveScreen implements Screen {
         float worldWidth = jeu.viewport.getWorldWidth();
         float worldHeight = jeu.viewport.getWorldHeight();
 
+        jeu.batch.setShader(shader);
         jeu.batch.begin();
 
         // affiche le fond d'écran
         jeu.batch.draw(backgroundTexture, 0, 0, worldWidth, worldHeight);
+        sun.draw(jeu.batch);
+        bateau.getSprite().draw(jeu.batch);
+
+        // PARTIE EAU
+        jeu.batch.end();
+
+        jeu.batch.setShader(shaderEau);
+
+        shaderEau.setUniformf("u_time", TimeUtils.millis() / 1000f);
+        shaderEau.setUniformf("u_strength", 0.01f); // tuning
+        shaderEau.setUniformf("u_opacity", 0.4f); // tuning
+        shaderEau.setUniformf("u_resolution", Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+        jeu.batch.setShader(null);
+        jeu.batch.begin();
 
         // affiche la partie du minijeu si il le faut
         if (minigameShow) {
@@ -174,18 +209,12 @@ public class PecheActiveScreen implements Screen {
             jeu.batch.draw(actualMinigameBg, 25, 81);
             actualMinigame.draw(this);
         }
+
         // draw Bateau
-        bateau.getSprite().draw(jeu.batch);
         if (inventaireShow) {
 
             inventaire.draw(this);
         }
-
-        String text = Integer.toString(Gdx.graphics.getFramesPerSecond());
-
-        layout.setText(jeu.HebertBold, text);
-        jeu.HebertBold.draw(jeu.batch, text, 510f - layout.width, 287f);
-
         // montrer resultat minijeu
         if (priseShow == true) {
             jeu.batch.draw(lastPrise.getFishText(), 129, 137);
@@ -194,10 +223,27 @@ public class PecheActiveScreen implements Screen {
             layout.setText(jeu.HebertBold, Float.toString((float) ((int) (lastPrise.getTaille() * 10)) / 10) + "cm");
             jeu.HebertBold.draw(jeu.batch, layout, 256 - (layout.width / 2), 128 + (layout.height / 2));
         }
+        jeu.batch.end();
+        jeu.batch.setShader(shader);
+        jeu.batch.begin();
+
+        String text = Integer.toString(Gdx.graphics.getFramesPerSecond());
+
+        layout.setText(jeu.HebertBold, text);
+        jeu.HebertBold.draw(jeu.batch, text, 510f - layout.width, 287f);
 
         if (menuShow) {
             menu.draw(this);
         }
+
+        // SHADERS INFORMATIONS
+
+        // shader soleil
+        Vector3 tempProj = new Vector3(sun.getX() + 25, sun.getY() + 25, 0);
+        jeu.viewport.getCamera().project(tempProj);
+        shader.setUniformf("u_sunLocation", tempProj.x, tempProj.y);
+        shader.setUniformf("u_resolution", Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
         jeu.batch.end();
 
     }
