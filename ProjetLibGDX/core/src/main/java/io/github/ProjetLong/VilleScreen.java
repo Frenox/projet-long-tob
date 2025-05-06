@@ -19,6 +19,7 @@ public class VilleScreen implements Screen {
     private ShaderProgram shader;
     public boolean menuShow;
     private AffichagePause menu = new AffichagePause();
+    private Batiment market = new BatimentMarket();
 
     public VilleScreen(final Jeu jeu) {
         this.jeu = jeu;
@@ -67,10 +68,11 @@ public class VilleScreen implements Screen {
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             menuShow = true;
         }
+        market.input(this);
     }
 
     public void logic() {
-
+        market.logic(this);
     }
 
     public void draw() {
@@ -101,6 +103,9 @@ public class VilleScreen implements Screen {
         if (menuShow) {
             menu.draw(this);
         }
+
+        // DRAW DU BAT
+        this.market.draw(this, 0);
         jeu.batch.end();
 
     }
