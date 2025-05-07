@@ -13,6 +13,9 @@ bg_actif.png
 bg_fishing_1.png
 bg_inventory.png
 bg_port.png
+bg_port_2.png
+bg_port_3.png
+bg_port_4.png
 boat1.png
 boat_tab_inventory.png
 contour_fishing.png
@@ -36,6 +39,7 @@ minigame2_arrow_left_fishing.png
 minigame2_arrow_right_fishing.png
 minigame2_arrow_up_fishing.png
 mouse_hover_actif.png
+overlayMarche.png
 poisson.png
 poissons/fish_bar.png
 poissons/fish_bar_shiny.png
@@ -50,9 +54,12 @@ poissons/hover_maquereau.png
 poissons/hover_maquereau_shiny.png
 poissons/hover_rascasse.png
 poissons/hover_rascasse_shiny.png
+refuser.png
 shaders/shader1.frag
+shaders/shaderCielPort.frag
 shaders/shaderEau.frag
 shaders/vertex.vert
 stockage_lvl1.png
 sun.png
+valider.png
 water.png

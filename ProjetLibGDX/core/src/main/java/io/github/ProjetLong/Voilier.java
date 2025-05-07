@@ -5,19 +5,17 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import io.github.ProjetLong.ZonesPeche.SousZoneCotePort;
 
-public class Barque extends Bateau {
+public class Voilier extends Bateau {
     private Sprite boatSprite;
 
-    public Barque() {
-        super(2);
-        addCannes(new CanneAPeche(1, new SousZoneCotePort()));
-        addStockage(new Stockage(3));
-        setName("Barque");
-        setModeleName("Barque");
-        boatSprite = new Sprite(new Texture("boat1.png"));
+    public Voilier() {
+        super(3);
+        setName("Voilier");
+        setModeleName("Voilier");
+        boatSprite = new Sprite(new Texture("voilier.png"));
         boatSprite.setPosition(227, 118);
         setEquipedCanne(getCannes().get(0));
-        setLogo(new Texture("boat_logo1"));
+        setLogo(new Texture("boat_logo2"));
     }
 
     @Override
@@ -41,4 +39,5 @@ public class Barque extends Bateau {
 
         boatSprite.setPosition(x, y);
     }
+
 }

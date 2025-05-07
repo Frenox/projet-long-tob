@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import io.github.ProjetLong.ZonesPeche.Poisson;
 
 public class Bateau {
+    private Texture Logo;
     private int TailleDispo;
     private int TailleMax;
     private String name;
@@ -30,6 +31,7 @@ public class Bateau {
         StockageDispo = 0;
         name = "Cregut";
         modeleName = "Cregut";
+        Logo = new Texture("Cregut.png");
     }
 
     public void setModeleName(String modeleName) {
@@ -58,6 +60,14 @@ public class Bateau {
 
     public void setTailleStockage(int tailleStockage) {
         TailleStockage = tailleStockage;
+    }
+
+    public void setLogo(Texture logo) {
+        setLogo(logo);
+    }
+
+    public Texture getLogo() {
+        return Logo;
     }
 
     public List<ModuleBateau> getModules() {
@@ -94,6 +104,9 @@ public class Bateau {
     }
 
     public void addSpriteY(float y) {
+    }
+
+    public void setSprite(float x, float y) {
     }
 
     public Sprite getSprite() {
