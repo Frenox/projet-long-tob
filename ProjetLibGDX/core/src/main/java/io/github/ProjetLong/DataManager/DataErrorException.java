@@ -1,4 +1,4 @@
-package io.github.ProjetLong;
+package io.github.ProjetLong.DataManager;
 
 public class DataErrorException extends Exception {
     public DataErrorException() {
