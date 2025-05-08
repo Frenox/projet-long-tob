@@ -17,7 +17,17 @@ bg_port_2.png
 bg_port_3.png
 bg_port_4.png
 boat1.png
+boat_card.png
+boat_logo1.png
+boat_logo2.png
+boat_logo3.png
+boat_logo4.png
+boat_logo5.png
 boat_tab_inventory.png
+button_cap1.png
+button_cap2.png
+button_cap3.png
+button_cap4.png
 contour_fishing.png
 contour_slot.png
 cregut.png
@@ -26,6 +36,7 @@ fish_tab_inventory.png
 fishing_rod_1_lvl1.png
 hamecon.png
 hover_alpha.png
+left_arrow.png
 libgdx.png
 metalui/font-export.fnt
 metalui/metal-ui.atlas
@@ -39,6 +50,7 @@ minigame2_arrow_left_fishing.png
 minigame2_arrow_right_fishing.png
 minigame2_arrow_up_fishing.png
 mouse_hover_actif.png
+nom_cap.png
 overlayMarche.png
 poisson.png
 poissons/fish_bar.png
@@ -55,6 +67,7 @@ poissons/hover_maquereau_shiny.png
 poissons/hover_rascasse.png
 poissons/hover_rascasse_shiny.png
 refuser.png
+right_arrow.png
 shaders/shader1.frag
 shaders/shaderCielPort.frag
 shaders/shaderEau.frag
@@ -62,4 +75,5 @@ shaders/vertex.vert
 stockage_lvl1.png
 sun.png
 valider.png
+voilier.png
 water.png

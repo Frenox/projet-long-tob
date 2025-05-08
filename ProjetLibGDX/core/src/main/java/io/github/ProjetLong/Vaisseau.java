@@ -14,8 +14,7 @@ public class Vaisseau extends Bateau {
         setModeleName("Vaisseau");
         boatSprite = new Sprite(new Texture("voilier.png"));
         boatSprite.setPosition(227, 118);
-        setEquipedCanne(getCannes().get(0));
-        setLogo(new Texture("boat_logo5"));
+        setLogo(new Texture("boat_logo5.png"));
     }
 
     @Override

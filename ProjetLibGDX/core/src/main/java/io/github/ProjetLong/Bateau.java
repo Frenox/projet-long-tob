@@ -20,6 +20,7 @@ public class Bateau {
     private List<ModuleBateau> Modules;
     private int TailleStockage;
     private int StockageDispo;
+    private String state;
 
     public Bateau(int taille) {
         this.TailleMax = taille;
@@ -30,6 +31,7 @@ public class Bateau {
         TailleStockage = 0;
         StockageDispo = 0;
         name = "Cregut";
+        state = "A quai";
         modeleName = "Cregut";
         Logo = new Texture("Cregut.png");
     }
@@ -63,7 +65,7 @@ public class Bateau {
     }
 
     public void setLogo(Texture logo) {
-        setLogo(logo);
+        Logo = logo;
     }
 
     public Texture getLogo() {
@@ -160,5 +162,13 @@ public class Bateau {
             result.addAll(mod.getContenu());
         }
         return result;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getState() {
+        return state;
     }
 }

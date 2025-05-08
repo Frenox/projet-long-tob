@@ -14,8 +14,7 @@ public class Fregate extends Bateau {
         setModeleName("Fregate");
         boatSprite = new Sprite(new Texture("voilier.png"));
         boatSprite.setPosition(227, 118);
-        setEquipedCanne(getCannes().get(0));
-        setLogo(new Texture("boat_logo4"));
+        setLogo(new Texture("boat_logo4.png"));
     }
 
     @Override
