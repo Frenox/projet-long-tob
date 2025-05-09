@@ -25,6 +25,8 @@ boat_logo4.png
 boat_logo5.png
 boat_tab_inventory.png
 button_cap1.png
+button_cap1_1.png
+button_cap1_1shine.png
 button_cap2.png
 button_cap3.png
 button_cap4.png

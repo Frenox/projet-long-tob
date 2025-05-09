@@ -200,6 +200,9 @@ public class BatimentMarket implements Batiment {
             screen.jeu.HebertBold.draw(screen.jeu.batch, "/", 201.6f, 42f + 20);
             screen.jeu.HebertBold.draw(screen.jeu.batch, Integer.toString(((len - 1) / 7) + 1), 204f, 40f + 20);
         }
+        if (isOpened && isSelling) {
+            affichageVente(screen);
+        }
     }
 
     private void affichageVente(VilleScreen screen) {

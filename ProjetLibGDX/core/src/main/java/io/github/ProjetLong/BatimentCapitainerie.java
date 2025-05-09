@@ -20,6 +20,7 @@ public class BatimentCapitainerie implements Batiment {
     private int page;
 
     private Vector3 mouse;
+    private Vector3 mouseUnclick;
 
     private Texture batCapitainerieTexture;
     private Sprite batCapitainerieSprite;
@@ -27,9 +28,12 @@ public class BatimentCapitainerie implements Batiment {
     private GlyphLayout layout = new GlyphLayout();
     private Texture NomBat;
     private Texture buttonCap1;
+    private Texture buttonCap11;
+    private Texture buttonCap11Shine;
     private Texture buttonCap2;
     private Texture buttonCap3;
     private Texture buttonCap4;
+
     private Texture boatCard;
     private Texture interfaceBatCapitainerieTexture;
     private Sprite interfaceOverlaybatCapitainerieSprite;
@@ -47,6 +51,8 @@ public class BatimentCapitainerie implements Batiment {
         this.NomBat = new Texture("nom_cap.png");
         this.boatCard = new Texture("boat_card.png");
         this.buttonCap1 = new Texture("button_cap1.png");
+        this.buttonCap11 = new Texture("button_cap1_1.png");
+        this.buttonCap11Shine = new Texture("button_cap1_1shine.png");
         this.buttonCap2 = new Texture("button_cap2.png");
         this.buttonCap3 = new Texture("button_cap3.png");
         this.buttonCap4 = new Texture("button_cap4.png");
@@ -68,6 +74,8 @@ public class BatimentCapitainerie implements Batiment {
 
     @Override
     public void input(VilleScreen screen) {
+        this.mouseUnclick = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+        screen.jeu.viewport.getCamera().unproject(mouseUnclick);
         if (Gdx.input.isKeyJustPressed(Input.Keys.C)) {
             if (this.isOpened == true) {
                 this.isOpened = false;
@@ -126,6 +134,17 @@ public class BatimentCapitainerie implements Batiment {
                     screen.jeu.batch.draw(buttonCap2, 286, 201 - ((i % 6) * 25));
                     screen.jeu.batch.draw(buttonCap3, 316, 201 - ((i % 6) * 25));
                     screen.jeu.batch.draw(buttonCap4, 360, 199 - ((i % 6) * 25));
+                    if (temp.get(i).getState() == "A quai") {
+                        if (mouseUnclick.x >= 271 && mouseUnclick.x <= 282 && mouseUnclick.y >= 203 - ((i % 6) * 25)
+                                && mouseUnclick.y <= 214 - ((i % 6) * 25)) {
+                            screen.jeu.batch.draw(buttonCap11Shine, 271, 203 - ((i % 6) * 25));
+                            if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+                                screen.jeu.setScreen(new PecheActiveScreen(screen.jeu, temp.get(i)));
+                            }
+                        } else {
+                            screen.jeu.batch.draw(buttonCap11, 271, 203 - ((i % 6) * 25));
+                        }
+                    }
                 }
             }
         }
