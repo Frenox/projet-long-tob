@@ -48,4 +48,15 @@ poissons/hover_maquereau.png
 poissons/hover_maquereau_shiny.png
 poissons/hover_rascasse.png
 poissons/hover_rascasse_shiny.png
+<<<<<<< Updated upstream
+=======
+refuser.png
+shaders/shader1.frag
+shaders/shaderEau.frag
+shaders/vertex.vert
+skin.atlas
+skin.json
+skin.png
+skin.scmp
+>>>>>>> Stashed changes
 stockage_lvl1.png
