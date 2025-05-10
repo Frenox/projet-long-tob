@@ -58,5 +58,8 @@ skin.atlas
 skin.json
 skin.png
 skin.scmp
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 stockage_lvl1.png
