@@ -14,7 +14,7 @@ public class Stockage implements ModuleBateau {
 
     public Stockage(int Niveau) {
         Contenu = new ArrayList<Poisson>();
-        if (Niveau == 1 || Niveau == 2) {
+        if (Niveau == 1 || Niveau == 2 || Niveau == 3) {
             stockageTexture = new Texture("stockage_lvl1.png");
         }
         TailleDisponible = (int) Math.pow(2, (2 + Niveau));

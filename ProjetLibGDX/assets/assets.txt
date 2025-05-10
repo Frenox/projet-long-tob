@@ -8,9 +8,11 @@ Menu_bg.png
 Menu_options.png
 Menu_quitter.png
 Menu_reprendre.png
+bat1.png
 bg_actif.png
 bg_fishing_1.png
 bg_inventory.png
+bg_port.png
 boat1.png
 boat_tab_inventory.png
 contour_fishing.png
@@ -34,6 +36,7 @@ minigame2_arrow_left_fishing.png
 minigame2_arrow_right_fishing.png
 minigame2_arrow_up_fishing.png
 mouse_hover_actif.png
+overlayMarche.png
 poisson.png
 poissons/fish_bar.png
 poissons/fish_bar_shiny.png
@@ -48,8 +51,6 @@ poissons/hover_maquereau.png
 poissons/hover_maquereau_shiny.png
 poissons/hover_rascasse.png
 poissons/hover_rascasse_shiny.png
-<<<<<<< Updated upstream
-=======
 refuser.png
 shaders/shader1.frag
 shaders/shaderEau.frag
@@ -58,8 +59,7 @@ skin.atlas
 skin.json
 skin.png
 skin.scmp
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 stockage_lvl1.png
+sun.png
+valider.png
+water.png

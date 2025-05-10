@@ -126,36 +126,38 @@ public class Poisson {
 
     public float getIDTaille(int id, int rarete) {
         Random r = new Random();
-
+        float rand;
+        do {
+            rand = (float) (0.5 + 0.20 * r.nextGaussian()); // loi gaussiennne qui prend des valeurs entre 0 et 1
+        } while (rand < 0.0 || rand > 1.0);
         if (id == 1 && rarete == 0) {
             float min = 20;
             float max = 80;
-            return min + r.nextFloat() * (max - min);
+            return min + rand * (max - min);
 
         } else if (id == 1 && rarete == 1) {
             float min = 40;
             float max = 110;
-            return min + r.nextFloat() * (max - min);
+            return min + rand * (max - min);
 
         } else if (id == 2 && rarete == 0) {
             float min = 5;
             float max = 35;
-            return min + r.nextFloat() * (max - min);
-
+            return min + rand * (max - min);
         } else if (id == 2 && rarete == 1) {
             float min = 15;
             float max = 50;
-            return min + r.nextFloat() * (max - min);
+            return min + rand * (max - min);
 
         } else if (id == 3 && rarete == 0) {
             float min = 30;
             float max = 70;
-            return min + r.nextFloat() * (max - min);
+            return min + rand * (max - min);
 
         } else if (id == 3 && rarete == 1) {
             float min = 30;
             float max = 80;
-            return min + r.nextFloat() * (max - min);
+            return min + rand * (max - min);
 
         } else {
             return 0;
