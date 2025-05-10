@@ -15,16 +15,17 @@ public class Minijeu1 extends ApplicationAdapter implements Minijeu {
 
     final float POISSON_X = 50;
     final float POISSON_Y = 100;
+    final float POISSON_Y_MAX = 190;
 
     final float POISSON_X_MIN = 50;
-    final float POISSON_X_MAX = 150;
+    final float POISSON_X_MAX = 127;
 
     final float MIN_REUSSITE = 20;
     final float MAX_REUSSITE = 100;
 
     final float IMPULSION_DURATION = 200f;
     final float IMPULSION_TIME_STEP = 1f;
-    final float IMPULSION_MAX = 20f;
+    final float IMPULSION_MAX = 5f;
 
     final float BAR_X = 160;
     final float BAR_Y = 90;
@@ -48,6 +49,7 @@ public class Minijeu1 extends ApplicationAdapter implements Minijeu {
     private float YMovement;
     private float tMovement;
 
+    private int cooldown = 0;
     private int sens = 1;
     private float ecartTexture;
 
@@ -90,28 +92,28 @@ public class Minijeu1 extends ApplicationAdapter implements Minijeu {
 
     @Override
     public void input(PecheActiveScreen screen) {
-        if (Gdx.input.isKeyJustPressed(Keys.P)) {
-            float reussite = MIN_REUSSITE + evolution + YMovement;
 
-            if (reussite > 80) {
-                System.out.println("Poisson capturé avec : " + reussite + " % de réussite");
-                this.State = 2;
-            } else {
-                System.out.println("Poisson non capturé.");
-            }
+        boolean reussite = fishSprite.getY() > POISSON_Y_MAX;
+
+        if (reussite) {
+            System.out.println("Poisson capturé avec : " + reussite + " % de réussite");
+            this.State = 2;
         }
-        if (Gdx.input.isKeyJustPressed(Keys.O)) {
-            if (Impulsions.size() < 4) {
-                Impulsion impulsion = new Impulsion(IMPULSION_DURATION, IMPULSION_TIME_STEP, IMPULSION_MAX);
-                Impulsions.add(impulsion);
+
+        if (Gdx.input.isKeyJustPressed(Keys.SPACE) && cooldown < 0) {
+            if ((float) Math.abs(Math.sin(tMovement)) > 0.95) {
+                evolution += 0.3;
+                System.out.println((float) Math.abs(Math.sin(tMovement)));
             }
+
+            cooldown = 40;
         }
     }
 
     @Override
     public void logic(PecheActiveScreen screen) {
-        float speed = 0.2f;
-
+        float speed = 0.4f;
+        cooldown--;
         fishSprite.translateX(speed * sens);
 
         if (fishSprite.getX() < POISSON_X_MIN || fishSprite.getX() > POISSON_X_MAX) {
@@ -120,32 +122,26 @@ public class Minijeu1 extends ApplicationAdapter implements Minijeu {
 
         }
 
-        evolution = 0;
-        Iterator<Impulsion> iterator = this.Impulsions.listIterator();
-        while (iterator.hasNext()) {
-            Impulsion impulsion = iterator.next();
-            impulsion.evolve();
-            if (!impulsion.isFinished()) {
-                evolution += impulsion.getImpulsionValue();
-            } else {
-                iterator.remove();
-            }
-        }
+        evolution -= 0.003f;
 
         tMovement += 0.05;
         YMovement = (float) Math.sin(tMovement) * 5;
 
-        fishSprite.setY(POISSON_Y + evolution + YMovement);
-        fishFishingSprite.setY(BAR_Y + 19 + evolution + YMovement);
+        fishSprite.translateY(evolution);
+        if (fishSprite.getY() < POISSON_Y) {
+            evolution = 0;
+            fishSprite.setY(POISSON_Y);
+        }
+        fishFishingSprite.setY(BAR_Y + 45 + (float) Math.cos(tMovement) * 35);
         barProgressSprite.setSize(BAR_PROGRESSION_WIDTH, MIN_REUSSITE + evolution + YMovement - ecartTexture);
     }
 
     @Override
     public void draw(PecheActiveScreen screen) {
         barBackgroundSprite.draw(screen.jeu.batch);
-        barProgressSprite.draw(screen.jeu.batch);
+
         fishSprite.draw(screen.jeu.batch);
         fishFishingSprite.draw(screen.jeu.batch);
-        
+
     }
 }

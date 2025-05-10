@@ -12,8 +12,9 @@ public class Voilier extends Bateau {
         super(3);
         setName("Voilier");
         setModeleName("Voilier");
+        addVoile(new Voile("", 4));
         boatSprite = new Sprite(new Texture("voilier.png"));
-        boatSprite.setPosition(227, 118);
+        boatSprite.setPosition(195, 118);
         setLogo(new Texture("boat_logo2.png"));
     }
 

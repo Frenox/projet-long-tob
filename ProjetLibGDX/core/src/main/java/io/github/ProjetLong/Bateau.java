@@ -18,6 +18,7 @@ public class Bateau {
     private List<Stockage> Stockage;
     private List<CanneAPeche> Cannes;
     private List<ModuleBateau> Modules;
+    private List<Voile> Voiles;
     private int TailleStockage;
     private int StockageDispo;
     private String state;
@@ -27,6 +28,7 @@ public class Bateau {
         this.TailleDispo = taille;
         Stockage = new ArrayList<Stockage>();
         Cannes = new ArrayList<CanneAPeche>();
+        Voiles = new ArrayList<Voile>();
         Modules = new ArrayList<ModuleBateau>();
         TailleStockage = 0;
         StockageDispo = 0;
@@ -102,6 +104,10 @@ public class Bateau {
         return Cannes;
     }
 
+    public List<Voile> getVoiles() {
+        return Voiles;
+    }
+
     public void addSpriteX(float x) {
     }
 
@@ -130,6 +136,16 @@ public class Bateau {
         }
     }
 
+    public boolean remStockage(Stockage stock) {
+        this.Stockage.remove(stock);
+        TailleStockage -= stock.getTailleDisponible();
+        StockageDispo -= stock.getTailleDisponible();
+        TailleDispo += 1;
+        majModules();
+        return true;
+
+    }
+
     public boolean addCannes(CanneAPeche canne) {
         if (TailleDispo > 0) {
             this.Cannes.add(canne);
@@ -141,10 +157,39 @@ public class Bateau {
         }
     }
 
+    public boolean remCannes(CanneAPeche canne) {
+
+        this.Cannes.remove(canne);
+        TailleDispo += 1;
+        majModules();
+        return true;
+    }
+
+    public boolean addVoile(Voile voile) {
+        if (TailleDispo > 0) {
+            this.Voiles.add(voile);
+            TailleDispo -= 1;
+            majModules();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean remVoile(Voile voile) {
+
+        this.Voiles.remove(voile);
+        TailleDispo += 1;
+        majModules();
+        return true;
+
+    }
+
     private void majModules() {
         Modules = new ArrayList<ModuleBateau>();
         Modules.addAll(Cannes);
         Modules.addAll(Stockage);
+        Modules.addAll(Voiles);
 
     }
 

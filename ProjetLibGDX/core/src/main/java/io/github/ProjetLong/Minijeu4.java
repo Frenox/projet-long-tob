@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.Array;
 public class Minijeu4 implements Minijeu {
 
     private Array<Sprite> poissons;
-    private Array<Float> directions; //  direction de chaque poisson 
+    private Array<Float> directions; // direction de chaque poisson
     private Sprite hamecon;
     private Texture poissonTexture;
     private Texture hameconTexture;
@@ -20,35 +20,33 @@ public class Minijeu4 implements Minijeu {
     private float hameconY;
 
     private int state = 1;
-
-    //  Coordonnées du cadre du minjeu
+    private float speedPoisson;
+    // Coordonnées du cadre du minjeu
     private final float CADRE_X_MIN = 22.5f;
     private final float CADRE_X_MAX = 187.5f;
-    private final float CADRE_Y_MIN = 81.5f;
+    private final float CADRE_Y_MIN = 90f;
     private final float CADRE_Y_MAX = 211f;
 
     public Minijeu4() {
         poissonTexture = new Texture("poisson.png");
-        hameconTexture = new Texture("hamecon.png");  // image du hamecon
+        hameconTexture = new Texture("hamecon.png"); // image du hamecon
 
         poissons = new Array<>();
         directions = new Array<>();
-
-        //  Ajouter 3 poissons avec direction initiale aléatoire
+        speedPoisson = 0.65f + new Random().nextFloat() * 0.25f;
+        // Ajouter 3 poissons avec direction initiale aléatoire
         Random rand = new Random();
-        for (int i = 0; i < 3; i++) {
-            Sprite fish = new Sprite(poissonTexture);
-            float x = CADRE_X_MIN + rand.nextFloat() * (CADRE_X_MAX - CADRE_X_MIN - fish.getWidth());
-            float y = CADRE_Y_MIN + i * 40f;
-            fish.setPosition(x, y);
-            poissons.add(fish);
 
-            float dir = rand.nextBoolean() ? 1f : -1f;
-            directions.add(dir);
-        }
+        Sprite fish = new Sprite(poissonTexture);
+        float x = CADRE_X_MIN + rand.nextFloat() * (CADRE_X_MAX - CADRE_X_MIN - fish.getWidth());
+        float y = CADRE_Y_MIN + 10f + new Random().nextFloat() * 35f;
+        fish.setPosition(x, y);
+        poissons.add(fish);
+
+        directions.add(1f);
 
         hamecon = new Sprite(hameconTexture);
-        hamecon.setSize(10, 40);
+
         resetHamecon();
     }
 
@@ -57,6 +55,7 @@ public class Minijeu4 implements Minijeu {
         hamecon.setPosition(centerX - hamecon.getWidth() / 2f, CADRE_Y_MAX);
         hameconY = hamecon.getY();
         hameconLance = false;
+        speedPoisson = 0.50f + new Random().nextFloat() * 0.50f;
     }
 
     @Override
@@ -68,8 +67,8 @@ public class Minijeu4 implements Minijeu {
 
     @Override
     public void logic(PecheActiveScreen screen) {
-        float speedPoisson = 1.5f;
-        float speedHamecon = 2.5f;
+
+        float speedHamecon = 0.85f;
 
         for (int i = 0; i < poissons.size; i++) {
             Sprite poisson = poissons.get(i);
@@ -77,12 +76,14 @@ public class Minijeu4 implements Minijeu {
 
             poisson.translateX(speedPoisson * direction);
 
-            //  Rebondir sur les bords du cadre
+            // Rebondir sur les bords du cadre
             if (poisson.getX() < CADRE_X_MIN) {
                 poisson.setX(CADRE_X_MIN);
+                poisson.flip(true, false);
                 directions.set(i, 1f); // vers la droite
             } else if (poisson.getX() + poisson.getWidth() > CADRE_X_MAX) {
                 poisson.setX(CADRE_X_MAX - poisson.getWidth());
+                poisson.flip(true, false);
                 directions.set(i, -1f); // vers la gauche
             }
         }
@@ -92,7 +93,8 @@ public class Minijeu4 implements Minijeu {
             hamecon.setY(hameconY);
 
             for (Sprite poisson : poissons) {
-                if (hamecon.getBoundingRectangle().overlaps(poisson.getBoundingRectangle())) {
+                if (hamecon.getY() + 3 > poisson.getY() && hamecon.getY() + 3 < poisson.getY() + 12
+                        && hamecon.getX() + 3 > poisson.getX() && hamecon.getX() + 3 < poisson.getX() + 15) {
                     System.out.println(" Poisson attrapé !");
                     state = 2;
                     hameconLance = false;
@@ -102,7 +104,7 @@ public class Minijeu4 implements Minijeu {
 
             if (hamecon.getY() < CADRE_Y_MIN) {
                 System.out.println(" Raté !");
-                state = 2;
+                resetHamecon();
                 hameconLance = false;
             }
         }

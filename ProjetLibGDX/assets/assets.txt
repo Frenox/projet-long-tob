@@ -28,7 +28,15 @@ button_cap1.png
 button_cap1_1.png
 button_cap1_1shine.png
 button_cap2.png
+button_cap2_1.png
+button_cap2_1b.png
+button_cap2_1h.png
+button_cap2shine.png
 button_cap3.png
+button_cap3_1.png
+button_cap3_1b.png
+button_cap3_1h.png
+button_cap3shine.png
 button_cap4.png
 contour_fishing.png
 contour_slot.png
@@ -57,6 +65,7 @@ overlayMarche.png
 poisson.png
 poissons/fish_bar.png
 poissons/fish_bar_shiny.png
+poissons/fish_cregut.png
 poissons/fish_maquereau.png
 poissons/fish_maquereau_shiny.png
 poissons/fish_rascasse.png
@@ -64,6 +73,7 @@ poissons/fish_rascasse_shiny.png
 poissons/hamecon.png
 poissons/hover_bar.png
 poissons/hover_bar_shiny.png
+poissons/hover_cregut.png
 poissons/hover_maquereau.png
 poissons/hover_maquereau_shiny.png
 poissons/hover_rascasse.png

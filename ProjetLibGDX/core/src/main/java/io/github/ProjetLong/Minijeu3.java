@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class Minijeu3 implements Minijeu {
+    
 
     private Skin skin; // ?
     private Stage stage; // ?
@@ -29,7 +30,7 @@ public class Minijeu3 implements Minijeu {
     private Array<Float> bubblesTime;
 
     private Random random;
-    
+
     private int bubbleClique;
 
     private float bubbleTimer;
@@ -37,8 +38,7 @@ public class Minijeu3 implements Minijeu {
     private float bubbleTimerMax;
 
     private float speed_montee;
-
-
+    private int sens = 1;
     private final float x_limit_min = 50;
     private final float x_limit_max = 150;
     private final float y_limit_min = 100;
@@ -55,7 +55,7 @@ public class Minijeu3 implements Minijeu {
 
         this.fishSprite = new Sprite(fish);
         this.random = new Random();
-        fishSprite.setPosition(x_limit_min-20, y_limit_min-20);
+        fishSprite.setPosition(x_limit_min , y_limit_min );
 
         this.directionY = 1;
 
@@ -66,7 +66,7 @@ public class Minijeu3 implements Minijeu {
 
         this.bubbleClique = -1;
         this.bubbleTimer = 0;
-        this.bubbleTimerMax = (5 + random.nextInt(10))/10;
+        this.bubbleTimerMax = (5 + random.nextInt(10)) / 10;
         this.speed_montee = 0.0f;
     }
 
@@ -88,7 +88,7 @@ public class Minijeu3 implements Minijeu {
                 }
                 i++;
             }
-    
+
         }
 
     }
@@ -107,12 +107,11 @@ public class Minijeu3 implements Minijeu {
         float speed_reel = delta * speed_montee;
 
         // Déplacement du poisson sur l'axe Y
-        if (fishSprite.getY() + speed_reel * this.directionY >= y_limit_min-20) {
+        if (fishSprite.getY() + speed_reel * this.directionY >= y_limit_min) {
             fishSprite.translateY(speed_reel * this.directionY);
-            speed_montee -= 0.08f;
-        }
-        else {
-            fishSprite.setY(y_limit_min-20);
+            speed_montee -= 0.62f;
+        } else {
+            fishSprite.setY(y_limit_min );
             speed_montee = 0.0f;
         }
 
@@ -121,17 +120,25 @@ public class Minijeu3 implements Minijeu {
         if (bubbleTimer >= bubbleTimerMax) {
             createBubble();
             bubbleTimer = 0;
-            bubbleTimerMax = (4f + random.nextInt(5))/10;
+            bubbleTimerMax = (4f + random.nextInt(5)) / 10;
         }
 
         // Suppression de la bulle cliquée
         if (bubbleClique != -1) {
             bubbles.removeIndex(bubbleClique);
             bubblesTime.removeIndex(bubbleClique);
-            speed_montee += 5f;
+            speed_montee += 25f;
             bubbleClique = -1;
         }
+        float speed = 0.3f;
 
+        fishSprite.translateX(speed * sens);
+
+        if (fishSprite.getX() < x_limit_min || fishSprite.getX() > x_limit_max) {
+            sens *= -1;
+            fishSprite.flip(true, false);
+
+        }
         // Suppression des bulles qui sont là depuis trop longtemps
         for (int i = bubblesTime.size - 1; i >= 0; i--) {
             float time = bubblesTime.get(i);

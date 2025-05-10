@@ -104,7 +104,9 @@ public class PecheActiveScreen implements Screen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.G) && minigameShow == false && bateau.getStockageDispo() > 0) {
             lancerMiniJeu();
         }
-
+        if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
+            jeu.setScreen(new VilleScreen(jeu));
+        }
         // Permet d'afficher les coordonnées du clic souris gauche dans la console
         // utile pour connaitre des coordonés à l'écran
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
@@ -148,7 +150,7 @@ public class PecheActiveScreen implements Screen {
 
     public void lancerMiniJeu() {
         Random rn = new Random();
-
+        
         switch (rn.nextInt(4)) {
             case 0:
                 actualMinigame = new Minijeu1();
@@ -188,7 +190,6 @@ public class PecheActiveScreen implements Screen {
         // affiche le fond d'écran
         jeu.batch.draw(backgroundTexture, 0, 0, worldWidth, worldHeight);
         sun.draw(jeu.batch);
-        bateau.getSprite().draw(jeu.batch);
 
         // PARTIE EAU
         jeu.batch.end();
@@ -202,7 +203,7 @@ public class PecheActiveScreen implements Screen {
 
         jeu.batch.setShader(null);
         jeu.batch.begin();
-
+        bateau.getSprite().draw(jeu.batch);
         // affiche la partie du minijeu si il le faut
         if (minigameShow) {
             jeu.batch.draw(minigameBorder, 21, 77);

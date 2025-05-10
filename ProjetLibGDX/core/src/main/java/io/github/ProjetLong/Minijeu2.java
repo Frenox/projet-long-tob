@@ -26,7 +26,7 @@ public class Minijeu2 implements Minijeu {
 
     private int directionX;
     private int directionY;
-
+    private int cooldown = 60;
     private int State; // 0 si inactif, 1 si actif, 2 si finit
 
     public Minijeu2() {
@@ -77,15 +77,22 @@ public class Minijeu2 implements Minijeu {
         float x_limit_max = 150;
         float y_limit_min = 100;
         float y_limit_max = 190;
-        float speed = 0.5f;
+        float speed = 0.75f;
+        float speedy = 0.40f;
 
         // Déplacement du poisson sur l'axe X
         fishSprite.translateX(speed * this.directionX);
         if (fishSprite.getX() < x_limit_min || fishSprite.getX() > x_limit_max) {
             this.directionX *= -1;
             fishSprite.flip(true, false);
+        } else {
+            if (new Random().nextFloat() > 0.982 && cooldown < 0) {
+                this.directionX *= -1;
+                fishSprite.flip(true, false);
+                cooldown = 45;
+            }
         }
-
+        cooldown -= 1;
         // calculer les centres du poisson et de la bulle
         float fishCenterX = fishSprite.getX() + fishSprite.getWidth() / 2f;
         float fishCenterY = fishSprite.getY() + fishSprite.getHeight() / 2f;
@@ -102,7 +109,7 @@ public class Minijeu2 implements Minijeu {
 
         // déplace le poisson uniquement si le jeu a commencé
         if (this.State == 1) {
-            if (distance < bubbleRadius) {
+            if (distance + 2 < bubbleRadius) {
                 this.directionY = 1;
             } else if (fishSprite.getY() > y_limit_max || fishSprite.getY() < y_limit_min) {
                 this.directionY = 0; // Arrêter le mouvement si le poisson sort des limites
@@ -113,7 +120,7 @@ public class Minijeu2 implements Minijeu {
             this.directionY = 0;
         }
         // Déplacement du poisson sur l'axe Y
-        fishSprite.translateY(speed * this.directionY);
+        fishSprite.translateY(speedy * this.directionY);
 
         // Affichage de la victoire si le poisson atteint la limite Y
         if (fishSprite.getY() >= 190) {
