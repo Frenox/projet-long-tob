@@ -30,7 +30,6 @@ public class Minijeu3 implements Minijeu {
     private Array<Float> bubblesTime;
 
     private Random random;
-
     private int bubbleClique;
 
     private float bubbleTimer;
@@ -88,7 +87,6 @@ public class Minijeu3 implements Minijeu {
                 }
                 i++;
             }
-
         }
 
     }

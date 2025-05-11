@@ -24,6 +24,7 @@ public class VilleScreen implements Screen {
     private AffichagePause menu = new AffichagePause();
     private Batiment market = new BatimentMarket();
     private Batiment capitainerie = new BatimentCapitainerie();
+    private Batiment quai;
 
     public VilleScreen(final Jeu jeu) {
         this.jeu = jeu;
@@ -38,6 +39,8 @@ public class VilleScreen implements Screen {
         ShaderProgram.pedantic = false;
         shader = new ShaderProgram(Gdx.files.internal("shaders/vertex.vert"),
                 Gdx.files.internal("shaders/shaderCielPort.frag"));
+
+        quai = new BatimentQuai(jeu.viewport);
     }
 
     @Override
@@ -77,11 +80,13 @@ public class VilleScreen implements Screen {
         }
         market.input(this);
         capitainerie.input(this);
+        quai.input(this);
     }
 
     public void logic() {
         market.logic(this);
         capitainerie.logic(this);
+        quai.logic(this);
     }
 
     public void draw() {
@@ -113,11 +118,14 @@ public class VilleScreen implements Screen {
         // DRAW DU BAT
         this.market.draw(this, 0);
         this.capitainerie.draw(this, 1);
+        this.quai.draw(this, 2);
         // avant plan bat
         this.jeu.batch.draw(backgroundTexture4, 0, 0);
         // overlays
         market.affichageInterface(this);
         capitainerie.affichageInterface(this);
+        quai.affichageInterface(this);
+
         // menu pause
         if (menuShow) {
             menu.draw(this);
@@ -126,6 +134,7 @@ public class VilleScreen implements Screen {
         jeu.batch.end();
         jeu.batch.setShader(shader);
         jeu.batch.begin();
+
         jeu.batch.end();
 
     }

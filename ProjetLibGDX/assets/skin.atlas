@@ -1,0 +1,27 @@
+
+skin.png
+size: 512, 512
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+fish_tab_fish
+  rotate: false
+  xy: 228, 436
+  size: 126, 17
+  orig: 126, 17
+  offset: 0, 0
+  index: -1
+Sans titre1
+  rotate: false
+  xy: 1, 228
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: -1
+Sans titreX
+  rotate: false
+  xy: 1, 1
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: -1

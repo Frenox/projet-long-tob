@@ -61,7 +61,9 @@ minigame2_arrow_right_fishing.png
 minigame2_arrow_up_fishing.png
 mouse_hover_actif.png
 nom_cap.png
+nom_quais.png
 overlayMarche.png
+overlayQuai.png
 poisson.png
 poissons/fish_bar.png
 poissons/fish_bar_shiny.png
@@ -84,6 +86,10 @@ shaders/shader1.frag
 shaders/shaderCielPort.frag
 shaders/shaderEau.frag
 shaders/vertex.vert
+skin.atlas
+skin.json
+skin.png
+skin.scmp
 stockage_lvl1.png
 sun.png
 valider.png

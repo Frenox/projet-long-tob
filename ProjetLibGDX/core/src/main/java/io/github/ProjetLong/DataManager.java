@@ -77,14 +77,12 @@ public class DataManager {
     public int getArgent() {
         return argent;
     }
-
     public void ajouterArgent(int montant) {
         if (montant <= 0) {
             return;
         }
         argent += montant;
     }
-
     public void retirerArgent(int montant) {
         if (montant <= 0) {
             return;
@@ -181,7 +179,6 @@ public class DataManager {
             String[] splitData = serializedData.split("\\|");
             for (String data : splitData) {
                 // Deserialisation du poisson
-
             }
         } catch (Exception e) {
             System.out.println("Echec du chargement des bateaux.");

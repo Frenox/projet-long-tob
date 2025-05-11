@@ -22,7 +22,6 @@ public class BatimentMarket implements Batiment {
     private int offsetSelectedFish;
 
     private int page;
-
     private Vector3 mouse;
 
     private Stage stage;
