@@ -64,6 +64,7 @@ nom_cap.png
 nom_quais.png
 overlayMarche.png
 overlayQuai.png
+pixel.png
 poisson.png
 poissons/fish_bar.png
 poissons/fish_bar_shiny.png

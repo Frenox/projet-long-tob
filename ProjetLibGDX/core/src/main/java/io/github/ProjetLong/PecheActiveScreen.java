@@ -150,7 +150,6 @@ public class PecheActiveScreen implements Screen {
 
     public void lancerMiniJeu() {
         Random rn = new Random();
-        
         switch (rn.nextInt(4)) {
             case 0:
                 actualMinigame = new Minijeu1();

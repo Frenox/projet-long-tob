@@ -58,6 +58,10 @@ public class Bateau {
         return TailleStockage;
     }
 
+    public List<Stockage> getStockage() {
+        return Stockage;
+    }
+
     public void setEquipedCanne(CanneAPeche equipedCanne) {
         this.equipedCanne = equipedCanne;
     }

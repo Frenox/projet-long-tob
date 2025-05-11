@@ -21,6 +21,7 @@ public class Minijeu4 implements Minijeu {
 
     private int state = 1;
     private float speedPoisson;
+    int dir = 1;
     // Coordonnées du cadre du minjeu
     private final float CADRE_X_MIN = 22.5f;
     private final float CADRE_X_MAX = 187.5f;
@@ -30,7 +31,6 @@ public class Minijeu4 implements Minijeu {
     public Minijeu4() {
         poissonTexture = new Texture("poisson.png");
         hameconTexture = new Texture("hamecon.png"); // image du hamecon
-
         poissons = new Array<>();
         directions = new Array<>();
         speedPoisson = 0.65f + new Random().nextFloat() * 0.25f;
@@ -80,11 +80,13 @@ public class Minijeu4 implements Minijeu {
             if (poisson.getX() < CADRE_X_MIN) {
                 poisson.setX(CADRE_X_MIN);
                 poisson.flip(true, false);
+                dir = 1;
                 directions.set(i, 1f); // vers la droite
             } else if (poisson.getX() + poisson.getWidth() > CADRE_X_MAX) {
                 poisson.setX(CADRE_X_MAX - poisson.getWidth());
                 poisson.flip(true, false);
                 directions.set(i, -1f); // vers la gauche
+                dir = 0;
             }
         }
 
@@ -93,8 +95,10 @@ public class Minijeu4 implements Minijeu {
             hamecon.setY(hameconY);
 
             for (Sprite poisson : poissons) {
+
                 if (hamecon.getY() + 3 > poisson.getY() && hamecon.getY() + 3 < poisson.getY() + 12
-                        && hamecon.getX() + 3 > poisson.getX() && hamecon.getX() + 3 < poisson.getX() + 15) {
+                        && hamecon.getX() + 3 > poisson.getX() + 16 * dir
+                        && hamecon.getX() + 3 < poisson.getX() + 15 + 16 * dir) {
                     System.out.println(" Poisson attrapé !");
                     state = 2;
                     hameconLance = false;
@@ -108,6 +112,7 @@ public class Minijeu4 implements Minijeu {
                 hameconLance = false;
             }
         }
+
     }
 
     @Override
@@ -117,6 +122,7 @@ public class Minijeu4 implements Minijeu {
         }
 
         hamecon.draw(screen.jeu.batch);
+
     }
 
     @Override

@@ -1,4 +1,4 @@
-package io.github.ProjetLong;
+package io.github.ProjetLong.DataManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,15 +7,10 @@ import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.badlogic.gdx.Gdx;
-
 import io.github.ProjetLong.Bateau;
-import io.github.ProjetLong.DataErrorException;
 import io.github.ProjetLong.ZonesPeche.Poisson;
 
 public class DataManager {
@@ -23,6 +18,9 @@ public class DataManager {
     private List<Bateau> bateaux;
     private List<Poisson> stockagePoissons;
     private int argent;
+
+    private final SerializerPoisson poissonSerializer;
+    private final SerializerBateau bateauSerializer;
 
     /**
      * Charge un nouveau slot de jeu (sans donnees)
@@ -33,6 +31,9 @@ public class DataManager {
         argent = 0;
 
         // ...
+
+        poissonSerializer = new SerializerPoisson();
+        bateauSerializer = new SerializerBateau();
     }
 
     /**
@@ -46,6 +47,9 @@ public class DataManager {
         argent = 0;
 
         // ...
+
+        poissonSerializer = new SerializerPoisson();
+        bateauSerializer = new SerializerBateau();
 
         loadGame(slot);
     }
@@ -77,12 +81,14 @@ public class DataManager {
     public int getArgent() {
         return argent;
     }
+
     public void ajouterArgent(int montant) {
         if (montant <= 0) {
             return;
         }
         argent += montant;
     }
+
     public void retirerArgent(int montant) {
         if (montant <= 0) {
             return;
@@ -102,8 +108,8 @@ public class DataManager {
 
         try {
             // Ajout des donnees a sauvegarder
-            data.put("Bateaux", serializeBateaux());
-            data.put("StockagePoissons", serializePoissons());
+            data.put("Bateaux", bateauSerializer.serializeListData(bateaux, 0));
+            data.put("StockagePoissons", poissonSerializer.serializeListData(stockagePoissons, 0));
             data.put("Argent", serializeArgent());
 
             ObjectMapper mapper = new ObjectMapper();
@@ -127,7 +133,7 @@ public class DataManager {
      * @return ______ (bool) : Le chargement a-t-il reussi
      */
     public boolean loadGame(String slot) {
-        Map<String, String> data = new HashMap<>();
+        Map<String, String> data;
 
         try {
             // Ouverture du fichier
@@ -137,8 +143,8 @@ public class DataManager {
             // Lecture des donnees
             data = mapper.readValue(dataFile, Map.class);
 
-            deserializeBateaux(data.get("Bateaux"));
-            deserializePoissons(data.get("StockagePoissons"));
+            bateaux = bateauSerializer.deserializeListData(data.get("Bateaux"), 0);
+            stockagePoissons = poissonSerializer.deserializeListData(data.get("StockagePoissons"), 0);
             deserializeArgent(data.get("Argent"));
 
             System.out.println("Jeu charge depuis " + slot + ".json");
@@ -148,80 +154,6 @@ public class DataManager {
         }
 
         return true;
-    }
-
-    /**
-     * Serialise et concatene les donnees des bateaux en
-     * les separant par le caractere "|"
-     * 
-     * @return ______ (String) : Chaine de caracteres serialisee des bateaux
-     */
-    private String serializeBateaux() {
-        String serializedData = "";
-        for (Bateau bateau : bateaux) {
-            // Serialisation du bateau
-            serializedData += "" + "|";
-        }
-        return serializedData;
-    }
-
-    /**
-     * Deserialise et les donnees des bateaux separees par le caractere "|"
-     * 
-     * @param serializedData (String) : Chaine de caracteres serialisee des bateaux
-     */
-    private void deserializeBateaux(String serializedData) throws DataErrorException {
-        if (serializedData.isEmpty()) { // Si pas de save de bateaux
-            return;
-        }
-
-        try {
-            String[] splitData = serializedData.split("\\|");
-            for (String data : splitData) {
-                // Deserialisation du poisson
-            }
-        } catch (Exception e) {
-            System.out.println("Echec du chargement des bateaux.");
-            throw new DataErrorException("Donnees corrompues");
-        }
-    }
-
-    /**
-     * Serialise et concatene les donnees des poissons en
-     * les separant par le caractere "|"
-     * 
-     * @return ______ (String) : Chaine de caracteres serialisee des poissons
-     */
-    private String serializePoissons() {
-        String serializedData = "";
-        for (Poisson poisson : stockagePoissons) {
-            // Serialisation du poisson
-            serializedData += poisson.getId() + "$" + poisson.getRarete() + "|";
-        }
-        return serializedData;
-    }
-
-    /**
-     * Deserialise et les donnees des poissons separees par le caractere "|"
-     * 
-     * @param serializedData (String) : Chaine de caracteres serialisee des poissons
-     */
-    private void deserializePoissons(String serializedData) throws DataErrorException {
-        if (serializedData.isEmpty()) { // Si pas de save de poissons
-            return;
-        }
-
-        try {
-            String[] splitData = serializedData.split("\\|");
-            for (String data : splitData) {
-                // Deserialisation du poisson
-                String[] poissonData = data.split("\\$");
-                stockagePoissons.add(new Poisson(Integer.valueOf(poissonData[0]), Integer.valueOf(poissonData[1])));
-            }
-        } catch (Exception e) {
-            System.out.println("Echec du chargement des poissons.");
-            throw new DataErrorException("Donnees corrompues");
-        }
     }
 
     /**
@@ -238,16 +170,15 @@ public class DataManager {
      * 
      * @param serializedData (String) : Chaine de caracteres serialisee de l'argent
      */
-    private void deserializeArgent(String serializedData) throws DataErrorException {
+    private void deserializeArgent(String serializedData) {
         if (serializedData.isEmpty()) { // Si pas de save d'argent
             return;
         }
 
         try {
-            argent = Integer.valueOf(serializedData);
+            argent = Integer.parseInt(serializedData);
         } catch (Exception e) {
-            System.out.println("Echec du chargement de l'argent.");
-            throw new DataErrorException("Donnees corrompues");
+            argent = 0;
         }
     }
 

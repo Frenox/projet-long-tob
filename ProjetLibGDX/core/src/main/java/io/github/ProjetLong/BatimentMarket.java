@@ -217,7 +217,7 @@ public class BatimentMarket implements Batiment {
         screen.jeu.HebertBold.setColor(1, 1, 1, 1); // blanc
         // screen.jeu.HebertBold.draw(screen.jeu.batch, "pour " +
         // this.poissons.get(selectedfish).getValeur() + " coins ?", 140, 220);
-        screen.jeu.HebertBold.draw(screen.jeu.batch, "pour " + "100" + " coins ?", 270, 160);
+        screen.jeu.HebertBold.draw(screen.jeu.batch, "pour " + "10" + " coins ?", 270, 160);
 
     }
 

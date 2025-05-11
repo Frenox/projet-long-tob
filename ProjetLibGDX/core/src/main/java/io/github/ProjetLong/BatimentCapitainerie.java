@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+import io.github.ProjetLong.DataManager.DataManager;
 import io.github.ProjetLong.ZonesPeche.Poisson;
 import io.github.ProjetLong.ZonesPeche.Zone;
 

@@ -132,7 +132,7 @@ public class Minijeu1 extends ApplicationAdapter implements Minijeu {
             evolution = 0;
             fishSprite.setY(POISSON_Y);
         }
-        fishFishingSprite.setY(BAR_Y + 45 + (float) Math.cos(tMovement) * 35);
+        fishFishingSprite.setY(BAR_Y + 45 + (float) Math.cos(tMovement) * 40);
         barProgressSprite.setSize(BAR_PROGRESSION_WIDTH, MIN_REUSSITE + evolution + YMovement - ecartTexture);
     }
 
