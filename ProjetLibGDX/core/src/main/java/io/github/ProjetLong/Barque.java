@@ -17,6 +17,7 @@ public class Barque extends Bateau {
         boatSprite = new Sprite(new Texture("boat1.png"));
         boatSprite.setPosition(227, 118);
         setEquipedCanne(getCannes().get(0));
+        setLogo(new Texture("boat_logo1.png"));
     }
 
     @Override
@@ -33,5 +34,11 @@ public class Barque extends Bateau {
     public Sprite getSprite() {
 
         return boatSprite;
+    }
+
+    @Override
+    public void setSprite(float x, float y) {
+
+        boatSprite.setPosition(x, y);
     }
 }

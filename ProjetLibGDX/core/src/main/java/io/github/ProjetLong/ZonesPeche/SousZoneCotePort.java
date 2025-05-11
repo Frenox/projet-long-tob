@@ -13,6 +13,7 @@ public class SousZoneCotePort extends SousZone {
         addPoissonDispo(new Poisson(2, 1), 3f);
         addPoissonDispo(new Poisson(3, 0), 14.25f);
         addPoissonDispo(new Poisson(3, 1), 0.75f);
+        addPoissonDispo(new Poisson(666, 0), 0.2f);
     }
 
     public SousZoneCotePort(boolean estDebloquee, Map<Poisson, Float> inPoissonsDispo) {
@@ -28,5 +29,6 @@ public class SousZoneCotePort extends SousZone {
         addPoissonDispo(new Poisson(2, 1), 3f);
         addPoissonDispo(new Poisson(3, 0), 14.25f);
         addPoissonDispo(new Poisson(3, 1), 0.75f);
+        addPoissonDispo(new Poisson(666, 0), 0.2f);
     }
 }

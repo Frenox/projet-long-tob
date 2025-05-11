@@ -76,6 +76,7 @@ public class Poisson {
         // 1 = bar
         // 2 = maquereau
         // 3 = rascasse
+        // 666 = cregut
 
         if (id == 1 && rarete == 0) {
             return new Texture("poissons/fish_bar.png");
@@ -94,6 +95,9 @@ public class Poisson {
 
         } else if (id == 3 && rarete == 1) {
             return new Texture("poissons/fish_rascasse_shiny.png");
+
+        } else if (id == 666 && rarete == 0) {
+            return new Texture("poissons/fish_cregut.png");
 
         } else {
             return new Texture("cregut.png");
@@ -120,7 +124,7 @@ public class Poisson {
             return "Rascasse corrompue";
 
         } else {
-            return "cregut";
+            return "Cregut";
         }
     }
 
@@ -159,6 +163,11 @@ public class Poisson {
             float max = 80;
             return min + rand * (max - min);
 
+        } else if (id == 666 && rarete == 0) {
+            float min = 160;
+            float max = 180;
+            return min + rand * (max - min);
+
         } else {
             return 0;
         }
@@ -187,6 +196,9 @@ public class Poisson {
 
         } else if (id == 3 && rarete == 1) {
             return new Texture("poissons/hover_rascasse_shiny.png");
+
+        } else if (id == 666 && rarete == 0) {
+            return new Texture("poissons/hover_cregut.png");
 
         } else {
             return new Texture("cregut.png");
