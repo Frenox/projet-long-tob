@@ -14,12 +14,12 @@ public class SerializerPoisson extends SerializerBaseClass<Poisson> {
         return element.getId() + getSeparateur(compositionLevel) + element.getRarete();
     }
     @Override
-    public Poisson deserializeElement(String element, int compositionLevel) throws DataErrorException {
+    public Poisson deserializeElement(String element, int compositionLevel) {
         try {
             String[] poissonData = element.split(getSeparateur(compositionLevel));
             return new Poisson(Integer.parseInt(poissonData[0]), Integer.parseInt(poissonData[1]));
         } catch (Exception e) {
-            throw new DataErrorException();
+            return null;
         }
     }
 

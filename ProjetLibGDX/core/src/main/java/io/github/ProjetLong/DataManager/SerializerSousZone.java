@@ -51,7 +51,7 @@ public class SerializerSousZone extends SerializerBaseClass<Class<? extends Sous
         
     }
     @Override
-    public Class<? extends SousZone> deserializeElement(String element, int compositionLevel) throws DataErrorException {
+    public Class<? extends SousZone> deserializeElement(String element, int compositionLevel) {
         try {
             return sousZoneCodes.get(element);
             

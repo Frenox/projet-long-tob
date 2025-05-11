@@ -31,7 +31,7 @@ public class SerializerBateau extends SerializerBaseClass<Bateau> {
                   separateur + stockage + separateur + canneAPeche + separateur + listeCanneAPeches;
     }
     @Override
-    public Bateau deserializeElement(String element, int compositionLevel) throws DataErrorException {
+    public Bateau deserializeElement(String element, int compositionLevel){
         try {
             String[] bateauData = element.split(getSeparateur(compositionLevel));
             Bateau newBateau = new Bateau(Integer.parseInt(bateauData[2]));

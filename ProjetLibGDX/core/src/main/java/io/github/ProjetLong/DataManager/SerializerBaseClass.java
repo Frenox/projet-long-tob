@@ -17,7 +17,7 @@ public abstract class SerializerBaseClass<T> {
     }
 
     public abstract String serializeElement(T element, int compositionLevel);
-    public abstract T deserializeElement(String element, int compositionLevel) throws DataErrorException;
+    public abstract T deserializeElement(String element, int compositionLevel);
 
     /**
      * Serialise et concatene les donnees de la liste en parametre en 
@@ -43,7 +43,7 @@ public abstract class SerializerBaseClass<T> {
      * @param serializedData (String) : Chaine de caracteres serialisee
      * @param compositionLevel (int) : Niveau de composition de la serialisation
      */
-    public List<T> deserializeListData(String serializedData, int compositionLevel) throws DataErrorException {
+    public List<T> deserializeListData(String serializedData, int compositionLevel) {
         if (serializedData.isEmpty()) { // Si pas de save de l'element
             return new ArrayList<>();
         }
@@ -61,7 +61,7 @@ public abstract class SerializerBaseClass<T> {
 
         } catch (Exception e) {
 
-            throw new DataErrorException("Donnees corrompues");
+            return null;
         }
     }
 }

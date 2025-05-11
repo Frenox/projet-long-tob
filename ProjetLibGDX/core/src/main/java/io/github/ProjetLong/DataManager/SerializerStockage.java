@@ -25,7 +25,7 @@ public class SerializerStockage extends SerializerBaseClass<Stockage> {
         return element.getNiveau() + separateur + contenu;
     }
     @Override
-    public Stockage deserializeElement(String element, int compositionLevel) throws DataErrorException {
+    public Stockage deserializeElement(String element, int compositionLevel) {
         try {
             String[] stockageData = element.split(getSeparateur(compositionLevel));
             Stockage newStockage = new Stockage(Integer.parseInt(stockageData[0]));
@@ -37,7 +37,7 @@ public class SerializerStockage extends SerializerBaseClass<Stockage> {
     
             return newStockage;
         } catch (Exception e) {
-            throw new DataErrorException();
+            return null;
         }
     }
 

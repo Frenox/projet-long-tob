@@ -24,7 +24,7 @@ public class SerializerCanneAPeche extends SerializerBaseClass<CanneAPeche> {
         return zoneString + separateur + element.getNiveau();
     }
     @Override
-    public CanneAPeche deserializeElement(String element, int compositionLevel) throws DataErrorException {
+    public CanneAPeche deserializeElement(String element, int compositionLevel) {
         try {
             String[] canneData = element.split(getSeparateur(compositionLevel));
             Class<? extends SousZone> zoneClass = sousZoneSerializer.deserializeElement(canneData[0], compositionLevel); // Recupere la classe de la sous zone

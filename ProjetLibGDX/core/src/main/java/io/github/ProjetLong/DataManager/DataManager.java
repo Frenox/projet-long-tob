@@ -7,15 +7,10 @@ import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.badlogic.gdx.Gdx;
-
 import io.github.ProjetLong.Bateau;
-import io.github.ProjetLong.Stockage;
 import io.github.ProjetLong.ZonesPeche.Poisson;
 
 
@@ -139,7 +134,7 @@ public class DataManager {
      * @return ______ (bool) : Le chargement a-t-il reussi
      */
     public boolean loadGame(String slot) {
-        Map<String, String> data = new HashMap<>();
+        Map<String, String> data;
 
         try {
             //Ouverture du fichier
@@ -175,16 +170,15 @@ public class DataManager {
      * Deserialise et les donnees de l'argent
      * @param serializedData (String) : Chaine de caracteres serialisee de l'argent
      */
-    private void deserializeArgent(String serializedData) throws DataErrorException {
+    private void deserializeArgent(String serializedData) {
         if (serializedData.isEmpty()) { // Si pas de save d'argent
             return;
         }
 
         try {
-            argent = Integer.valueOf(serializedData);
+            argent = Integer.parseInt(serializedData);
         } catch (Exception e) {
-            System.out.println("Echec du chargement de l'argent.");
-            throw new DataErrorException("Donnees corrompues");
+            argent = 0;
         }
     }
 
