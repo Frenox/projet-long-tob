@@ -35,7 +35,7 @@ public class Bateau {
         name = "Cregut";
         state = "A quai";
         modeleName = "Cregut";
-        Logo = new Texture("Cregut.png");
+        Logo = new Texture("cregut.png");
     }
 
     public void setModeleName(String modeleName) {

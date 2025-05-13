@@ -32,10 +32,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.utils.Null;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import io.github.ProjetLong.DataManager.DataManager;
 import io.github.ProjetLong.ZonesPeche.Poisson;
 
 public class BatimentQuai implements Batiment {
-    final int CAPACITE_MAX_MENU = 7;
+    final int CAPACITE_MAX_MENU = 4;
 
     private Texture batQuaiTexture;
     private BitmapFont HebertBold;
@@ -47,7 +48,7 @@ public class BatimentQuai implements Batiment {
     private boolean isOpened;
 
     // à supprimer quand implémenté
-    private ArrayList<Bateau> bateaux;
+    private DataManager data;
 
     private Vector3 mouse;
 
@@ -77,9 +78,9 @@ public class BatimentQuai implements Batiment {
     private int width;
     private int height;
 
-    public BatimentQuai(Viewport viewport) {
+    public BatimentQuai(Viewport viewport, DataManager datan) {
         poissonDessin = false;
-
+        this.data = datan;
         HebertBold = new BitmapFont(Gdx.files.internal("HebertSansBold.fnt"));
         HebertBold.getData().setScale(0.15f);
         this.batQuaiTexture = new Texture("bat1.png");
@@ -88,22 +89,15 @@ public class BatimentQuai implements Batiment {
         this.mouse = new Vector3(0, 0, 0);
         this.isOpened = false;
 
-        this.page = 1;
+        this.page = 0;
 
-        // à supprimer plus tard
-        this.bateaux = new ArrayList<>();
-        for (int i = 0; i <= 100; i++) {
-            this.bateaux.add(new Barque());
-        }
-
-        this.maxPage = this.bateaux.size() / CAPACITE_MAX_MENU;
+        this.maxPage = this.data.getBateaux().size() / CAPACITE_MAX_MENU;
 
         height = this.fishInv.getHeight() * 7 + 6 * 2 + 70;
         width = 370;
-        
+
         pixmaptex = new Texture("overlayQuai.png");
         NomBat = new Texture("nom_quais.png");
-        
 
         // ***************************************************** */
 
@@ -133,14 +127,12 @@ public class BatimentQuai implements Batiment {
         infos_bateaux.add(nom_bateau).pad(2).row();
         infos_bateaux.add(modele).pad(2).row();
         infos_bateaux.add(taille_stockage).pad(2).row();
-        infos_bateaux.add(new Label("Equipement : ", skin, "HebertBold", Color.WHITE)).top().left().expand().pad(2)
-                .row();
-        infos_bateaux.add(Equipement_Texture).center().pad(2).expand();
-
-        caracteristiques.add(infos_bateaux).top().left().expand();
+        // Ajout des caractéristiques (infos bateau) en haut
+        Table haut = new Table();
+        haut.add(infos_bateaux).left().pad(5);
+        mtable.add(haut).row();
 
         Table droite = new Table();
-
         poissons_table = new Table();
         stockage_table = new Table();
 
@@ -149,13 +141,14 @@ public class BatimentQuai implements Batiment {
 
         droite.setSkin(skin);
 
-        droite.add("Cannes a peche", "HebertBold", Color.WHITE).row();
+        droite.add("Equipement disponible :", "HebertBold", Color.WHITE).row();
         droite.add(scrollpane_stockage).center().bottom().expand().height(this.fishInv.getWidth() * 1.618f * 0.3f)
                 .pad(5).padBottom(5).row();
         droite.add("Poissons", "HebertBold", Color.WHITE).padBottom(0).row();
         droite.add(scrollpane_poissons).right().bottom().expand().height(this.fishInv.getWidth() * 1.618f * 0.3f).pad(5)
                 .padTop(5);
-
+        caracteristiques.add(new Label("Equipement : ", skin, "HebertBold", Color.WHITE)).top().left().expand().pad(2);
+        caracteristiques.add(Equipement_Texture).center().pad(2).expand();
         caracteristiques.add(droite).right().expand();
 
         for (int i = 0; i < CAPACITE_MAX_MENU; i++) {
@@ -176,7 +169,7 @@ public class BatimentQuai implements Batiment {
 
         changer.add(new ButtonChangerPage(styleChangerPageGauche, -1)).pad(3);
 
-        page_label = new Label(page + " / " + maxPage, skin, "HebertBold", Color.WHITE);
+        page_label = new Label((page + 1) + " / " + (maxPage + 1), skin, "HebertBold", Color.WHITE);
         changer.add(page_label);
 
         changer.add(new ButtonChangerPage(styleChangerPageDroite, 1)).pad(3);
@@ -189,7 +182,7 @@ public class BatimentQuai implements Batiment {
         root.setFillParent(true);
 
         caracteristiques.setVisible(false);
-
+        support.firePropertyChange("page", -1, page);
     }
 
     @Override
@@ -215,7 +208,8 @@ public class BatimentQuai implements Batiment {
 
     @Override
     public void logic(VilleScreen screen) {
-
+        this.data = screen.jeu.data;
+        this.maxPage = this.data.getBateaux().size() / CAPACITE_MAX_MENU;
     }
 
     @Override
@@ -227,11 +221,11 @@ public class BatimentQuai implements Batiment {
     private void afficherCaracteristiques(int i) {
         caracteristiques.setVisible(true);
 
-        Bateau bateau = bateaux.get(i);
+        Bateau bateau = data.getBateaux().get(i);
 
         nom_bateau.setText("Nom : " + bateau.getName());
         modele.setText("Modele : " + bateau.getModeleName());
-        taille_stockage.setText("Taille de stockage : " + bateau.getTailleDispo());
+        taille_stockage.setText("Taille de stockage : " + bateau.getTailleStockage());
         Skin skin = new Skin(Gdx.files.internal("skin.json"));
         skin.add("CanneApeche", new Texture("fishing_rod_1_lvl1.png"));
         Equipement_Texture.setDrawable(skin.getDrawable("CanneApeche"));
@@ -250,8 +244,8 @@ public class BatimentQuai implements Batiment {
             poissons_table.row();
         }
 
-        for (int j = 0; j < 3; j++) {
-            stockage_table.add(new Image(new Texture("fishing_rod_1_lvl1.png")));
+        for (ModuleBateau module : this.data.getModules()) {
+            stockage_table.add(new Image(module.getTexture()));
             stockage_table.row();
         }
     }
@@ -293,8 +287,7 @@ public class BatimentQuai implements Batiment {
 
                 @Override
                 public void propertyChange(PropertyChangeEvent arg0) {
-
-                    if (i + page * CAPACITE_MAX_MENU < bateaux.size()) {
+                    if (i + page * CAPACITE_MAX_MENU < data.getBateaux().size()) {
                         setVisible(true);
                     } else {
                         setVisible(false);
@@ -326,14 +319,13 @@ public class BatimentQuai implements Batiment {
             this.textButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    bateaux.remove(i + page * CAPACITE_MAX_MENU);
-                    if (maxPage > (bateaux.size() - 1) / CAPACITE_MAX_MENU) {
+                    data.getBateaux().remove(i + page * CAPACITE_MAX_MENU);
+                    if (maxPage > (data.getBateaux().size() - 1) / CAPACITE_MAX_MENU) {
                         if (page == maxPage) {
                             page--;
                         }
 
-                        maxPage -= 1;
-                        page_label.setText(page + " / " + maxPage);
+                        page_label.setText((page + 1) + " / " + (maxPage + 1));
                     }
                     support.firePropertyChange("page", 0, 1);
 
@@ -360,8 +352,10 @@ public class BatimentQuai implements Batiment {
             this.textButton.setPosition(this.getX() + 75, this.getY() + 2);
 
             HebertBold.getData().setScale(0.15f);
-            Bateau bateau = bateaux.get(i + page * CAPACITE_MAX_MENU);
-            HebertBold.draw(batch, bateau.getName(), this.getX() + 4, this.getY() + 12);
+            if (i + page * CAPACITE_MAX_MENU < data.getBateaux().size()) {
+                Bateau bateau = data.getBateaux().get(i + page * CAPACITE_MAX_MENU);
+                HebertBold.draw(batch, bateau.getName(), this.getX() + 4, this.getY() + 12);
+            }
         }
     }
 
@@ -440,7 +434,7 @@ public class BatimentQuai implements Batiment {
                 public void clicked(InputEvent event, float x, float y) {
                     if (page + pas >= 0 && page + pas <= maxPage) {
                         page += pas;
-                        page_label.setText(page + " / " + maxPage);
+                        page_label.setText((page + 1) + " / " + (maxPage + 1));
 
                         support.firePropertyChange("page", page - pas, page);
                     }
@@ -455,7 +449,7 @@ public class BatimentQuai implements Batiment {
             int epsilon = 8;
             screen.jeu.batch.draw(this.pixmaptex, screen.jeu.viewport.getWorldWidth() / 2 - width / 2,
                     screen.jeu.viewport.getWorldHeight() / 2 - height / 2 + epsilon);
-            screen.jeu.batch.draw(this.NomBat,71,233);
+            screen.jeu.batch.draw(this.NomBat, 71, 233);
         }
 
         screen.jeu.batch.end();

@@ -61,6 +61,7 @@ minigame2_arrow_right_fishing.png
 minigame2_arrow_up_fishing.png
 mouse_hover_actif.png
 nom_cap.png
+nom_chantier.png
 nom_quais.png
 overlayMarche.png
 overlayQuai.png

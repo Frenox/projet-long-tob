@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.github.ProjetLong.Bateau;
+import io.github.ProjetLong.ModuleBateau;
 import io.github.ProjetLong.ZonesPeche.Poisson;
 
 public class DataManager {
@@ -18,6 +19,7 @@ public class DataManager {
     private List<Bateau> bateaux;
     private List<Poisson> stockagePoissons;
     private int argent;
+    private List<ModuleBateau> modulesDispo;
 
     private final SerializerPoisson poissonSerializer;
     private final SerializerBateau bateauSerializer;
@@ -28,6 +30,7 @@ public class DataManager {
     public DataManager() {
         bateaux = new ArrayList<Bateau>();
         stockagePoissons = new ArrayList<Poisson>();
+        modulesDispo = new ArrayList<ModuleBateau>();
         argent = 0;
 
         // ...
@@ -44,6 +47,7 @@ public class DataManager {
     public DataManager(String slot) {
         bateaux = new ArrayList<Bateau>();
         stockagePoissons = new ArrayList<Poisson>();
+        modulesDispo = new ArrayList<ModuleBateau>();
         argent = 0;
 
         // ...
@@ -76,6 +80,18 @@ public class DataManager {
 
     public void supprimerPoissonStockage(Poisson poisson) {
         stockagePoissons.remove(poisson);
+    }
+
+    public List<ModuleBateau> getModules() {
+        return modulesDispo;
+    }
+
+    public void ajouterModule(ModuleBateau mod) {
+        modulesDispo.add(mod);
+    }
+
+    public void supprimerModule(ModuleBateau mod) {
+        modulesDispo.remove(mod);
     }
 
     public int getArgent() {
