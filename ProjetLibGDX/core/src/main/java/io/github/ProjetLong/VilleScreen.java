@@ -120,7 +120,7 @@ public class VilleScreen implements Screen {
         this.jeu.batch.draw(backgroundTexture2, 0, 0);
         this.jeu.batch.draw(backgroundTexture3, 0, 0);
         // DRAW DU BAT
-        this.market.draw(this, 0);
+        this.market.draw(this, 5);
         this.capitainerie.draw(this, 1);
         this.quai.draw(this, 2);
         this.chantier.draw(this, 3);
