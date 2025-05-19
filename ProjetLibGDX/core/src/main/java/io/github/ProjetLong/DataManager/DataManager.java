@@ -23,6 +23,7 @@ public class DataManager {
 
     private final SerializerPoisson poissonSerializer;
     private final SerializerBateau bateauSerializer;
+    private final SerializerModule moduleSerializer;
 
     /**
      * Charge un nouveau slot de jeu (sans donnees)
@@ -37,6 +38,7 @@ public class DataManager {
 
         poissonSerializer = new SerializerPoisson();
         bateauSerializer = new SerializerBateau();
+        moduleSerializer = new SerializerModule();
     }
 
     /**
@@ -54,6 +56,7 @@ public class DataManager {
 
         poissonSerializer = new SerializerPoisson();
         bateauSerializer = new SerializerBateau();
+        moduleSerializer = new SerializerModule();
 
         loadGame(slot);
     }
@@ -126,6 +129,7 @@ public class DataManager {
             // Ajout des donnees a sauvegarder
             data.put("Bateaux", bateauSerializer.serializeListData(bateaux, 0));
             data.put("StockagePoissons", poissonSerializer.serializeListData(stockagePoissons, 0));
+            data.put("ModulesDisponibles", moduleSerializer.serializeListData(modulesDispo, 0));
             data.put("Argent", serializeArgent());
 
             ObjectMapper mapper = new ObjectMapper();
@@ -161,6 +165,7 @@ public class DataManager {
 
             bateaux = bateauSerializer.deserializeListData(data.get("Bateaux"), 0);
             stockagePoissons = poissonSerializer.deserializeListData(data.get("StockagePoissons"), 0);
+            modulesDispo = moduleSerializer.deserializeListData(data.get("ModulesDisponibles"), 0);
             deserializeArgent(data.get("Argent"));
 
             System.out.println("Jeu charge depuis " + slot + ".json");
