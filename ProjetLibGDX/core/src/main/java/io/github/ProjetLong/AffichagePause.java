@@ -36,7 +36,7 @@ public class AffichagePause implements SousFenetre {
         }
         if (state == 3 && (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)
                 || (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && hover))) {
-            Gdx.app.exit();
+            screen.jeu.setScreen(new mainMenuScreen(screen.jeu));
         } else if (state == 1 && (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)
                 || (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && hover))) {
             screen.menuShow = false;
@@ -99,7 +99,7 @@ public class AffichagePause implements SousFenetre {
         }
         if (state == 3 && (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)
                 || (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && hover))) {
-            Gdx.app.exit();
+            screen.jeu.setScreen(new mainMenuScreen(screen.jeu));
         } else if (state == 1 && (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)
                 || (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && hover))) {
             screen.menuShow = false;

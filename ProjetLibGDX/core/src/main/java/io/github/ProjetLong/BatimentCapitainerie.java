@@ -49,8 +49,6 @@ public class BatimentCapitainerie implements Batiment {
     private Sprite interfaceOverlaybatCapitainerieSprite;
     private int Menu3pos = 0;
     private int Menu2pos = -1;
-    // A SUPPRIMER
-    private DataManager data;
 
     public BatimentCapitainerie() {
         this.isOpened = false;
@@ -85,9 +83,6 @@ public class BatimentCapitainerie implements Batiment {
         this.page = 0;
 
         // A Supprimer
-        data = new DataManager();
-        data.ajouterBateauPort(new Barque());
-        data.ajouterBateauPort(new Voilier());
 
     }
 
@@ -137,7 +132,7 @@ public class BatimentCapitainerie implements Batiment {
             screen.jeu.HebertBold.draw(screen.jeu.batch, "Passif", 286, 229);
             screen.jeu.HebertBold.draw(screen.jeu.batch, "Lieu", 327, 229);
             // Draw bateau
-            List<Bateau> temp = data.getBateaux();
+            List<Bateau> temp = screen.jeu.data.getBateaux();
             int len = temp.size();
             for (int i = (page * 6); i != (6 * (page + 1)); i++) {
                 if (i < len) {
@@ -192,7 +187,8 @@ public class BatimentCapitainerie implements Batiment {
                                 && mouseUnclick.y <= 216 - ((i % 6) * 25)) {
                             screen.jeu.batch.draw(buttonCap11Shine, 271, 203 - ((i % 6) * 25));
                             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-                                screen.jeu.setScreen(new PecheActiveScreen(screen.jeu, data.getBateaux().get(i)));
+                                screen.jeu.setScreen(
+                                        new PecheActiveScreen(screen.jeu, screen.jeu.data.getBateaux().get(i)));
                             }
                         } else {
                             screen.jeu.batch.draw(buttonCap11, 271, 203 - ((i % 6) * 25));

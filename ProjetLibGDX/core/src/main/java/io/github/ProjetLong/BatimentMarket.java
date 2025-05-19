@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+
+import io.github.ProjetLong.DataManager.DataManager;
 import io.github.ProjetLong.ZonesPeche.Poisson;
 
 public class BatimentMarket implements Batiment {
@@ -41,11 +43,11 @@ public class BatimentMarket implements Batiment {
     private Sprite refuserVenteTextureSprite;
 
     // a supprimer quand implémente
-    private ArrayList<Poisson> poissons;
+    private List<Poisson> poissons;
 
     // 512 par 288
 
-    public BatimentMarket() {
+    public BatimentMarket(DataManager data) {
         this.isOpened = false;
         this.isSelling = false;
         this.stage = new Stage(new ScreenViewport());
@@ -73,11 +75,7 @@ public class BatimentMarket implements Batiment {
         this.offsetSelectedFish = 0;
         this.fishInv = new Texture("fish_tab_fish.png");
 
-        // a supprimer later
-        this.poissons = new ArrayList<>();
-        for (int i = 0; i <= 100; i++) {
-            this.poissons.add(new Poisson(1, 1));
-        }
+        this.poissons = data.getStockage();
 
     }
 
@@ -103,9 +101,9 @@ public class BatimentMarket implements Batiment {
 
     @Override
     public void logic(VilleScreen screen) {
-
+        this.poissons = screen.jeu.data.getStockage();
         // à décommenter quand ca sera implémenté
-        // this.coinAmount = screen.jeu.DataManagerJeu.getArgent();
+        this.coinAmount = screen.jeu.data.getArgent();
 
         if (this.isOpened && this.isSelling == false) {
             // changer de page
@@ -137,7 +135,7 @@ public class BatimentMarket implements Batiment {
             if (mouse.x > 280 && mouse.x < 310 && mouse.y > 90 && mouse.y < 120) {
                 // on crédite le joueur
                 // this.coinAmount += this.poissons.get(selectedfish).getValeur();
-                this.coinAmount += 10;
+                screen.jeu.data.ajouterArgent(10);
 
                 // on enlève le poisson dans la session ET dans le data manager
                 this.poissons.remove(selectedfish);
