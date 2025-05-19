@@ -48,6 +48,11 @@ hamecon.png
 hover_alpha.png
 left_arrow.png
 libgdx.png
+menu_princ_bg.png
+menu_princ_bt1.png
+menu_princ_bt2.png
+menu_princ_bt3.png
+menu_princ_btr.png
 metalui/font-export.fnt
 metalui/metal-ui.atlas
 metalui/metal-ui.json
@@ -92,6 +97,11 @@ skin.atlas
 skin.json
 skin.png
 skin.scmp
+slot1.png
+slot2.png
+slot3.png
+slotn.png
+slotret.png
 stockage_lvl1.png
 sun.png
 valider.png

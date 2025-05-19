@@ -155,7 +155,9 @@ public class BatimentChantierNaval implements Batiment {
     @Override
     public void draw(VilleScreen screen, int position) {
         // Toujours afficher le bâtiment chantier
-        chantierSprite.draw(screen.jeu.batch);
+
+        this.chantierSprite.draw(screen.jeu.batch);
+        this.chantierSprite.setPosition(64 * position, 90);
     }
 
     // Méthode d'affichage de l'interface (inspirée du code de la capitainerie)

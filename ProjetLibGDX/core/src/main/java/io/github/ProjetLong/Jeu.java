@@ -45,7 +45,7 @@ public class Jeu extends Game {
         viewport = new FitViewport(512, 288);
         // lance l'écran
         try {
-            this.setScreen(new VilleScreen(this));
+            this.setScreen(new mainMenuScreen(this));
         } catch (Exception e) {
             e.printStackTrace(); // Affiche l’erreur réelle
         }
