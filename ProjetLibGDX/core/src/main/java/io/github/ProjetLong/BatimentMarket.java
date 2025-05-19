@@ -63,7 +63,7 @@ public class BatimentMarket implements Batiment {
         this.validerVenteTextureSprite = new Sprite(validerVenteTexture);
         this.refuserVenteTextureSprite = new Sprite(refuserVenteTexture);
 
-        this.batMarketSprite.setPosition(0, 90);
+        //this.batMarketSprite.setPosition(0, 90);
         this.interfaceOverlayBatMarketSprite.setPosition(130, 50);
         this.validerVenteTextureSprite.setPosition(280, 90);
         this.refuserVenteTextureSprite.setPosition(335, 90);
@@ -156,12 +156,10 @@ public class BatimentMarket implements Batiment {
 
     @Override
     public void draw(VilleScreen screen, int position) {
-        // alwasy draw the batiment itself
+        // always draw the batiment itself
+        //this.batMarketSprite.setPosition(position*64, 90);
+        //System.out.println(position);
         this.batMarketSprite.draw(screen.jeu.batch);
-
-        if (this.isOpened && this.isSelling) {
-            affichageVente(screen);
-        }
     }
 
     public void affichageInterface(VilleScreen screen) {
