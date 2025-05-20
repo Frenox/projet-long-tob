@@ -5,6 +5,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 
+import java.io.File;
+
 public class AffichageMainMenu {
     private int state;
     private Texture BG = new Texture("menu_princ_bg.png");
@@ -22,6 +24,7 @@ public class AffichageMainMenu {
     private int idMenu; // quel menu afficher
     private boolean[] estVide = new boolean[3];
 
+
     public AffichageMainMenu() {
         state = 1;
         idMenu = 0;
@@ -35,9 +38,15 @@ public class AffichageMainMenu {
         slot3 = new Texture("slot3.png");
         slotr = new Texture("slotn.png");
         slotret = new Texture("slotret.png");
-        estVide[0] = false;
-        estVide[1] = false;
-        estVide[2] = false;
+        estVide[0] = slotExiste(1);
+        estVide[1] = slotExiste(2);
+        estVide[2] = slotExiste(3);
+    }
+
+    private boolean slotExiste(int slotNb) {
+        String slotName = "slot" + (String.valueOf(slotNb)) + ".json";
+        File slotFile = new File(slotName);
+        return slotFile.exists() && !slotFile.isDirectory();
     }
 
     public void input(mainMenuScreen screen) {
@@ -77,29 +86,30 @@ public class AffichageMainMenu {
             } else if (state == 1 && (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)
                     || (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && hover))) {
                 // slot 1 lancement
-                if (estVide[0]) {
-                    // creer nouvelle sauvegarde
-                } else {
-                    screen.jeu.setScreen(new VilleScreen(screen.jeu));// temporaire
+                if (!estVide[0]) {
+                    // load la sauvegarde
+                    screen.jeu.data.loadGame("slot1");
                 }
+                screen.jeu.setScreen(new VilleScreen(screen.jeu));
+                
 
             } else if (state == 2 && (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)
                     || (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && hover))) {
                 // slot 2 lancement
                 if (estVide[1]) {
-                    // creer nouvelle sauvegarde
-                } else {
-                    // lance la sauvegarde
+                    // load la sauvegarde
+                    screen.jeu.data.loadGame("slot2");
                 }
+                screen.jeu.setScreen(new VilleScreen(screen.jeu));
 
             } else if (state == 3 && (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)
                     || (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && hover))) {
                 // slot 3 lancement
                 if (estVide[2]) {
-                    // creer nouvelle sauvegarde
-                } else {
-                    // lance la sauvegarde
+                    // load la sauvegarde
+                    screen.jeu.data.loadGame("slot3");
                 }
+                screen.jeu.setScreen(new VilleScreen(screen.jeu));
 
             }
         }
