@@ -90,11 +90,6 @@ public class BatimentChantierNaval implements Batiment {
 
     @Override
     public void input(VilleScreen screen) {
-        // Utilisation de la touche W (au lieu de la barre espace) pour afficher/cacher
-        // l'interface
-        if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
-            isOpened = !isOpened;
-        }
         // Si l'interface est ouverte, on gère la détection de clic sur une option
         if (isOpened) {
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
@@ -153,11 +148,12 @@ public class BatimentChantierNaval implements Batiment {
     }
 
     @Override
-    public void draw(VilleScreen screen, int position) {
+    public void draw(VilleScreen screen, int position, int offset) {
         // Toujours afficher le bâtiment chantier
 
         this.chantierSprite.draw(screen.jeu.batch);
-        this.chantierSprite.setPosition(64 * position, 90);
+        this.chantierSprite.setPosition(64 * position + offset, 90);
+        screen.jeu.HebertBold.draw(screen.jeu.batch, "Chantier Naval", 64 * position + offset, 180);
     }
 
     // Méthode d'affichage de l'interface (inspirée du code de la capitainerie)
@@ -211,6 +207,20 @@ public class BatimentChantierNaval implements Batiment {
     // Renvoie le temps effectif de construction pour un équipement donné
     public int getEffectiveBuildTime(EquipementType equipment) {
         return (int) Math.ceil(equipment.getBaseTime() * getBuildTimeMultiplier());
+    }
+
+    public boolean getIsOpened() {
+        return this.isOpened;
+    }
+
+    public void setIsOpened(boolean value) {
+        this.isOpened = value;
+    }
+
+    public void close(){
+    }
+    
+    public void open(){
     }
 
 }

@@ -187,16 +187,6 @@ public class BatimentQuai implements Batiment {
 
     @Override
     public void input(VilleScreen screen) {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.K)) {
-            if (this.isOpened) {
-                isOpened = false;
-                mtable.setVisible(false);
-                caracteristiques.setVisible(false);
-            } else {
-                mtable.setVisible(true);
-                isOpened = true;
-            }
-        }
 
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
             this.mouse = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -213,8 +203,9 @@ public class BatimentQuai implements Batiment {
     }
 
     @Override
-    public void draw(VilleScreen screen, int position) {
-        screen.jeu.batch.draw(this.batQuaiTexture, 0f + position * this.batQuaiTexture.getWidth(), 90);
+    public void draw(VilleScreen screen, int position, int offset) {
+        screen.jeu.batch.draw(this.batQuaiTexture, 0f + position * this.batQuaiTexture.getWidth() + offset, 90);
+        screen.jeu.HebertBold.draw(screen.jeu.batch, "Quai", 64 * position + offset, 180);
 
     }
 
@@ -466,5 +457,22 @@ public class BatimentQuai implements Batiment {
 
             screen.jeu.batch.draw(poisson_texture_hover, mouse.x, mouse.y, 70, 70 / 1.6f);
         }
+    }
+
+    public boolean getIsOpened() {
+        return this.isOpened;
+    }
+
+    public void setIsOpened(boolean value) {
+        this.isOpened = value;
+    }
+
+    public void close(){
+        mtable.setVisible(false);
+        caracteristiques.setVisible(false);
+    }
+
+    public void open(){
+        mtable.setVisible(true);
     }
 }

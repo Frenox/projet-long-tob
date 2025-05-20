@@ -46,6 +46,7 @@ fish_tab_inventory.png
 fishing_rod_1_lvl1.png
 hamecon.png
 hover_alpha.png
+jouervillescreen.png
 left_arrow.png
 libgdx.png
 menu_princ_bg.png
