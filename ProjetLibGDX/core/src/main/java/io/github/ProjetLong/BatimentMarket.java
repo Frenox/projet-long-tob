@@ -1,6 +1,5 @@
 package io.github.ProjetLong;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
@@ -65,7 +64,7 @@ public class BatimentMarket implements Batiment {
         this.validerVenteTextureSprite = new Sprite(validerVenteTexture);
         this.refuserVenteTextureSprite = new Sprite(refuserVenteTexture);
 
-        this.batMarketSprite.setPosition(0, 90);
+        // this.batMarketSprite.setPosition(0, 90);
         this.interfaceOverlayBatMarketSprite.setPosition(130, 50);
         this.validerVenteTextureSprite.setPosition(280, 90);
         this.refuserVenteTextureSprite.setPosition(335, 90);
@@ -81,16 +80,6 @@ public class BatimentMarket implements Batiment {
 
     @Override
     public void input(VilleScreen screen) {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            if (this.isOpened == true) {
-                this.isOpened = false;
-                this.isSelling = false;
-                this.selectedfish = 0;
-                this.offsetSelectedFish = 0;
-            } else {
-                this.isOpened = true;
-            }
-        }
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
             this.mouse = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             screen.jeu.viewport.getCamera().unproject(mouse);
@@ -102,7 +91,6 @@ public class BatimentMarket implements Batiment {
     @Override
     public void logic(VilleScreen screen) {
         this.poissons = screen.jeu.data.getStockage();
-        // à décommenter quand ca sera implémenté
         this.coinAmount = screen.jeu.data.getArgent();
 
         if (this.isOpened && this.isSelling == false) {
@@ -134,8 +122,7 @@ public class BatimentMarket implements Batiment {
         if (this.isOpened && this.isSelling == true) {
             if (mouse.x > 280 && mouse.x < 310 && mouse.y > 90 && mouse.y < 120) {
                 // on crédite le joueur
-                // this.coinAmount += this.poissons.get(selectedfish).getValeur();
-                screen.jeu.data.ajouterArgent(10);
+                screen.jeu.data.ajouterArgent(this.poissons.get(selectedfish).getPrix());
 
                 // on enlève le poisson dans la session ET dans le data manager
                 this.poissons.remove(selectedfish);
@@ -153,13 +140,11 @@ public class BatimentMarket implements Batiment {
     }
 
     @Override
-    public void draw(VilleScreen screen, int position) {
-        // alwasy draw the batiment itself
+    public void draw(VilleScreen screen, int position, int offset) {
+        // always draw the batiment itself
+        this.batMarketSprite.setPosition(position * 64 + offset, 90);
         this.batMarketSprite.draw(screen.jeu.batch);
-
-        if (this.isOpened && this.isSelling) {
-            affichageVente(screen);
-        }
+        screen.jeu.HebertBold.draw(screen.jeu.batch, "Market", 64 * position + offset, 180);
     }
 
     public void affichageInterface(VilleScreen screen) {
@@ -213,10 +198,26 @@ public class BatimentMarket implements Batiment {
         screen.jeu.HebertBold.setColor(1, 0, 0, 1); // rouge
         screen.jeu.HebertBold.draw(screen.jeu.batch, this.poissons.get(selectedfish).getNom(), 270, 180);
         screen.jeu.HebertBold.setColor(1, 1, 1, 1); // blanc
-        // screen.jeu.HebertBold.draw(screen.jeu.batch, "pour " +
-        // this.poissons.get(selectedfish).getValeur() + " coins ?", 140, 220);
-        screen.jeu.HebertBold.draw(screen.jeu.batch, "pour " + "10" + " coins ?", 270, 160);
+        screen.jeu.HebertBold.draw(screen.jeu.batch, "pour " + this.poissons.get(selectedfish).getPrix() + " coins ?", 270, 160);
 
+    }
+
+    public boolean getIsOpened() {
+        return this.isOpened;
+    }
+
+    public void setIsOpened(boolean value) {
+        this.isOpened = value;
+    }
+
+    public void close() {
+        this.isSelling = false;
+        this.selectedfish = 0;
+        this.offsetSelectedFish = 0;
+    }
+
+    public void open() {
+        System.out.println("ouverture market");
     }
 
 }

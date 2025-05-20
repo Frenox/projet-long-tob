@@ -90,13 +90,6 @@ public class BatimentCapitainerie implements Batiment {
     public void input(VilleScreen screen) {
         this.mouseUnclick = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         screen.jeu.viewport.getCamera().unproject(mouseUnclick);
-        if (Gdx.input.isKeyJustPressed(Input.Keys.C)) {
-            if (this.isOpened == true) {
-                this.isOpened = false;
-            } else {
-                this.isOpened = true;
-            }
-        }
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
             this.mouse = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             screen.jeu.viewport.getCamera().unproject(mouse);
@@ -114,11 +107,11 @@ public class BatimentCapitainerie implements Batiment {
     }
 
     @Override
-    public void draw(VilleScreen screen, int position) {
+    public void draw(VilleScreen screen, int position, int offset) {
         // alwasy draw the batiment itself
         this.batCapitainerieSprite.draw(screen.jeu.batch);
-        this.batCapitainerieSprite.setPosition(64 * position, 90);
-
+        this.batCapitainerieSprite.setPosition(64 * position + offset, 90);
+        screen.jeu.HebertBold.draw(screen.jeu.batch, "Capitainerie", 64 * position + offset, 180);
     }
 
     @Override
@@ -249,4 +242,17 @@ public class BatimentCapitainerie implements Batiment {
         }
     }
 
+    public boolean getIsOpened() {
+        return this.isOpened;
+    }
+
+    public void setIsOpened(boolean value) {
+        this.isOpened = value;
+    }    
+
+    public void close() {
+    }
+
+    public void open(){
+    }
 }

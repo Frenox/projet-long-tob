@@ -2,6 +2,7 @@ package io.github.ProjetLong;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -24,7 +25,8 @@ public class Jeu extends Game {
     public void create() {
         batch = new SpriteBatch();
         data = new DataManager();
-
+        Graphics.DisplayMode currentMode = Gdx.graphics.getDisplayMode();
+        Gdx.graphics.setFullscreenMode(currentMode);
         // a la main pour le moment
         data.ajouterModule(new Stockage(1));
         data.ajouterModule(new Stockage(1));

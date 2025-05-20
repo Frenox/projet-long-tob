@@ -26,6 +26,7 @@ public class VilleScreen implements Screen {
     private Batiment capitainerie = new BatimentCapitainerie();
     private Batiment quai;
     private Batiment chantier = new BatimentChantierNaval();
+    private BatimentHandler handler = new BatimentHandler();
 
     public VilleScreen(final Jeu jeu) {
         this.jeu = jeu;
@@ -43,6 +44,19 @@ public class VilleScreen implements Screen {
 
         quai = new BatimentQuai(jeu.viewport, jeu.data);
         market = new BatimentMarket(jeu.data);
+        handler.addBatiment(capitainerie);
+        handler.addBatiment(market);
+        handler.addBatiment(quai);
+        handler.addBatiment(chantier);
+        handler.addBatiment(new BatimentMarket(jeu.data));
+        handler.addBatiment(new BatimentMarket(jeu.data));
+        handler.addBatiment(new BatimentMarket(jeu.data));
+        handler.addBatiment(new BatimentMarket(jeu.data));
+        handler.addBatiment(new BatimentMarket(jeu.data));
+        handler.addBatiment(new BatimentMarket(jeu.data));
+        handler.addBatiment(new BatimentMarket(jeu.data));
+        handler.addBatiment(new BatimentMarket(jeu.data));
+        
     }
 
     @Override
@@ -80,17 +94,11 @@ public class VilleScreen implements Screen {
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             menuShow = true;
         }
-        market.input(this);
-        capitainerie.input(this);
-        quai.input(this);
-        chantier.input(this);
+        handler.input(this);
     }
 
     public void logic() {
-        market.logic(this);
-        capitainerie.logic(this);
-        quai.logic(this);
-        chantier.logic(this);
+        handler.logic(this);
     }
 
     public void draw() {
@@ -120,17 +128,11 @@ public class VilleScreen implements Screen {
         this.jeu.batch.draw(backgroundTexture2, 0, 0);
         this.jeu.batch.draw(backgroundTexture3, 0, 0);
         // DRAW DU BAT
-        this.market.draw(this, 0);
-        this.capitainerie.draw(this, 1);
-        this.quai.draw(this, 2);
-        this.chantier.draw(this, 3);
+        this.handler.draw(this);
         // avant plan bat
         this.jeu.batch.draw(backgroundTexture4, 0, 0);
         // overlays
-        market.affichageInterface(this);
-        capitainerie.affichageInterface(this);
-        quai.affichageInterface(this);
-        chantier.affichageInterface(this);
+        this.handler.affichageInterface(this);
         // menu pause
         if (menuShow) {
             menu.draw(this);

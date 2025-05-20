@@ -11,14 +11,12 @@ import com.badlogic.gdx.utils.ScreenUtils;
 public class mainMenuScreen implements Screen {
     final Jeu jeu;
     private AffichageMainMenu aff;
-    
 
     public mainMenuScreen(final Jeu jeu) {
-        Graphics.DisplayMode currentMode = Gdx.graphics.getDisplayMode();
-        Gdx.graphics.setFullscreenMode(currentMode);
+
         this.jeu = jeu;
         aff = new AffichageMainMenu();
-        
+
     }
 
     @Override
