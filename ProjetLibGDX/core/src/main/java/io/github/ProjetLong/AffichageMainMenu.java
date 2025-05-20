@@ -90,26 +90,26 @@ public class AffichageMainMenu {
                     // load la sauvegarde
                     screen.jeu.data.loadGame("slot1");
                 }
-                screen.jeu.setScreen(new VilleScreen(screen.jeu));// temporaire
+                screen.jeu.setScreen(new VilleScreen(screen.jeu));
                 
 
             } else if (state == 2 && (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)
                     || (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && hover))) {
                 // slot 2 lancement
                 if (estVide[1]) {
-                    // creer nouvelle sauvegarde
-                } else {
-                    // lance la sauvegarde
+                    // load la sauvegarde
+                    screen.jeu.data.loadGame("slot2");
                 }
+                screen.jeu.setScreen(new VilleScreen(screen.jeu));
 
             } else if (state == 3 && (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)
                     || (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && hover))) {
                 // slot 3 lancement
                 if (estVide[2]) {
-                    // creer nouvelle sauvegarde
-                } else {
-                    // lance la sauvegarde
+                    // load la sauvegarde
+                    screen.jeu.data.loadGame("slot3");
                 }
+                screen.jeu.setScreen(new VilleScreen(screen.jeu));
 
             }
         }
