@@ -26,10 +26,11 @@ public class VilleScreen implements Screen {
     private Batiment capitainerie = new BatimentCapitainerie();
     private Batiment quai;
     private Batiment chantier = new BatimentChantierNaval();
-    private BatimentHandler handler = new BatimentHandler();
+    private BatimentHandler handler;
 
     public VilleScreen(final Jeu jeu) {
         this.jeu = jeu;
+        handler = new BatimentHandler(jeu);
         menuShow = false;
         backgroundTexture = new Texture("bg_port.png");
         backgroundTexture2 = new Texture("bg_port_2.png");
@@ -44,18 +45,18 @@ public class VilleScreen implements Screen {
 
         quai = new BatimentQuai(jeu.viewport, jeu.data);
         market = new BatimentMarket(jeu.data);
-        handler.addBatiment(capitainerie);
-        handler.addBatiment(market);
-        handler.addBatiment(quai);
-        handler.addBatiment(chantier);
-        handler.addBatiment(new BatimentMarket(jeu.data));
-        handler.addBatiment(new BatimentMarket(jeu.data));
-        handler.addBatiment(new BatimentMarket(jeu.data));
-        handler.addBatiment(new BatimentMarket(jeu.data));
-        handler.addBatiment(new BatimentMarket(jeu.data));
-        handler.addBatiment(new BatimentMarket(jeu.data));
-        handler.addBatiment(new BatimentMarket(jeu.data));
-        handler.addBatiment(new BatimentMarket(jeu.data));
+        jeu.data.ajouterBatiment(capitainerie);
+        jeu.data.ajouterBatiment(market);
+        jeu.data.ajouterBatiment(quai);
+        jeu.data.ajouterBatiment(chantier);
+        // jeu.data.ajouterBatiment(new BatimentMarket(jeu.data));
+        // jeu.data.ajouterBatiment(new BatimentMarket(jeu.data));
+        // jeu.data.ajouterBatiment(new BatimentMarket(jeu.data));
+        // jeu.data.ajouterBatiment(new BatimentMarket(jeu.data));
+        // jeu.data.ajouterBatiment(new BatimentMarket(jeu.data));
+        // jeu.data.ajouterBatiment(new BatimentMarket(jeu.data));
+        // jeu.data.ajouterBatiment(new BatimentMarket(jeu.data));
+        // jeu.data.ajouterBatiment(new BatimentMarket(jeu.data));
         
     }
 

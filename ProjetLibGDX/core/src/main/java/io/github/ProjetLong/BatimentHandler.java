@@ -12,6 +12,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class BatimentHandler {
 
+    private Jeu jeu;
+
     private boolean isOpened;
     private boolean modifiedIsOpened;
     private boolean spriteFacingRight;
@@ -24,7 +26,8 @@ public class BatimentHandler {
     private Texture joueur;
     private Sprite joueurSprite;
 
-    public BatimentHandler() {
+    public BatimentHandler(Jeu jeu) {
+        this.jeu = jeu;
         this.isOpened = false;
         this.spriteFacingRight = true;
         this.modifiedIsOpened = false;
@@ -33,10 +36,8 @@ public class BatimentHandler {
         this.positionJoueur = 248;
         this.joueur = new Texture("jouervillescreen.png");
         this.joueurSprite = new Sprite(joueur);
-        // a supprimer quand data manager ok
-        this.batimentList = new LinkedHashMap<Batiment, Boolean>();
-        // a remplacer par
-        // this.batimentList = loadBatimentList();
+
+        loadBatimentList();
         updateBatimentVisibility();
     }
 
@@ -85,7 +86,7 @@ public class BatimentHandler {
         Batiment openedBat;
         System.out.println(offset);
         // load des batiments (a faire quand datamanager ok)
-        // this.batimentList = loadBatimentList();
+        loadBatimentList();
 
         // gestion ouverture/fermeture batiment
         if (this.modifiedIsOpened) {
@@ -151,16 +152,10 @@ public class BatimentHandler {
     }
 
     // load la liste des bâtiments depuis le data manager
-    // private Map<Batiment, Boolean> loadBatimentList() {
-    // doit être implémenté quand le data manager fonctionne
-    // ....
-    // updateBatimentVisibility(); //met à jour la visibilité après avoir load les
-    // bats
-    // }
-
-    // remove when data manager works
-    public void addBatiment(Batiment bat) {
-        this.batimentList.put(bat, false);
+    private void loadBatimentList() {
+        batimentList = jeu.data.getBatimentsMap();
+        updateBatimentVisibility(); //met à jour la visibilité après avoir load les
+                                    // bats
     }
 
     // updates the status of the visibility of each bat depending on the offset

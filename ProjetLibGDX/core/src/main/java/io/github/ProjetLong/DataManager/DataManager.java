@@ -12,6 +12,7 @@ import java.util.Map;
 
 import io.github.ProjetLong.Bateau;
 import io.github.ProjetLong.ModuleBateau;
+import io.github.ProjetLong.Batiment;
 import io.github.ProjetLong.ZonesPeche.Poisson;
 
 public class DataManager {
@@ -20,6 +21,7 @@ public class DataManager {
     private List<Poisson> stockagePoissons;
     private int argent;
     private List<ModuleBateau> modulesDispo;
+    private Map<Batiment, Boolean> batimentsMap;
 
     private final SerializerPoisson poissonSerializer;
     private final SerializerBateau bateauSerializer;
@@ -33,6 +35,7 @@ public class DataManager {
         stockagePoissons = new ArrayList<Poisson>();
         modulesDispo = new ArrayList<ModuleBateau>();
         argent = 0;
+        batimentsMap = new HashMap<Batiment, Boolean>();
 
         // ...
 
@@ -51,6 +54,7 @@ public class DataManager {
         stockagePoissons = new ArrayList<Poisson>();
         modulesDispo = new ArrayList<ModuleBateau>();
         argent = 0;
+        batimentsMap = new HashMap<Batiment, Boolean>();
 
         // ...
 
@@ -113,6 +117,18 @@ public class DataManager {
             return;
         }
         argent -= montant;
+    }
+
+    public Map<Batiment, Boolean> getBatimentsMap() {
+        return batimentsMap;
+    }
+
+    public void ajouterBatiment(Batiment batiment) {
+        batimentsMap.put(batiment, true);
+    }
+
+    public void supprimerBatiment(Batiment batiment) {
+        batimentsMap.remove(batiment);
     }
 
     /**
