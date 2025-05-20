@@ -6,7 +6,10 @@ import java.util.Map;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g3d.particles.influencers.RegionInfluencer.Animated;
 
 //512 par 288
 
@@ -16,6 +19,7 @@ public class BatimentHandler {
     private boolean modifiedIsOpened;
     private boolean spriteFacingRight;
 
+    private float tempsAnim;
     private int offset;
     private int maxvalueOffset;
     private int positionJoueur;
@@ -23,6 +27,12 @@ public class BatimentHandler {
 
     private Texture joueur;
     private Sprite joueurSprite;
+
+    // animation joueur
+    private TextureRegion[] runFrames;
+    private TextureRegion[] idleFrames;
+    private Animation<TextureRegion> runAnimation;
+    private Animation<TextureRegion> idleAnimation;
 
     public BatimentHandler() {
         this.isOpened = false;
@@ -35,23 +45,58 @@ public class BatimentHandler {
         this.joueurSprite = new Sprite(joueur);
         // a supprimer quand data manager ok
         this.batimentList = new LinkedHashMap<Batiment, Boolean>();
+        tempsAnim = 0;
         // a remplacer par
         // this.batimentList = loadBatimentList();
         updateBatimentVisibility();
+
+        // animations
+        runFrames = new TextureRegion[6];
+        idleFrames = new TextureRegion[12];
+
+        // load run
+        for (int i = 0; i < 6; i++) {
+            String fileName = "animations/joueur_run/frame_" + (i) + ".png";
+            runFrames[i] = new TextureRegion(new Texture(Gdx.files.internal(fileName)));
+
+        }
+        // load idle
+        for (int i = 0; i < 12; i++) {
+            String fileName = "animations/joueur_idle/frame_" + (i) + ".png";
+            idleFrames[i] = new TextureRegion(new Texture(Gdx.files.internal(fileName)));
+        }
+        runAnimation = new Animation<TextureRegion>(0.2f, runFrames);
+        idleAnimation = new Animation<TextureRegion>(0.2f, idleFrames);
     }
 
     public void input(VilleScreen screen) {
 
         // gestion barre espace
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && !(getActualBat() instanceof noBat)) {
             this.isOpened = !this.isOpened;
             this.modifiedIsOpened = !this.modifiedIsOpened;
         }
 
+        // animation texture
+        TextureRegion currentFramerun = runAnimation.getKeyFrame(tempsAnim, true);
+        TextureRegion currentFrameidle = idleAnimation.getKeyFrame(tempsAnim, true);
+        boolean flipX = joueurSprite.isFlipX();
+        boolean flipY = joueurSprite.isFlipY();
+
+        if (!Gdx.input.isKeyPressed(Input.Keys.RIGHT) && !Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            // anim
+            joueurSprite.setRegion(currentFrameidle);
+            joueurSprite.setFlip(flipX, flipY);
+        }
+
         // gestion fleche droite
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && !isOpened) {
+            // anim
+            joueurSprite.setRegion(currentFramerun);
+            joueurSprite.setFlip(flipX, flipY);
             if (this.positionJoueur >= 492 && offset < maxvalueOffset) {
                 offsetIncrementer();
+
             } else if (this.positionJoueur <= 492) {
                 joueurIncrementer();
             }
@@ -63,7 +108,10 @@ public class BatimentHandler {
 
             // gestion fleche gauche
         } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && !isOpened) {
-            if (this.positionJoueur <= 4 && offset >= 0) {
+            // anim
+            joueurSprite.setRegion(currentFramerun);
+            joueurSprite.setFlip(flipX, flipY);
+            if (this.positionJoueur <= 4 && offset >= 2) {
                 offsetDecrementer();
             } else if (this.positionJoueur >= 4) {
                 joueurDecrementer();
@@ -83,7 +131,7 @@ public class BatimentHandler {
     public void logic(VilleScreen screen) {
 
         Batiment openedBat;
-        System.out.println(offset);
+        tempsAnim += 1f / 60f;
         // load des batiments (a faire quand datamanager ok)
         // this.batimentList = loadBatimentList();
 
@@ -100,7 +148,7 @@ public class BatimentHandler {
             this.modifiedIsOpened = false;
         }
         updateBatimentVisibility();
-        this.joueurSprite.setPosition(positionJoueur, 80);
+        this.joueurSprite.setPosition(positionJoueur, 85);
 
         // appel de la logique des batiments
         for (Map.Entry<Batiment, Boolean> entree : this.batimentList.entrySet()) {
@@ -108,7 +156,8 @@ public class BatimentHandler {
         }
 
         // update de la valeur max du offset
-        this.maxvalueOffset = Math.max((batimentList.size() * 64 - 512), 0);
+
+        this.maxvalueOffset = 512 * 3;
 
     }
 
@@ -178,10 +227,12 @@ public class BatimentHandler {
 
     // permet de recup le batiment se trouvant devant le joueur
     private Batiment getActualBat() {
-        Batiment foundBat = new BatimentChantierNaval(); // pas propre mais pas de solutions
+        Batiment foundBat = new noBat(); // pas propre mais pas de solutions
         int numBat;
         int compteur = 0;
-        numBat = Math.min((positionJoueur - 8 + offset) / 64, this.batimentList.size() - 1);
+        // numBat = Math.min((positionJoueur - 8 + offset) / 64,
+        // this.batimentList.size() - 1);
+        numBat = (positionJoueur - 8 + offset) / 64;
         for (Map.Entry<Batiment, Boolean> entree : this.batimentList.entrySet()) {
             if (numBat == compteur) {
                 foundBat = entree.getKey();

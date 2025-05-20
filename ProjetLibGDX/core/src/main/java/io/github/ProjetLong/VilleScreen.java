@@ -56,7 +56,7 @@ public class VilleScreen implements Screen {
         handler.addBatiment(new BatimentMarket(jeu.data));
         handler.addBatiment(new BatimentMarket(jeu.data));
         handler.addBatiment(new BatimentMarket(jeu.data));
-        
+
     }
 
     @Override
@@ -125,12 +125,18 @@ public class VilleScreen implements Screen {
         jeu.batch.begin();
 
         // AFFICHAGE DU RESTE
-        this.jeu.batch.draw(backgroundTexture2, 0, 0);
-        this.jeu.batch.draw(backgroundTexture3, 0, 0);
+        for (int i = 0; i < 2; i++) {
+            this.jeu.batch.draw(backgroundTexture2, 0 - handler.getOffset() / 4 + 1024 * i, 0);
+        }
+        for (int i = 0; i < 4; i++) {
+            this.jeu.batch.draw(backgroundTexture3, 0 - handler.getOffset() + 512 * i, 0);
+        }
         // DRAW DU BAT
         this.handler.draw(this);
         // avant plan bat
-        this.jeu.batch.draw(backgroundTexture4, 0, 0);
+        for (int i = 0; i < 4; i++) {
+            this.jeu.batch.draw(backgroundTexture4, 0 - handler.getOffset() + 512 * i, 0);
+        }
         // overlays
         this.handler.affichageInterface(this);
         // menu pause

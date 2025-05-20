@@ -204,7 +204,7 @@ public class BatimentQuai implements Batiment {
 
     @Override
     public void draw(VilleScreen screen, int position, int offset) {
-        screen.jeu.batch.draw(this.batQuaiTexture, 0f + position * this.batQuaiTexture.getWidth() + offset, 90);
+        screen.jeu.batch.draw(this.batQuaiTexture, 0f + position * this.batQuaiTexture.getWidth() + offset, 91);
         screen.jeu.HebertBold.draw(screen.jeu.batch, "Quai", 64 * position + offset, 180);
 
     }
@@ -467,12 +467,12 @@ public class BatimentQuai implements Batiment {
         this.isOpened = value;
     }
 
-    public void close(){
+    public void close() {
         mtable.setVisible(false);
         caracteristiques.setVisible(false);
     }
 
-    public void open(){
+    public void open() {
         mtable.setVisible(true);
     }
 }

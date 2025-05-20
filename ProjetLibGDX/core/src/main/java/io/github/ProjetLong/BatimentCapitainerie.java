@@ -77,7 +77,7 @@ public class BatimentCapitainerie implements Batiment {
         this.batCapitainerieSprite = new Sprite(batCapitainerieTexture);
         this.interfaceOverlaybatCapitainerieSprite = new Sprite(interfaceBatCapitainerieTexture);
 
-        this.batCapitainerieSprite.setPosition(0, 90);
+        this.batCapitainerieSprite.setPosition(0, 91);
         this.interfaceOverlaybatCapitainerieSprite.setPosition(130, 50);
 
         this.page = 0;

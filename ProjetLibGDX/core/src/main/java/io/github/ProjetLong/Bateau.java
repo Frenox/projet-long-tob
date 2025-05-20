@@ -213,6 +213,18 @@ public class Bateau {
         return result;
     }
 
+    public Poisson remFirstPoisson() {
+        Poisson temp = null;
+        for (Stockage mod : this.Stockage) {
+            if (mod.getContenu().size() != 0) {
+                temp = mod.getContenu().removeFirst();
+                break;
+            }
+        }
+        return temp;
+
+    }
+
     public void setState(String state) {
         this.state = state;
     }

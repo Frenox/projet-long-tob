@@ -152,7 +152,7 @@ public class BatimentChantierNaval implements Batiment {
         // Toujours afficher le bâtiment chantier
 
         this.chantierSprite.draw(screen.jeu.batch);
-        this.chantierSprite.setPosition(64 * position + offset, 90);
+        this.chantierSprite.setPosition(64 * position + offset, 91);
         screen.jeu.HebertBold.draw(screen.jeu.batch, "Chantier Naval", 64 * position + offset, 180);
     }
 

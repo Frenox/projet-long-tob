@@ -21,6 +21,7 @@ public class DataManager {
     private int argent;
     private List<ModuleBateau> modulesDispo;
 
+    private int stockagePoissonMax;
     private final SerializerPoisson poissonSerializer;
     private final SerializerBateau bateauSerializer;
 
@@ -32,6 +33,7 @@ public class DataManager {
         stockagePoissons = new ArrayList<Poisson>();
         modulesDispo = new ArrayList<ModuleBateau>();
         argent = 0;
+        stockagePoissonMax = 100;
 
         // ...
 
@@ -58,6 +60,10 @@ public class DataManager {
         loadGame(slot);
     }
 
+    public int getStockagePoissonMax() {
+        return stockagePoissonMax;
+    }
+
     public List<Bateau> getBateaux() {
         return bateaux;
     }
@@ -75,7 +81,17 @@ public class DataManager {
     }
 
     public void ajouterPoissonStockage(Poisson poisson) {
-        stockagePoissons.add(poisson);
+        if (reste1place()) {
+            stockagePoissons.add(poisson);
+        }
+    }
+
+    public boolean reste1place(){
+         if (this.stockagePoissons.size() < stockagePoissonMax) {
+            return true;
+         }else{
+            return false;
+         }
     }
 
     public void supprimerPoissonStockage(Poisson poisson) {

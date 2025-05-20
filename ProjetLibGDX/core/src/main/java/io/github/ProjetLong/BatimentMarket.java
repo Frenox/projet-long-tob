@@ -104,8 +104,8 @@ public class BatimentMarket implements Batiment {
             }
 
             // detection de la vente (identifiez quel poisson)
-            if (mouse.x >= 140 && mouse.x <= 265 && mouse.y >= 70 && mouse.y <= 200) {
-                while (mouse.y > (70 + offsetSelectedFish * 18.5)) {
+            if (mouse.x >= 140 && mouse.x <= 265 && mouse.y >= 70 && mouse.y < 200) {
+                while (mouse.y > (70 + offsetSelectedFish * 18.75)) {
                     offsetSelectedFish++;
                     System.out.println(offsetSelectedFish);
                 }
@@ -142,7 +142,7 @@ public class BatimentMarket implements Batiment {
     @Override
     public void draw(VilleScreen screen, int position, int offset) {
         // always draw the batiment itself
-        this.batMarketSprite.setPosition(position * 64 + offset, 90);
+        this.batMarketSprite.setPosition(position * 64 + offset, 91);
         this.batMarketSprite.draw(screen.jeu.batch);
         screen.jeu.HebertBold.draw(screen.jeu.batch, "Market", 64 * position + offset, 180);
     }
@@ -198,7 +198,8 @@ public class BatimentMarket implements Batiment {
         screen.jeu.HebertBold.setColor(1, 0, 0, 1); // rouge
         screen.jeu.HebertBold.draw(screen.jeu.batch, this.poissons.get(selectedfish).getNom(), 270, 180);
         screen.jeu.HebertBold.setColor(1, 1, 1, 1); // blanc
-        screen.jeu.HebertBold.draw(screen.jeu.batch, "pour " + this.poissons.get(selectedfish).getPrix() + " coins ?", 270, 160);
+        screen.jeu.HebertBold.draw(screen.jeu.batch, "pour " + this.poissons.get(selectedfish).getPrix() + " coins ?",
+                270, 160);
 
     }
 
