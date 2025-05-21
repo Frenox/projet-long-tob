@@ -36,7 +36,6 @@ public class BatimentHandler {
     private Animation<TextureRegion> runAnimation;
     private Animation<TextureRegion> idleAnimation;
 
-    
     public BatimentHandler(Jeu jeu) {
         this.jeu = jeu;
         this.isOpened = false;
@@ -47,9 +46,8 @@ public class BatimentHandler {
         this.positionJoueur = 248;
         this.joueur = new Texture("jouervillescreen.png");
         this.joueurSprite = new Sprite(joueur);
-        
+
         tempsAnim = 0;
-        
 
         loadBatimentList();
         updateBatimentVisibility();
@@ -206,7 +204,7 @@ public class BatimentHandler {
     // load la liste des bâtiments depuis le data manager
     private void loadBatimentList() {
         batimentList = jeu.data.getBatimentsMap();
-        updateBatimentVisibility(); //met à jour la visibilité après avoir load les
+        updateBatimentVisibility(); // met à jour la visibilité après avoir load les
                                     // bats
     }
 

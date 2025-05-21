@@ -21,10 +21,18 @@ public class Jeu extends Game {
     public BitmapFont HebertBold;
     public DataManager data;
 
+    // temporaire tant que pas de serializer de bat
+    private Batiment market;
+    private Batiment capitainerie;
+    private Batiment quai;
+    private Batiment chantier;
+
     @Override
     public void create() {
         batch = new SpriteBatch();
         data = new DataManager();
+
+        viewport = new FitViewport(512, 288);
         Graphics.DisplayMode currentMode = Gdx.graphics.getDisplayMode();
         Gdx.graphics.setFullscreenMode(currentMode);
         // a la main pour le moment
@@ -34,17 +42,20 @@ public class Jeu extends Game {
         data.ajouterBateauPort(new Barque());
         data.ajouterBateauPort(new Voilier());
         data.ajouterBateauPort(new Voilier());
-        data.ajouterPoissonStockage(new Poisson(1, 0, false));
-        data.ajouterPoissonStockage(new Poisson(1, 0, false));
-        data.ajouterPoissonStockage(new Poisson(1, 0, false));
-        data.ajouterPoissonStockage(new Poisson(3, 0, false));
-        data.ajouterPoissonStockage(new Poisson(1, 0, false));
-        data.ajouterPoissonStockage(new Poisson(3, 1, false));
-        data.ajouterPoissonStockage(new Poisson(666, 0, false));
+
+        quai = new BatimentQuai(viewport, data);
+        market = new BatimentMarket(data);
+        chantier = new BatimentChantierNaval();
+        capitainerie = new BatimentCapitainerie();
+
+        data.ajouterBatiment(capitainerie);
+        data.ajouterBatiment(market);
+        data.ajouterBatiment(quai);
+        data.ajouterBatiment(chantier);
 
         HebertBold = new BitmapFont(Gdx.files.internal("HebertSansBold.fnt"));
         HebertBold.getData().setScale(0.15f);
-        viewport = new FitViewport(512, 288);
+
         // lance l'écran
         try {
             this.setScreen(new mainMenuScreen(this));

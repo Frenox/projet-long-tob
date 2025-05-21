@@ -22,10 +22,7 @@ public class VilleScreen implements Screen {
     private ShaderProgram shader;
     public boolean menuShow;
     private AffichagePause menu = new AffichagePause();
-    private Batiment market;
-    private Batiment capitainerie = new BatimentCapitainerie();
-    private Batiment quai;
-    private Batiment chantier = new BatimentChantierNaval();
+    
     private BatimentHandler handler;
 
     public VilleScreen(final Jeu jeu) {
@@ -43,20 +40,7 @@ public class VilleScreen implements Screen {
         shader = new ShaderProgram(Gdx.files.internal("shaders/vertex.vert"),
                 Gdx.files.internal("shaders/shaderCielPort.frag"));
 
-        quai = new BatimentQuai(jeu.viewport, jeu.data);
-        market = new BatimentMarket(jeu.data);
-        jeu.data.ajouterBatiment(capitainerie);
-        jeu.data.ajouterBatiment(market);
-        jeu.data.ajouterBatiment(quai);
-        jeu.data.ajouterBatiment(chantier);
-        // jeu.data.ajouterBatiment(new BatimentMarket(jeu.data));
-        // jeu.data.ajouterBatiment(new BatimentMarket(jeu.data));
-        // jeu.data.ajouterBatiment(new BatimentMarket(jeu.data));
-        // jeu.data.ajouterBatiment(new BatimentMarket(jeu.data));
-        // jeu.data.ajouterBatiment(new BatimentMarket(jeu.data));
-        // jeu.data.ajouterBatiment(new BatimentMarket(jeu.data));
-        // jeu.data.ajouterBatiment(new BatimentMarket(jeu.data));
-        // jeu.data.ajouterBatiment(new BatimentMarket(jeu.data));
+        
 
     }
 

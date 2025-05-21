@@ -27,18 +27,20 @@ public class DataManager {
     private final SerializerPoisson poissonSerializer;
     private final SerializerBateau bateauSerializer;
     private final SerializerModule moduleSerializer;
+    private String actData;
 
     /**
      * Charge un nouveau slot de jeu (sans donnees)
      */
     public DataManager() {
+
         bateaux = new ArrayList<Bateau>();
         stockagePoissons = new ArrayList<Poisson>();
         modulesDispo = new ArrayList<ModuleBateau>();
         argent = 0;
         stockagePoissonMax = 100;
         batimentsMap = new HashMap<Batiment, Boolean>();
-
+        actData = "";
         // ...
 
         poissonSerializer = new SerializerPoisson();
@@ -93,12 +95,12 @@ public class DataManager {
         }
     }
 
-    public boolean reste1place(){
-         if (this.stockagePoissons.size() < stockagePoissonMax) {
+    public boolean reste1place() {
+        if (this.stockagePoissons.size() < stockagePoissonMax) {
             return true;
-         }else{
+        } else {
             return false;
-         }
+        }
     }
 
     public void supprimerPoissonStockage(Poisson poisson) {
@@ -194,7 +196,7 @@ public class DataManager {
             ObjectMapper mapper = new ObjectMapper();
             // Lecture des donnees
             data = mapper.readValue(dataFile, Map.class);
-
+            actData = slot;
             bateaux = bateauSerializer.deserializeListData(data.get("Bateaux"), 0);
             stockagePoissons = poissonSerializer.deserializeListData(data.get("StockagePoissons"), 0);
             modulesDispo = moduleSerializer.deserializeListData(data.get("ModulesDisponibles"), 0);
@@ -207,6 +209,10 @@ public class DataManager {
         }
 
         return true;
+    }
+
+    public String getActData() {
+        return actData;
     }
 
     /**

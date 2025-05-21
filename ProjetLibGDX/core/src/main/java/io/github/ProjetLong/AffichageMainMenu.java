@@ -24,7 +24,6 @@ public class AffichageMainMenu {
     private int idMenu; // quel menu afficher
     private boolean[] estVide = new boolean[3];
 
-
     public AffichageMainMenu() {
         state = 1;
         idMenu = 0;
@@ -86,12 +85,13 @@ public class AffichageMainMenu {
             } else if (state == 1 && (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)
                     || (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && hover))) {
                 // slot 1 lancement
-                if (!estVide[0]) {
-                    // load la sauvegarde
+
+                boolean reussi = screen.jeu.data.loadGame("slot1");
+                if (!reussi) {
+                    screen.jeu.data.saveGame("slot1");
                     screen.jeu.data.loadGame("slot1");
                 }
                 screen.jeu.setScreen(new VilleScreen(screen.jeu));
-                
 
             } else if (state == 2 && (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)
                     || (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && hover))) {
