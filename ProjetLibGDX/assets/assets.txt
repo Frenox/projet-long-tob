@@ -117,7 +117,6 @@ skin.atlas
 skin.json
 skin.png
 skin.scmp
-slot1.json
 slot1.png
 slot2.png
 slot3.png
@@ -126,5 +125,6 @@ slotret.png
 stockage_lvl1.png
 sun.png
 valider.png
+vide.png
 voilier.png
 water.png

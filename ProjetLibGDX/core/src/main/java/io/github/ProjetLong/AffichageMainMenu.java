@@ -2,6 +2,7 @@ package io.github.ProjetLong;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 
@@ -19,6 +20,7 @@ public class AffichageMainMenu {
     private Texture slot3;
     private Texture slotr;
     private Texture slotret;
+    private Texture vide;
     private Vector3 mouseCoor;
     private boolean hover;
     private int idMenu; // quel menu afficher
@@ -28,6 +30,7 @@ public class AffichageMainMenu {
         state = 1;
         idMenu = 0;
         state = 0;
+        vide = new Texture("vide.png");
         reprendre = new Texture("menu_princ_bt3.png");
         option = new Texture("menu_princ_bt2.png");
         quitter = new Texture("menu_princ_bt1.png");
@@ -46,6 +49,12 @@ public class AffichageMainMenu {
         String slotName = "slot" + (String.valueOf(slotNb)) + ".json";
         File slotFile = new File(slotName);
         return slotFile.exists() && !slotFile.isDirectory();
+    }
+
+    private void slotDelete(int slotNb) {
+        String slotName = "slot" + (String.valueOf(slotNb)) + ".json";
+        File slotFile = new File(slotName);
+        slotFile.delete();
     }
 
     public void input(mainMenuScreen screen) {
@@ -85,13 +94,13 @@ public class AffichageMainMenu {
             } else if (state == 1 && (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)
                     || (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && hover))) {
                 // slot 1 lancement
-                /*
-                 * boolean reussi = screen.jeu.data.loadGame("slot1");
-                 * if (!reussi) {
-                 * screen.jeu.data.saveGame("slot1");
-                 * screen.jeu.data.loadGame("slot1");
-                 * }
-                 */
+
+                boolean reussi = screen.jeu.data.loadGame("slot1");
+                if (!reussi) {
+                    screen.jeu.data.saveGame("slot1");
+                    screen.jeu.data.loadGame("slot1");
+                }
+
                 screen.jeu.setScreen(new VilleScreen(screen.jeu));
 
             } else if (state == 2 && (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)
@@ -107,6 +116,7 @@ public class AffichageMainMenu {
             } else if (state == 3 && (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)
                     || (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && hover))) {
                 // slot 3 lancement
+
                 boolean reussi = screen.jeu.data.loadGame("slot3");
                 if (!reussi) {
                     screen.jeu.data.saveGame("slot3");
@@ -179,6 +189,27 @@ public class AffichageMainMenu {
                 screen.jeu.batch.draw(slotret, 0, -6);
             } else {
                 screen.jeu.batch.draw(slotr, 0, -6);
+            }
+            if (!slotExiste(1)) {
+                screen.jeu.batch.draw(vide, 191, 149);
+            } else {
+                if (Gdx.input.isKeyJustPressed(Input.Keys.K)) {
+                    slotDelete(1);
+                }
+            }
+            if (!slotExiste(2)) {
+                screen.jeu.batch.draw(vide, 191, 119);
+            } else {
+                if (Gdx.input.isKeyJustPressed(Input.Keys.L)) {
+                    slotDelete(2);
+                }
+            }
+            if (!slotExiste(3)) {
+                screen.jeu.batch.draw(vide, 191, 89);
+            } else {
+                if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
+                    slotDelete(3);
+                }
             }
         }
     }

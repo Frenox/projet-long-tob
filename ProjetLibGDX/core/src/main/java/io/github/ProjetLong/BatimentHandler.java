@@ -228,7 +228,7 @@ public class BatimentHandler {
         int compteur = 0;
         // numBat = Math.min((positionJoueur - 8 + offset) / 64,
         // this.batimentList.size() - 1);
-        numBat = (positionJoueur - 8 + offset) / 64;
+        numBat = (positionJoueur + 8 + offset) / 64;
         for (Map.Entry<Batiment, Boolean> entree : this.batimentList.entrySet()) {
             if (numBat == compteur) {
                 foundBat = entree.getKey();
