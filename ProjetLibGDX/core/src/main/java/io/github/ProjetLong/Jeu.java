@@ -37,8 +37,8 @@ public class Jeu extends Game {
         Gdx.graphics.setFullscreenMode(currentMode);
         // a la main pour le moment
         data.ajouterModule(new Stockage(1));
-        data.ajouterModule(new Stockage(1));
         data.ajouterModule(new CanneAPeche(1, new SousZoneCotePort()));
+        data.ajouterModule(new Stockage(1));
         data.ajouterBateauPort(new Barque());
         data.ajouterBateauPort(new Voilier());
         data.ajouterBateauPort(new Voilier());

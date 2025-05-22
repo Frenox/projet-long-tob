@@ -85,19 +85,21 @@ public class AffichageMainMenu {
             } else if (state == 1 && (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)
                     || (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && hover))) {
                 // slot 1 lancement
-
-                boolean reussi = screen.jeu.data.loadGame("slot1");
-                if (!reussi) {
-                    screen.jeu.data.saveGame("slot1");
-                    screen.jeu.data.loadGame("slot1");
-                }
+                /*
+                 * boolean reussi = screen.jeu.data.loadGame("slot1");
+                 * if (!reussi) {
+                 * screen.jeu.data.saveGame("slot1");
+                 * screen.jeu.data.loadGame("slot1");
+                 * }
+                 */
                 screen.jeu.setScreen(new VilleScreen(screen.jeu));
 
             } else if (state == 2 && (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)
                     || (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && hover))) {
                 // slot 2 lancement
-                if (estVide[1]) {
-                    // load la sauvegarde
+                boolean reussi = screen.jeu.data.loadGame("slot2");
+                if (!reussi) {
+                    screen.jeu.data.saveGame("slot2");
                     screen.jeu.data.loadGame("slot2");
                 }
                 screen.jeu.setScreen(new VilleScreen(screen.jeu));
@@ -105,8 +107,9 @@ public class AffichageMainMenu {
             } else if (state == 3 && (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)
                     || (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && hover))) {
                 // slot 3 lancement
-                if (estVide[2]) {
-                    // load la sauvegarde
+                boolean reussi = screen.jeu.data.loadGame("slot3");
+                if (!reussi) {
+                    screen.jeu.data.saveGame("slot3");
                     screen.jeu.data.loadGame("slot3");
                 }
                 screen.jeu.setScreen(new VilleScreen(screen.jeu));

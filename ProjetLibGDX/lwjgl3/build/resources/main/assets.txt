@@ -1,3 +1,4 @@
+.json
 CercleMinijeu3.png
 HebertSansBold.fnt
 HebertSansBold.png

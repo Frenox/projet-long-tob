@@ -14,6 +14,8 @@ public class CanneAPeche implements ModuleBateau {
         this.zone = zone;
         if (Niveau == 1) {
             canneAPechTexture = new Texture("fishing_rod_1_lvl1.png");
+        } else {
+            canneAPechTexture = new Texture("cregut.png");
         }
     }
 

@@ -22,10 +22,14 @@ public class Bateau {
     private int TailleStockage;
     private int StockageDispo;
     private String state;
+    private String lieuSelec;
+    private int dureeSelec;
 
     public Bateau(int taille) {
         this.TailleMax = taille;
         this.TailleDispo = taille;
+        lieuSelec = "Aucun";
+        dureeSelec = 0;
         Stockage = new ArrayList<Stockage>();
         Cannes = new ArrayList<CanneAPeche>();
         Voiles = new ArrayList<Voile>();
@@ -36,6 +40,22 @@ public class Bateau {
         state = "A quai";
         modeleName = "Cregut";
         Logo = new Texture("cregut.png");
+    }
+
+    public int getDureeSelec() {
+        return dureeSelec;
+    }
+
+    public void setDureeSelec(int dureeSelec) {
+        this.dureeSelec = dureeSelec;
+    }
+
+    public String getLieuSelec() {
+        return lieuSelec;
+    }
+
+    public void setLieuSelec(String lieuSelec) {
+        this.lieuSelec = lieuSelec;
     }
 
     public void setModeleName(String modeleName) {
