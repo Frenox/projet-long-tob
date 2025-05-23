@@ -12,8 +12,9 @@ public class Stockage implements ModuleBateau {
     private List<Poisson> Contenu;
     private Texture stockageTexture;
 
-    public Stockage(int Niveau) {
+    public Stockage(int inNiveau) {
         Contenu = new ArrayList<Poisson>();
+        Niveau = inNiveau;
         if (Niveau == 1 || Niveau == 2 || Niveau == 3) {
             stockageTexture = new Texture("stockage_lvl1.png");
         }

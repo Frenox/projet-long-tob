@@ -1,16 +1,24 @@
+package io.github.ProjetLong;
+
 import java.util.ArrayList;
 import java.util.List;
+import com.badlogic.gdx.graphics.Texture;
 
-public class Voile implements Equipement {
+public class Voile implements ModuleBateau, Equipement {
     private int niveau;
     private String nom;
     private final String categorie = "voile"; // fixe
     private final static String[] ZONES = {
-        "Côte",     // niveau 1
-        "Océan",    // niveau 2
-        "Tropique", // niveau 3
-        "Arctique"  // niveau 4
+            "Côte", // niveau 1
+            "Océan", // niveau 2
+            "Tropique", // niveau 3
+            "Arctique" // niveau 4
     };
+
+    @Override
+    public Texture getTexture() {
+        return new Texture("cregut.png");
+    }
 
     public Voile(String nom) {
         this.nom = nom;
