@@ -1,5 +1,6 @@
 package io.github.ProjetLong;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
@@ -41,6 +42,11 @@ public class BatimentMarket implements Batiment {
     private Sprite validerVenteTextureSprite;
     private Sprite refuserVenteTextureSprite;
 
+    private Texture flecheGaucheTexture;
+    private Texture flecheDroiteTexture;
+    private Sprite flecheGaucheSprite;
+    private Sprite flecheDroiteSprite;
+
     // a supprimer quand implémente
     private List<Poisson> poissons;
 
@@ -75,6 +81,22 @@ public class BatimentMarket implements Batiment {
         this.fishInv = new Texture("fish_tab_fish.png");
 
         this.poissons = data.getStockage();
+        this.flecheGaucheTexture = new Texture("minigame2_arrow_left_fishing.png");
+        this.flecheDroiteTexture = new Texture("minigame2_arrow_right_fishing.png");
+
+        this.flecheGaucheSprite = new Sprite(flecheGaucheTexture);
+        this.flecheDroiteSprite = new Sprite(flecheDroiteTexture);
+
+        this.flecheGaucheSprite.setPosition(175, 56); // Flèche gauche
+        this.flecheDroiteSprite.setPosition(215, 56); // Flèche droite
+        this.flecheGaucheSprite.setSize(15, 11);
+        this.flecheDroiteSprite.setSize(15, 11);
+
+        // a supprimer later
+        this.poissons = new ArrayList<>();
+        for (int i = 0; i <= 100; i++) {
+            this.poissons.add(new Poisson(1, 1));
+        }
 
     }
 
@@ -95,11 +117,11 @@ public class BatimentMarket implements Batiment {
 
         if (this.isOpened && this.isSelling == false) {
             // changer de page
-            if (mouse.x >= 216 && mouse.x <= 265 && mouse.y >= 56 && mouse.y <= 67
+            if (mouse.x >= 215 && mouse.x <= 230 && mouse.y >= 56 && mouse.y <= 67
                     && page < (((poissons.size() - 1) / 7))) {
                 page++;
             }
-            if (mouse.x >= 139 && mouse.x <= 190 && mouse.y >= 56 && mouse.y <= 67 && page > 0) {
+            if (mouse.x >= 175 && mouse.x <= 190 && mouse.y >= 56 && mouse.y <= 67 && page > 0) {
                 page--;
             }
 
@@ -177,6 +199,18 @@ public class BatimentMarket implements Batiment {
                             210.5f - ((i % 7) * 19) - 15);
                 }
             }
+
+            // Affichage des flèches de navigation
+            // Flèche gauche (seulement si on n'est pas sur la première page)
+            if (page > 0) {
+                this.flecheGaucheSprite.draw(screen.jeu.batch);
+            }
+
+            // Flèche droite (seulement si il y a des pages suivantes)
+            if (page < (((poissons.size() - 1) / 7))) {
+                this.flecheDroiteSprite.draw(screen.jeu.batch);
+            }
+            // Affichage du numéro de page
             screen.jeu.HebertBold.draw(screen.jeu.batch, Integer.toString(page + 1), 197.5f - (5 * (page / 9)),
                     43f + 20);
             screen.jeu.HebertBold.draw(screen.jeu.batch, "/", 201.6f, 42f + 20);

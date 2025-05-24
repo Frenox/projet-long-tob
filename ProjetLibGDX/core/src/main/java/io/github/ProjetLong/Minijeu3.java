@@ -125,7 +125,7 @@ public class Minijeu3 implements Minijeu {
         if (bubbleClique != -1) {
             bubbles.removeIndex(bubbleClique);
             bubblesTime.removeIndex(bubbleClique);
-            speed_montee += 25f;
+            speed_montee += 30f;
             bubbleClique = -1;
         }
         float speed = 0.3f;
