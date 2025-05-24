@@ -24,6 +24,7 @@ public class VilleScreen implements Screen {
     private AffichagePause menu = new AffichagePause();
     private Batiment market = new BatimentMarket();
     private Batiment capitainerie = new BatimentCapitainerie();
+    private Batiment marcheEquipement = new BatimentEquipMarket();
     private Batiment quai;
 
     public VilleScreen(final Jeu jeu) {
@@ -81,12 +82,14 @@ public class VilleScreen implements Screen {
         market.input(this);
         capitainerie.input(this);
         quai.input(this);
+        marcheEquipement.input(this);
     }
 
     public void logic() {
         market.logic(this);
         capitainerie.logic(this);
         quai.logic(this);
+        marcheEquipement.logic(this);
     }
 
     public void draw() {
@@ -119,12 +122,14 @@ public class VilleScreen implements Screen {
         this.market.draw(this, 0);
         this.capitainerie.draw(this, 1);
         this.quai.draw(this, 2);
+        this.marcheEquipement.draw(this, 3);
         // avant plan bat
         this.jeu.batch.draw(backgroundTexture4, 0, 0);
         // overlays
         market.affichageInterface(this);
         capitainerie.affichageInterface(this);
         quai.affichageInterface(this);
+        marcheEquipement.affichageInterface(this);
 
         // menu pause
         if (menuShow) {

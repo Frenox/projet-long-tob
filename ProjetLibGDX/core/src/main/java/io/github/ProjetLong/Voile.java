@@ -2,6 +2,7 @@ package io.github.ProjetLong;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import com.badlogic.gdx.graphics.Texture;
 
 public class Voile implements ModuleBateau, Equipement {
@@ -14,6 +15,10 @@ public class Voile implements ModuleBateau, Equipement {
             "Tropique", // niveau 3
             "Arctique" // niveau 4
     };
+
+    private boolean aLaVente = false; // pas à la vente
+    private final static int prixInitial = 100; 
+    private final static int prixParNiveau = 50; 
 
     @Override
     public Texture getTexture() {
@@ -75,5 +80,20 @@ public class Voile implements ModuleBateau, Equipement {
 
     public String getCategorie() {
         return categorie;
+    }
+
+    public int getPrix() {
+        return (aLaVente)? prixInitial + (niveau - 1) * prixParNiveau : -1; // -1 si pas à la vente
+    }
+
+    public void enleverDeLaVente() {
+        this.aLaVente = false;
+    }
+
+    @Override
+    public Equipement dupliquer() {
+        Equipement e =  new Voile(this.nom, this.niveau);
+        e.enleverDeLaVente(); // Duplique sans la vente
+        return e;
     }
 }

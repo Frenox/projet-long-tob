@@ -17,7 +17,7 @@ public class BatimentMarket implements Batiment {
     private boolean isOpened;
     private boolean isSelling;
 
-    private int coinAmount;
+    public static int coinAmount; //modifié pour pouvoir l'utiliser
     private int selectedfish;
     private int offsetSelectedFish;
 
@@ -153,7 +153,7 @@ public class BatimentMarket implements Batiment {
             if (mouse.x > 280 && mouse.x < 310 && mouse.y > 90 && mouse.y < 120) {
                 // on crédite le joueur
                 // this.coinAmount += this.poissons.get(selectedfish).getValeur();
-                this.coinAmount += 10;
+                BatimentMarket.coinAmount += 10;
 
                 // on enlève le poisson dans la session ET dans le data manager
                 this.poissons.remove(selectedfish);
@@ -191,7 +191,7 @@ public class BatimentMarket implements Batiment {
             // Affichage des coins
             // Mis en jaune, puis re en blanc
             screen.jeu.HebertBold.setColor(1, 1, 0, 1); // couleur jaune
-            screen.jeu.HebertBold.draw(screen.jeu.batch, "COINS : " + this.coinAmount, 300, 240);
+            screen.jeu.HebertBold.draw(screen.jeu.batch, "COINS : " + BatimentMarket.coinAmount, 300, 240);
             screen.jeu.HebertBold.setColor(1, 1, 1, 1);
 
             // Affichage des instructions
@@ -218,7 +218,7 @@ public class BatimentMarket implements Batiment {
             }
             
             // Flèche droite (seulement si il y a des pages suivantes)
-            if (page < (((poissons.size() - 1) / 7))) {
+            if (page < (((len - 1) / 7))) {
                 this.flecheDroiteSprite.draw(screen.jeu.batch);
             }
             // Affichage du numéro de page
