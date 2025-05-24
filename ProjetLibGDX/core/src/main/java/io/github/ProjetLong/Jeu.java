@@ -24,6 +24,7 @@ public class Jeu extends Game {
     // temporaire tant que pas de serializer de bat
     private Batiment market;
     private Batiment capitainerie;
+    private Batiment shop;
     private Batiment quai;
     private Batiment chantier;
 
@@ -47,11 +48,13 @@ public class Jeu extends Game {
         market = new BatimentMarket(data);
         chantier = new BatimentChantierNaval();
         capitainerie = new BatimentCapitainerie();
+        shop = new BatimentEquipMarket();
 
         data.ajouterBatiment(capitainerie);
         data.ajouterBatiment(market);
         data.ajouterBatiment(quai);
         data.ajouterBatiment(chantier);
+        data.ajouterBatiment(shop);
 
         HebertBold = new BitmapFont(Gdx.files.internal("HebertSansBold.fnt"));
         HebertBold.getData().setScale(0.15f);

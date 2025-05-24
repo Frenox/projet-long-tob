@@ -22,7 +22,7 @@ public class VilleScreen implements Screen {
     private ShaderProgram shader;
     public boolean menuShow;
     private AffichagePause menu = new AffichagePause();
-    
+
     private BatimentHandler handler;
 
     public VilleScreen(final Jeu jeu) {
@@ -39,8 +39,6 @@ public class VilleScreen implements Screen {
         ShaderProgram.pedantic = false;
         shader = new ShaderProgram(Gdx.files.internal("shaders/vertex.vert"),
                 Gdx.files.internal("shaders/shaderCielPort.frag"));
-
-        
 
     }
 
