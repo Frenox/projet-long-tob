@@ -1,15 +1,30 @@
 package io.github.ProjetLong;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Null;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class VilleScreen implements Screen {
     final Jeu jeu;
@@ -21,6 +36,13 @@ public class VilleScreen implements Screen {
     private AffichagePause menu = new AffichagePause();
     private Batiment market = new BatimentMarket();
     private Batiment quai;
+
+    private ArrayList<Batiment> batiments = new ArrayList<>();
+    private ArrayList<ButtonBatiment> batimentsButtons = new ArrayList<>();
+    private int nb_batiments = 3;
+
+    private Texture batQuaiTexture = new Texture("bat1.png");
+    Stage stage;
 
     public VilleScreen(final Jeu jeu) {
         this.jeu = jeu;
@@ -34,6 +56,20 @@ public class VilleScreen implements Screen {
                 Gdx.files.internal("shaders/shader1.frag"));
 
         quai = new BatimentQuai(jeu.viewport);
+        batiments.add(market);
+        batiments.add(capitainerie);
+        batiments.add(quai);
+        
+        Skin skin = new Skin();
+        skin.add("Moulin", batQuaiTexture);
+        ButtonStyle style = new ButtonStyle(skin.getDrawable("Moulin"), skin.getDrawable("Moulin"),skin.getDrawable("Moulin"));
+    
+        stage = new Stage(jeu.viewport);
+
+        for(int i = 0;i < nb_batiments;i++) {
+            batimentsButtons.add(new ButtonBatiment(style, i, jeu.HebertBold));
+            stage.addActor(batimentsButtons.get(i));
+        }
     }
 
     @Override
@@ -71,6 +107,7 @@ public class VilleScreen implements Screen {
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             menuShow = true;
         }
+<<<<<<< Updated upstream
         market.input(this);
         quai.input(this);
     }
@@ -78,6 +115,18 @@ public class VilleScreen implements Screen {
     public void logic() {
         market.logic(this);
         quai.logic(this);
+=======
+
+        for (int i = 0;i < nb_batiments;i++) {
+            batiments.get(i).input(this);
+        }
+    }
+
+    public void logic() {
+        for (int i = 0;i < nb_batiments;i++) {
+            batiments.get(i).logic(this);
+        }
+>>>>>>> Stashed changes
     }
 
     public void draw() {
@@ -104,6 +153,26 @@ public class VilleScreen implements Screen {
         jeu.batch.begin();
 
         // AFFICHAGE DU RESTE
+<<<<<<< Updated upstream
+=======
+        this.jeu.batch.draw(backgroundTexture2, 0, 0);
+        this.jeu.batch.draw(backgroundTexture3, 0, 0);
+        // avant plan bat
+        this.jeu.batch.draw(backgroundTexture4, 0, 0);
+        // overlays
+        
+        
+        Gdx.input.setInputProcessor(stage);
+
+        stage.getViewport().apply();
+        stage.act();
+        stage.draw();
+
+        for (int i = 0;i < nb_batiments;i++) {
+            batiments.get(i).affichageInterface(this);
+            batiments.get(i).draw(this, i);
+        }
+>>>>>>> Stashed changes
 
         if (menuShow) {
             menu.draw(this);
@@ -146,5 +215,46 @@ public class VilleScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         jeu.viewport.update(width, height, true);
+    }
+
+    public class ButtonBatiment extends Button {
+        private int i;
+        private Label textAbove;
+
+        public ButtonBatiment(ButtonStyle buttonStyle, int i, BitmapFont font) {
+            super(buttonStyle);
+
+            this.i = i;
+            this.setPosition(64 * i, 90);
+            this.setVisible(true);
+
+            LabelStyle label_style = new LabelStyle(font, Color.WHITE);
+            textAbove = new Label(batiments.get(i).getNom(), label_style);
+            textAbove.setPosition(64 * i + 16, 200);
+            textAbove.setVisible(false);
+            stage.addActor(textAbove);
+
+            this.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    batiments.get(i).agir();
+                }
+                
+                @Override
+                public void enter(InputEvent event, float x, float y, int pointer, @Null Actor fromActor) {
+                    textAbove.setVisible(true);
+                }
+                
+                @Override
+                public void exit(InputEvent event, float x, float y, int pointer, @Null Actor fromActor) {
+                    textAbove.setVisible(false);
+                }
+            });
+        }
+
+        @Override
+        public void draw(Batch batch, float parentAlpha) {
+            super.draw(batch, parentAlpha);
+        }
     }
 }

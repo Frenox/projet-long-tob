@@ -158,13 +158,33 @@ public class BatimentMarket implements Batiment{
 
     @Override
     public void draw(VilleScreen screen, int position) {
+<<<<<<< Updated upstream
         //alwasy draw the batiment itself
         this.batMarketSprite.draw(screen.jeu.batch);
         if (this.isOpened) {
             affichageInterface(screen);
         }
+=======
+        // alwasy draw the batiment itself
+
+>>>>>>> Stashed changes
         if (this.isOpened && this.isSelling) {
             affichageVente(screen);
+        }
+    }
+    
+    public String getNom() {
+        return "Market";
+    }
+    
+    public void agir() {
+        if (this.isOpened == true) {
+            this.isOpened = false;
+            this.isSelling = false;
+            this.selectedfish = 0;
+            this.offsetSelectedFish = 0;
+        } else {
+            this.isOpened = true;
         }
     }
 

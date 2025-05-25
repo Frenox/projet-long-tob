@@ -37,29 +37,42 @@ import io.github.ProjetLong.ZonesPeche.Poisson;
 public class BatimentQuai implements Batiment {
     final int CAPACITE_MAX_MENU = 7;
 
-    private Texture batQuaiTexture;
     private BitmapFont HebertBold;
+<<<<<<< Updated upstream
     
+=======
+
+    //Maximum de pages affichées
+>>>>>>> Stashed changes
     private int maxPage;
 
-    private Texture fishInv;
-
+    //Page actuelle
+    int page;
+    
     private boolean isOpened;
 
+<<<<<<< Updated upstream
     //à supprimer quand implémenté
+=======
+    private Texture fishInv;
+
+    // à supprimer quand implémenté
+>>>>>>> Stashed changes
     private ArrayList<Bateau> bateaux;
 
     private Vector3 mouse;
 
-    private ScrollPane scrollpane_poissons;
-    private ScrollPane scrollpane_stockage;
-
+    //Stage
     Stage stage;
+
+    //Table qui contient toute l'interface
     Table mtable;
 
+    //Caractéristiques d'un bâteau
     Table caracteristiques;
-    int page;
 
+
+    //Elements affichés par un bâteau
     Label nom_bateau;
     Label modele;
     Label taille_stockage;
@@ -68,20 +81,30 @@ public class BatimentQuai implements Batiment {
     Table stockage_table;
     Image Equipement_Texture;
 
+    private ScrollPane scrollpane_poissons;
+    private ScrollPane scrollpane_stockage;
+
     boolean poissonDessin;
     Texture poisson_texture_hover;
 
     Texture pixmaptex;
 
+    //Taille de la fenêtre affichée
     private int width;
     private int height;
 
+<<<<<<< Updated upstream
     public BatimentQuai(Viewport viewport){
+=======
+    public Viewport viewport;
+
+    public BatimentQuai(Viewport viewport) {
+        this.viewport = viewport;
+>>>>>>> Stashed changes
         poissonDessin = false;
 
         HebertBold = new BitmapFont(Gdx.files.internal("HebertSansBold.fnt"));
         HebertBold.getData().setScale(0.15f);
-        this.batQuaiTexture = new Texture("bat1.png");
         this.fishInv = new Texture("fish_tab_fish.png");
         
         this.mouse = new Vector3(0, 0, 0);
@@ -110,6 +133,7 @@ public class BatimentQuai implements Batiment {
 
         //***************************************************** */
 
+        //Initialisation
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
         mtable = new Table();
@@ -121,7 +145,12 @@ public class BatimentQuai implements Batiment {
 
         Table root = new Table();
         stage.addActor(root);
+<<<<<<< Updated upstream
         
+=======
+
+        //Mise en place des caractéristiques pour un bâteau spécifique
+>>>>>>> Stashed changes
         caracteristiques = new Table();
         caracteristiques.setSkin(skin);
 
@@ -130,6 +159,7 @@ public class BatimentQuai implements Batiment {
         taille_stockage = new Label("Taille Stockage :", skin, "HebertBold", Color.WHITE);
         Equipement_Texture = new Image();
 
+        //Caractéristiques pour la partie gauche de l'interface à côté des boutons
         Table infos_bateaux = new Table();
         infos_bateaux.setSkin(skin);
         infos_bateaux.add(nom_bateau).pad(2).row();
@@ -140,6 +170,7 @@ public class BatimentQuai implements Batiment {
 
         caracteristiques.add(infos_bateaux).top().left().expand();
 
+        //Caractéristiques pour la partie droite de l'interface
         Table droite = new Table();
         
         poissons_table = new Table();
@@ -156,8 +187,14 @@ public class BatimentQuai implements Batiment {
         droite.add(scrollpane_poissons).right().bottom().expand().height(this.fishInv.getWidth() * 1.618f * 0.3f).pad(5).padTop(5);
 
         caracteristiques.add(droite).right().expand();
+<<<<<<< Updated upstream
         
         for (int i = 0;i < CAPACITE_MAX_MENU;i++) {
+=======
+
+        //Boutons ajoutés à gauche de l'interface
+        for (int i = 0; i < CAPACITE_MAX_MENU; i++) {
+>>>>>>> Stashed changes
             mtable.add(new ButtonBateau(ButtonStylePoisson, i)).pad(2);
             mtable.row();
         }
@@ -166,6 +203,7 @@ public class BatimentQuai implements Batiment {
         skin.add("Arrow_left", new Texture("minigame2_arrow_left_fishing.png"));
         skin.add("Arrow_right", new Texture("minigame2_arrow_right_fishing.png"));
 
+        //Possibilité de changer de page ajoutée
         Table changer = new Table();
 
         ButtonStyle styleChangerPageGauche = new ButtonStyle(skin.getDrawable("Arrow_left"), skin.getDrawable("Arrow_left"), skin.getDrawable("Arrow_left"));
@@ -178,6 +216,7 @@ public class BatimentQuai implements Batiment {
 
         changer.add(new ButtonChangerPage(styleChangerPageDroite, 1)).pad(3);
 
+        //Mise en place du reste de l'interface
         mtable.add(changer);
 
         root.add(mtable);
@@ -191,6 +230,8 @@ public class BatimentQuai implements Batiment {
 
     @Override
     public void input(VilleScreen screen) {
+
+        //On vérifie si on ouvre la fenêtre
         if (Gdx.input.isKeyJustPressed(Input.Keys.K)) {
             if (this.isOpened) {
                 isOpened = false;
@@ -209,6 +250,17 @@ public class BatimentQuai implements Batiment {
             this.mouse = new Vector3(0, 0, 0);    
         }
     }
+    
+    public void agir() {
+        if (this.isOpened) {
+            isOpened = false;
+            mtable.setVisible(false);
+            caracteristiques.setVisible(false);
+        } else {
+            mtable.setVisible(true);
+            isOpened = true;
+        }
+    }
 
 
 
@@ -219,7 +271,6 @@ public class BatimentQuai implements Batiment {
 
     @Override
     public void draw(VilleScreen screen, int position) {
-        screen.jeu.batch.draw(this.batQuaiTexture, 0f + position * this.batQuaiTexture.getWidth(), 90);
 
         if (this.isOpened) {
             int epsilon = 8; 
@@ -243,9 +294,11 @@ public class BatimentQuai implements Batiment {
         }
     }
 
+    //Affichage des caractéristiques héritées du DataManager
     private void afficherCaracteristiques(int i) {
         caracteristiques.setVisible(true);
 
+        //DATAMANGAER : BATEAU DONT ON VEUT CONNAITRE LES CARACTERISTIQUES
         Bateau bateau = bateaux.get(i);
 
         nom_bateau.setText("Nom : " + bateau.getName());
@@ -274,11 +327,22 @@ public class BatimentQuai implements Batiment {
         }
     }
 
+    public String getNom() {
+        return "Quai";
+    }
+
     Event evenX = new Event();
 
     private PropertyChangeSupport support = new PropertyChangeSupport(this);
+<<<<<<< Updated upstream
     public class ButtonBateau extends Button{
         private int i; 
+=======
+
+    //Bouton pour sélectionner un bâteau
+    public class ButtonBateau extends Button {
+        private int i;
+>>>>>>> Stashed changes
         private TextButton textButton;
 
 
@@ -385,7 +449,12 @@ public class BatimentQuai implements Batiment {
         }
     }
 
+<<<<<<< Updated upstream
     public class ButtonPoisson extends Button{
+=======
+    //Bouton pour un poisson lorsqu'il est survolé
+    public class ButtonPoisson extends Button {
+>>>>>>> Stashed changes
         private Poisson poisson;
 
         Batch batch;
@@ -450,7 +519,12 @@ public class BatimentQuai implements Batiment {
         }
     }
 
+<<<<<<< Updated upstream
     public class ButtonChangerPage extends Button{
+=======
+    //Changer de Page
+    public class ButtonChangerPage extends Button {
+>>>>>>> Stashed changes
 
         public ButtonChangerPage(ButtonStyle buttonStyle, int pas) {
             super(buttonStyle);
@@ -468,4 +542,33 @@ public class BatimentQuai implements Batiment {
             });
         }
     }
+<<<<<<< Updated upstream
+=======
+
+    @Override
+    public void affichageInterface(VilleScreen screen) {
+        if (this.isOpened) {
+            int epsilon = 8;
+            screen.jeu.batch.draw(this.pixmaptex, screen.jeu.viewport.getWorldWidth() / 2 - width / 2,
+                    screen.jeu.viewport.getWorldHeight() / 2 - height / 2 + epsilon);
+            screen.jeu.batch.draw(this.NomBat,71,233);
+        }
+
+        
+        if (this.isOpened)
+            Gdx.input.setInputProcessor(stage);
+
+        stage.getViewport().apply();
+        stage.act();
+        stage.draw();
+
+
+        if (poissonDessin) {
+            Vector3 mouse = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+            screen.jeu.viewport.getCamera().unproject(mouse);
+
+            screen.jeu.batch.draw(poisson_texture_hover, mouse.x, mouse.y, 70, 70 / 1.6f);
+        }
+    }
+>>>>>>> Stashed changes
 }
