@@ -32,6 +32,7 @@ audio/BubblePop.mp3
 audio/ButtonClick.mp3
 audio/CashSound.mp3
 audio/Footstep.mp3
+audio/Music.mp3
 audio/Seagull.mp3
 bat1.png
 bg_actif.png
