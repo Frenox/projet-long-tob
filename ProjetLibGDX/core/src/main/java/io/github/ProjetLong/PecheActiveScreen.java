@@ -14,7 +14,6 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 
-import io.github.NoMinigame;
 import io.github.ProjetLong.ZonesPeche.Poisson;
 
 public class PecheActiveScreen implements Screen {
