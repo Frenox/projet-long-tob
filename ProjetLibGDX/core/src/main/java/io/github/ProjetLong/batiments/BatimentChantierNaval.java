@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+import io.github.ProjetLong.Bateaux.Barque;
 import io.github.ProjetLong.equipementetmodule.ConstructionOrder;
 import io.github.ProjetLong.equipementetmodule.EquipementType;
 import io.github.ProjetLong.screen.VilleScreen;
@@ -112,13 +113,12 @@ public class BatimentChantierNaval implements Batiment {
                         if (mouse.x >= cardX && mouse.x <= (cardX + cardWidth) &&
                                 mouse.y >= cardY && mouse.y <= (cardY + cardHeight)) {
                             // On ajoute l'équipement à la file si celle-ci n'est pas pleine
-                            if (buildQueue.size() < maxQueueLength) {
+                            if (buildQueue.size() < maxQueueLength && screen.jeu.data.getArgent() > 500) {
+                                screen.jeu.data.retirerArgent(500);
                                 int effectiveTime = getEffectiveBuildTime(eq);
                                 buildQueue.add(new ConstructionOrder(eq, effectiveTime));
                                 System.out.println(eq.getName() + " ajouté à la file d'attente (temps effectif : "
                                         + effectiveTime + " sec)");
-                            } else {
-                                System.out.println("La file d'attente est pleine !");
                             }
                             break; // Un seul clic traité par frame
                         }
@@ -140,6 +140,7 @@ public class BatimentChantierNaval implements Batiment {
             ConstructionOrder currentOrder = buildQueue.peek();
             currentOrder.decrementTime();
             if (currentOrder.isCompleted()) {
+                screen.jeu.data.ajouterBateauPort(new Barque());
                 System.out.println(currentOrder.getType().getName() + " construit !");
                 buildQueue.poll();
             }
@@ -165,9 +166,13 @@ public class BatimentChantierNaval implements Batiment {
     // Méthode d'affichage de l'interface (inspirée du code de la capitainerie)
     public void affichageInterface(VilleScreen screen) {
         if (isOpened) {
+
             // Affichage de l'overlay
             interfaceOverlaySprite.draw(screen.jeu.batch);
             screen.jeu.batch.draw(this.nom, 130, 231);
+            screen.jeu.HebertBold.setColor(1, 1, 0, 1); // couleur jaune
+            screen.jeu.HebertBold.draw(screen.jeu.batch, "COINS : " + screen.jeu.data.getArgent(), 300, 240);
+            screen.jeu.HebertBold.setColor(1, 1, 1, 1);
             // Titre et niveau (position et style inspirés de la capitainerie)
             screen.jeu.HebertBold.draw(screen.jeu.batch, "Niveau : " + level, 243, 229);
 

@@ -2,7 +2,7 @@ package io.github.ProjetLong.equipementetmodule;
 
 // Enumération qui définit les différents types d'équipement et leurs caractéristiques de base
 public enum EquipementType {
-    BOAT("Bateau", 120, 500), // 120 secondes, 500 unités de coût
+    BOAT("Barque", 20, 500), // 120 secondes, 500 unités de coût
     SAIL("Voile", 60, 200), // 60 secondes, 200 unités de coût
     STORAGE("Stockage", 180, 800); // 180 secondes, 800 unités de coût
 
