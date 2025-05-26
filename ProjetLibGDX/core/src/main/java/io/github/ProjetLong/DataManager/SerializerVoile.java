@@ -7,7 +7,7 @@ public class SerializerVoile extends SerializerBaseClass<Voile> {
     
     /**
      * Serialise un objet de type Voile sous la forme :
-     * Nom#1#Niveau
+     * Nom#-1-#Niveau
      * 
      * @param element (Voile) : Objet a serialiser
      * @param compositionLevel (int) : Niveau de composition de l'objet
@@ -25,7 +25,7 @@ public class SerializerVoile extends SerializerBaseClass<Voile> {
 
     /**
      * Deserialise un objet de type Voile etant sous la forme :
-     * Nom#1#Niveau
+     * Nom#-1-#Niveau
      * 
      * @param element (String) : Chaine de caractere serialisee
      * @param compositionLevel (int) : Niveau de composition de l'objet

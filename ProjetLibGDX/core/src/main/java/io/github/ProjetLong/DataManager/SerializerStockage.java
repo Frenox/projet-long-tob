@@ -16,7 +16,7 @@ public class SerializerStockage extends SerializerBaseClass<Stockage> {
     
     /**
      * Serialise un objet de type Stockage sous la forme :
-     * Niveau#1#Contenu
+     * Niveau#-1-#Contenu
      * 
      * @param element (Stockage) : Objet a serialiser
      * @param compositionLevel (int) : Niveau de composition de l'objet
@@ -35,7 +35,7 @@ public class SerializerStockage extends SerializerBaseClass<Stockage> {
 
     /**
      * Deserialise un objet de type Stockage etant sous la forme :
-     * Niveau#1#Contenu
+     * Niveau#-1-#Contenu
      * 
      * @param element (String) : Chaine de caractere serialisee
      * @param compositionLevel (int) : Niveau de composition de l'objet

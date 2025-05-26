@@ -23,12 +23,17 @@ public class AmbientSoundManager {
         startSeagullLoop(); // Lance la boucle de sfx de mouette
     }
 
-    /*Initialise la boucle d'audio pour le sfx de mouette */
+    /**
+     * Initialise la boucle d'audio pour le sfx de mouette 
+     */
     private void startSeagullLoop() {
         seagullScheduler = Executors.newSingleThreadScheduledExecutor();
         scheduleSeagullSound();
     }
 
+    /**
+     * Joue l'audio de mouette apres un timer random
+     */
     private void scheduleSeagullSound() {
         int delay = 20 + (int) (Math.random() * 35);
 

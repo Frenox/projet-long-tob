@@ -42,7 +42,7 @@ public class SerializerBateau extends SerializerBaseClass<Bateau> {
     
     /**
      * Serialise un objet de type Bateau sous la forme :
-     * type|Nom#1#Modele#1#ListeStockage#1#CanneAPeche#1#ListeCannesAPeche#1#ListeVoiles
+     * type|Nom#-1-#Modele#-1-#ListeStockage#-1-#CanneAPeche#-1-#ListeCannesAPeche#-1-#ListeVoiles
      * 
      * @param element (Bateau) : Objet a serialiser
      * @param compositionLevel (int) : Niveau de composition de l'objet
@@ -70,7 +70,7 @@ public class SerializerBateau extends SerializerBaseClass<Bateau> {
 
     /**
      * Deserialise un objet de type Bateau etant sous la forme :
-     * type|Nom#1#Modele#1#ListeStockage#1#CanneAPeche#1#ListeCannesAPeche#1#ListeVoiles
+     * type|Nom#-1-#Modele#-1-#ListeStockage#-1-#CanneAPeche#-1-#ListeCannesAPeche#-1-#ListeVoiles
      * 
      * @param element (String) : Chaine de caractere serialisee
      * @param compositionLevel (int) : Niveau de composition de l'objet

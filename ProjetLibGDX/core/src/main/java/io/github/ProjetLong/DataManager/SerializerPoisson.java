@@ -7,7 +7,7 @@ public class SerializerPoisson extends SerializerBaseClass<Poisson> {
     
     /**
      * Serialise un objet de type Poisson sous la forme :
-     * ID#1#Rarete
+     * ID#-1-#Rarete
      * 
      * @param element (Poisson) : Objet a serialiser
      * @param compositionLevel (int) : Niveau de composition de l'objet
@@ -24,7 +24,7 @@ public class SerializerPoisson extends SerializerBaseClass<Poisson> {
 
     /**
      * Deserialise un objet de type Poisson etant sous la forme :
-     * ID#1#Rarete
+     * ID#-1-#Rarete
      * 
      * @param element (String) : Chaine de caractere serialisee
      * @param compositionLevel (int) : Niveau de composition de l'objet

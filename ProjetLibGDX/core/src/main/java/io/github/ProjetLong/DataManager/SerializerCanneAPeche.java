@@ -15,7 +15,7 @@ public class SerializerCanneAPeche extends SerializerBaseClass<CanneAPeche> {
 
     /**
      * Serialise un objet de type CanneAPeche sous la forme :
-     * Zone#1#Niveau
+     * Zone#-1-#Niveau
      * 
      * @param element (CanneAPeche) : Objet a serialiser
      * @param compositionLevel (int) : Niveau de composition de l'objet
@@ -34,7 +34,7 @@ public class SerializerCanneAPeche extends SerializerBaseClass<CanneAPeche> {
 
     /**
      * Deserialise un objet de type CanneAPeche etant sous la forme :
-     * Zone#1#Niveau
+     * Zone#-1-#Niveau
      * 
      * @param element (String) : Chaine de caractere serialisee
      * @param compositionLevel (int) : Niveau de composition de l'objet
