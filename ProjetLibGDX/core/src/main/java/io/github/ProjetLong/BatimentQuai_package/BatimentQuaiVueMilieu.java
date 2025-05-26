@@ -11,16 +11,20 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import io.github.ProjetLong.Bateaux.Bateau;
 
+/*
+ * Regroupe les éléments affichés au milieu de l'interface quai
+ */
 public class BatimentQuaiVueMilieu extends Table {
-    public BatimentQuaiVueMilieu(BatimentQuaiModele modele) {
+    public BatimentQuaiVueMilieu(BatimentQuaiModele modele){
         super();
-
+        
         Image Equipement_Texture = new Image();
 
-        this.add(new Label("Equipement : ", BatimentQuaiVue.skin, "HebertSansBold", Color.WHITE)).top().left().pad(2)
-                .expand().row();
+        //La canne à pêche équipée est affichée
+        this.add(new Label("Equipement : ", BatimentQuaiVue.skin, "HebertSansBold", Color.WHITE)).top().left().pad(2).expand().row();
         this.add(Equipement_Texture).center().pad(2).expand();
 
+        //Lorsque l'on veut afficher un nouveau bateau, on met à jour l'affichage de la canne à pêche équipée
         modele.addPropertyChangeListener("Nouveau bateau affiché", new PropertyChangeListener() {
 
             @Override
@@ -29,7 +33,7 @@ public class BatimentQuaiVueMilieu extends Table {
 
                 Equipement_Texture.setDrawable(new TextureRegionDrawable(bateau.getEquipedCanne().getTexture()));
             }
-
+            
         });
     }
 }

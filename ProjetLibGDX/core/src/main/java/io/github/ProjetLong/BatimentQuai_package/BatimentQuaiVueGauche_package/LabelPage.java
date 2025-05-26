@@ -9,6 +9,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import io.github.ProjetLong.BatimentQuai_package.BatimentQuaiModele;
 import io.github.ProjetLong.BatimentQuai_package.BatimentQuaiVue;
 
+/*
+ * Label affichant le nombre de pages et le numéro de pages maximal possible
+ */
 public class LabelPage extends Label{
     public LabelPage(BatimentQuaiModele modele) {
         super((modele.getPage() + 1) + " / " + (modele.getMaxPage() + 1), BatimentQuaiVue.skin, "HebertSansBold", Color.WHITE);
@@ -24,3 +27,4 @@ public class LabelPage extends Label{
         });
     }
 }
+

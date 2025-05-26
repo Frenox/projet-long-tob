@@ -7,6 +7,9 @@ import io.github.ProjetLong.BatimentQuai_package.BatimentQuaiVueGauche_package.C
 import io.github.ProjetLong.BatimentQuai_package.BatimentQuaiVueGauche_package.InformationsPrincipales;
 import io.github.ProjetLong.batiments.BatimentQuai;
 
+/*
+ * Regroupe les éléments affichés à gauche de l'interface quai
+ */
 public class BatimentQuaiVueGauche extends Table {
     public BatimentQuaiVueGauche(BatimentQuai quai, BatimentQuaiModele modele) {
 

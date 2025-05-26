@@ -12,10 +12,14 @@ import io.github.ProjetLong.Bateaux.Bateau;
 import io.github.ProjetLong.ZonesPeche.Poisson;
 import io.github.ProjetLong.equipementetmodule.ModuleBateau;
 
+/*
+ * Regroupe les éléments affichés à droite de l'interface quai
+ */
 public class BatimentQuaiVueDroite extends Table {
     public BatimentQuaiVueDroite(BatimentQuaiModele modele) {
         super();
 
+        //Poissons et éléments dans l'espace de stockage affichés 
         Table poissons_table = new Table();
         Table stockage_table = new Table();
 
@@ -24,14 +28,13 @@ public class BatimentQuaiVueDroite extends Table {
 
         this.setSkin(BatimentQuaiVue.skin);
         this.add("Equipements disponibles :", "HebertSansBold", Color.WHITE).row();
-        this.add(scrollpane_stockage).center().bottom().expand()
-                .height(BatimentQuaiVue.fishInv.getWidth() * 1.618f * 0.3f)
+        this.add(scrollpane_stockage).center().bottom().expand().height(BatimentQuaiVue.fishInv.getWidth() * 1.618f * 0.3f)
                 .pad(5).padBottom(5).row();
         this.add("Poissons", "HebertSansBold", Color.WHITE).padBottom(0).row();
-        this.add(scrollpane_poissons).center().bottom().expand()
-                .height(BatimentQuaiVue.fishInv.getWidth() * 1.618f * 0.3f).pad(5)
+        this.add(scrollpane_poissons).center().bottom().expand().height(BatimentQuaiVue.fishInv.getWidth() * 1.618f * 0.3f).pad(5)
                 .padTop(5);
 
+        //Lorsque l'on veut afficher un nouveau bateau, la table des poissons et du stockage se mettent à jour
         modele.addPropertyChangeListener("Nouveau bateau affiché", new PropertyChangeListener() {
 
             @Override
@@ -48,7 +51,7 @@ public class BatimentQuaiVueDroite extends Table {
                     stockage_table.add(new Image(module.getTexture())).row();
                 }
             }
-
+            
         });
     }
 }
