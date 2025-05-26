@@ -2,9 +2,8 @@ package io.github.ProjetLong.DataManager;
 
 import java.util.List;
 
-import io.github.ProjetLong.Stockage;
 import io.github.ProjetLong.ZonesPeche.Poisson;
-
+import io.github.ProjetLong.equipementetmodule.Stockage;
 
 public class SerializerStockage extends SerializerBaseClass<Stockage> {
 
@@ -13,12 +12,12 @@ public class SerializerStockage extends SerializerBaseClass<Stockage> {
     public SerializerStockage() {
         poissonSerializer = new SerializerPoisson();
     }
-    
+
     /**
      * Serialise un objet de type Stockage sous la forme :
      * Niveau#-1-#Contenu
      * 
-     * @param element (Stockage) : Objet a serialiser
+     * @param element          (Stockage) : Objet a serialiser
      * @param compositionLevel (int) : Niveau de composition de l'objet
      * @return _______ (String) : Chaine de caractere serialisee
      */
@@ -27,9 +26,9 @@ public class SerializerStockage extends SerializerBaseClass<Stockage> {
         if (element == null) {
             return "";
         }
-        
+
         String separateur = getSeparateur(compositionLevel);
-        String contenu = poissonSerializer.serializeListData(element.getContenu(), compositionLevel+1);
+        String contenu = poissonSerializer.serializeListData(element.getContenu(), compositionLevel + 1);
         return element.getNiveau() + separateur + contenu;
     }
 
@@ -37,7 +36,7 @@ public class SerializerStockage extends SerializerBaseClass<Stockage> {
      * Deserialise un objet de type Stockage etant sous la forme :
      * Niveau#-1-#Contenu
      * 
-     * @param element (String) : Chaine de caractere serialisee
+     * @param element          (String) : Chaine de caractere serialisee
      * @param compositionLevel (int) : Niveau de composition de l'objet
      * @return _______ (Stockage) : Objet deserialise
      */
@@ -46,12 +45,12 @@ public class SerializerStockage extends SerializerBaseClass<Stockage> {
         try {
             String[] stockageData = element.split(getSeparateur(compositionLevel));
             Stockage newStockage = new Stockage(Integer.parseInt(stockageData[0]));
-            
-            List<Poisson> contenu = poissonSerializer.deserializeListData(stockageData[1], compositionLevel+1);
+
+            List<Poisson> contenu = poissonSerializer.deserializeListData(stockageData[1], compositionLevel + 1);
             for (Poisson poisson : contenu) {
                 newStockage.addPoisson(poisson);
             }
-    
+
             return newStockage;
         } catch (Exception e) {
             return null;

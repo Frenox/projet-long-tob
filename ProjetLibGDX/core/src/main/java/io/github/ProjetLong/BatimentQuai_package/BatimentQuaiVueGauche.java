@@ -2,10 +2,10 @@ package io.github.ProjetLong.BatimentQuai_package;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
-import io.github.ProjetLong.BatimentQuai;
 import io.github.ProjetLong.BatimentQuai_package.BatimentQuaiVueGauche_package.ButtonsBateaux;
 import io.github.ProjetLong.BatimentQuai_package.BatimentQuaiVueGauche_package.ChangerPage;
 import io.github.ProjetLong.BatimentQuai_package.BatimentQuaiVueGauche_package.InformationsPrincipales;
+import io.github.ProjetLong.batiments.BatimentQuai;
 
 public class BatimentQuaiVueGauche extends Table {
     public BatimentQuaiVueGauche(BatimentQuai quai, BatimentQuaiModele modele) {

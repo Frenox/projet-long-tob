@@ -9,15 +9,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-import io.github.ProjetLong.Bateau;
+import io.github.ProjetLong.Bateaux.Bateau;
 
 public class BatimentQuaiVueMilieu extends Table {
-    public BatimentQuaiVueMilieu(BatimentQuaiModele modele){
+    public BatimentQuaiVueMilieu(BatimentQuaiModele modele) {
         super();
-        
+
         Image Equipement_Texture = new Image();
 
-        this.add(new Label("Equipement : ", BatimentQuaiVue.skin, "HebertSansBold", Color.WHITE)).top().left().pad(2).expand().row();
+        this.add(new Label("Equipement : ", BatimentQuaiVue.skin, "HebertSansBold", Color.WHITE)).top().left().pad(2)
+                .expand().row();
         this.add(Equipement_Texture).center().pad(2).expand();
 
         modele.addPropertyChangeListener("Nouveau bateau affiché", new PropertyChangeListener() {
@@ -28,7 +29,7 @@ public class BatimentQuaiVueMilieu extends Table {
 
                 Equipement_Texture.setDrawable(new TextureRegionDrawable(bateau.getEquipedCanne().getTexture()));
             }
-            
+
         });
     }
 }

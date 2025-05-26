@@ -3,7 +3,7 @@ package io.github.ProjetLong.BatimentQuai_package;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-import io.github.ProjetLong.Bateau;
+import io.github.ProjetLong.Bateaux.Bateau;
 import io.github.ProjetLong.DataManager.DataManager;
 
 public class BatimentQuaiModele {
@@ -14,7 +14,7 @@ public class BatimentQuaiModele {
     private int maxPage;
 
     private DataManager data;
-    
+
     private PropertyChangeSupport support;
 
     public BatimentQuaiModele(DataManager data) {
@@ -61,7 +61,7 @@ public class BatimentQuaiModele {
             if (this.page == this.maxPage) {
                 page--;
             }
-            
+
         }
         support.firePropertyChange("Nombre de bateaux différent", page + 1, page);
     }
@@ -69,9 +69,9 @@ public class BatimentQuaiModele {
     public boolean element_affichable(int i) {
         return (i + this.page * this.CAPACITE_MAX_MENU < data.getBateaux().size());
     }
-    
+
     public Bateau bateau_i(int i) {
         return this.data.getBateaux().get((i + this.page * this.CAPACITE_MAX_MENU));
     }
-    
+
 }

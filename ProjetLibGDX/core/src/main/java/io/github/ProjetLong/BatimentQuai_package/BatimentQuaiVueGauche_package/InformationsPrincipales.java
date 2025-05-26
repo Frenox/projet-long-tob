@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
-import io.github.ProjetLong.Bateau;
+import io.github.ProjetLong.Bateaux.Bateau;
 import io.github.ProjetLong.BatimentQuai_package.BatimentQuaiModele;
 import io.github.ProjetLong.BatimentQuai_package.BatimentQuaiVue;
 
@@ -35,7 +35,7 @@ public class InformationsPrincipales extends Table {
                 modele_bateau.setText("Modele : " + bateau.getModeleName());
                 taille_stockage.setText("Taille Stockage : " + bateau.getTailleStockage());
             }
-            
+
         });
     }
 }

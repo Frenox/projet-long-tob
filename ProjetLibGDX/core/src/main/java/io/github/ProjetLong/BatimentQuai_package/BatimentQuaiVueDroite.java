@@ -8,9 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
-import io.github.ProjetLong.Bateau;
-import io.github.ProjetLong.ModuleBateau;
+import io.github.ProjetLong.Bateaux.Bateau;
 import io.github.ProjetLong.ZonesPeche.Poisson;
+import io.github.ProjetLong.equipementetmodule.ModuleBateau;
 
 public class BatimentQuaiVueDroite extends Table {
     public BatimentQuaiVueDroite(BatimentQuaiModele modele) {
@@ -24,10 +24,12 @@ public class BatimentQuaiVueDroite extends Table {
 
         this.setSkin(BatimentQuaiVue.skin);
         this.add("Equipements disponibles :", "HebertSansBold", Color.WHITE).row();
-        this.add(scrollpane_stockage).center().bottom().expand().height(BatimentQuaiVue.fishInv.getWidth() * 1.618f * 0.3f)
+        this.add(scrollpane_stockage).center().bottom().expand()
+                .height(BatimentQuaiVue.fishInv.getWidth() * 1.618f * 0.3f)
                 .pad(5).padBottom(5).row();
         this.add("Poissons", "HebertSansBold", Color.WHITE).padBottom(0).row();
-        this.add(scrollpane_poissons).center().bottom().expand().height(BatimentQuaiVue.fishInv.getWidth() * 1.618f * 0.3f).pad(5)
+        this.add(scrollpane_poissons).center().bottom().expand()
+                .height(BatimentQuaiVue.fishInv.getWidth() * 1.618f * 0.3f).pad(5)
                 .padTop(5);
 
         modele.addPropertyChangeListener("Nouveau bateau affiché", new PropertyChangeListener() {
@@ -46,7 +48,7 @@ public class BatimentQuaiVueDroite extends Table {
                     poissons_table.add(new Image(module.getTexture())).row();
                 }
             }
-            
+
         });
     }
 }

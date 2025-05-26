@@ -7,9 +7,20 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
+import io.github.ProjetLong.Bateaux.Barque;
+import io.github.ProjetLong.Bateaux.Voilier;
 import io.github.ProjetLong.DataManager.DataManager;
 import io.github.ProjetLong.ZonesPeche.SousZoneCotePort;
-
+import io.github.ProjetLong.batiments.Batiment;
+import io.github.ProjetLong.batiments.BatimentCapitainerie;
+import io.github.ProjetLong.batiments.BatimentChantierNaval;
+import io.github.ProjetLong.batiments.BatimentEquipMarket;
+import io.github.ProjetLong.batiments.BatimentMarket;
+import io.github.ProjetLong.batiments.BatimentQuai;
+import io.github.ProjetLong.equipementetmodule.CanneAPeche;
+import io.github.ProjetLong.equipementetmodule.Stockage;
+import io.github.ProjetLong.screen.AmbientSoundManager;
+import io.github.ProjetLong.screen.mainMenuScreen;
 
 /**
  * {@link com.badlogic.gdx.ApplicationListener} implementation shared by all
@@ -99,9 +110,15 @@ public class Jeu extends Game {
 
     }
 
+    public void exit() {
+        Gdx.app.exit();
+    }
+
     @Override
     public void dispose() {
+        super.dispose();
         batch.dispose();
+        System.exit(0);
 
     }
 }

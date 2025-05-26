@@ -10,10 +10,10 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.github.ProjetLong.Bateau;
-import io.github.ProjetLong.ModuleBateau;
-import io.github.ProjetLong.Batiment;
+import io.github.ProjetLong.Bateaux.Bateau;
 import io.github.ProjetLong.ZonesPeche.Poisson;
+import io.github.ProjetLong.batiments.Batiment;
+import io.github.ProjetLong.equipementetmodule.ModuleBateau;
 
 public class DataManager {
 
@@ -189,6 +189,7 @@ public class DataManager {
             ObjectMapper mapper = new ObjectMapper();
             // Lecture des donnees
             data = mapper.readValue(dataFile, Map.class);
+
             actData = slot;
             bateaux = bateauSerializer.deserializeListData(data.get("Bateaux"), 0);
             stockagePoissons = poissonSerializer.deserializeListData(data.get("StockagePoissons"), 0);
