@@ -3,6 +3,7 @@ package io.github.ProjetLong.DataManager;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 // JSON manipulation
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -188,7 +189,8 @@ public class DataManager {
 
             ObjectMapper mapper = new ObjectMapper();
             // Lecture des donnees
-            data = mapper.readValue(dataFile, Map.class);
+            data = mapper.readValue(dataFile, new TypeReference<Map<String, String>>() {
+            });
 
             actData = slot;
             bateaux = bateauSerializer.deserializeListData(data.get("Bateaux"), 0);

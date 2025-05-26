@@ -39,7 +39,7 @@ public class BatimentChantierNaval implements Batiment {
     private Texture nom;
 
     // Texture de fond pour les "cartes" d'option
-    private Texture equipmentCardTexture;
+    // private Texture equipmentCardTexture;
 
     // Gestion de la file d'attente pour les ordres de construction
     private final Queue<ConstructionOrder> buildQueue;
@@ -70,7 +70,8 @@ public class BatimentChantierNaval implements Batiment {
         this.interfaceOverlayTexture = new Texture("overlayMarche.png"); // overlay de l'interface
         this.buttonValidateTexture = new Texture("valider.png"); // bouton de validation (affichage)
         this.buttonCancelTexture = new Texture("refuser.png"); // bouton d'annulation (affichage)
-        this.equipmentCardTexture = new Texture("hover_alpha.png"); // fond pour une carte d'option
+        // this.equipmentCardTexture = new Texture("hover_alpha.png"); // fond pour une
+        // carte d'option
 
         // Création des sprites
         this.chantierSprite = new Sprite(chantierTexture);
@@ -177,7 +178,7 @@ public class BatimentChantierNaval implements Batiment {
                     int cardX = cardStartX;
                     int cardY = cardStartY - index * cardHeight;
                     // Affichage de la carte (le fond)
-                    screen.jeu.batch.draw(equipmentCardTexture, cardX, cardY);
+                    // screen.jeu.batch.draw(equipmentCardTexture, cardX, cardY);
                     // Affichage des informations : nom, temps effectif et coût
                     String text = eq.getName() + " (T:" + getEffectiveBuildTime(eq)
                             + "s, C:" + eq.getBaseCost() + ")";
