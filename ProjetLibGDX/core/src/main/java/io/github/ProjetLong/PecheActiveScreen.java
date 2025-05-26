@@ -38,7 +38,6 @@ public class PecheActiveScreen implements Screen {
     private int timerPrise;
     private ShaderProgram shader;
     private ShaderProgram shaderEau;
-    private Texture water;
 
     public PecheActiveScreen(final Jeu jeu, Bateau bateau) {
         this.jeu = jeu;
@@ -59,7 +58,6 @@ public class PecheActiveScreen implements Screen {
         sunTexture = new Texture("sun.png");
         sun = new Sprite(sunTexture);
         sun.setPosition(256 - 25, 200 - 25);
-        water = new Texture("water.png");
         ShaderProgram.pedantic = false;
         shader = new ShaderProgram(Gdx.files.internal("shaders/vertex.vert"),
                 Gdx.files.internal("shaders/shader1.frag"));
