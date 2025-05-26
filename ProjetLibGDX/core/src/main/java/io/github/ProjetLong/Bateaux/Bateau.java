@@ -126,7 +126,7 @@ public class Bateau {
         for (Stockage mod : this.Stockage) {
             if (mod.getContenu().size() != 0) {
                 mod.addPlace();
-                temp = mod.getContenu().removeFirst();
+                temp = mod.getContenu().remove(0);
                 StockageDispo += 1;
                 break;
             }
