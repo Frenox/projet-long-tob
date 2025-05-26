@@ -30,6 +30,9 @@ public class BatimentQuaiVueMilieu extends Table {
             @Override
             public void propertyChange(PropertyChangeEvent arg0) {
                 Bateau bateau = (Bateau) arg0.getNewValue();
+                if (bateau == null || bateau.getEquipedCanne() == null) {
+                    return;
+                }
 
                 Equipement_Texture.setDrawable(new TextureRegionDrawable(bateau.getEquipedCanne().getTexture()));
             }
