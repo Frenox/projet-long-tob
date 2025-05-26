@@ -13,37 +13,55 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
 public class AffichageInventaire implements SousFenetre {
+
+    // bateau actuel
     private Bateau bateau;
+
+    // Texture nécessaires
     private Texture fondInventaire;
     private Texture tabStock;
     private Texture tabMod;
-    private boolean whichTab;
     private Texture fishInv;
     private Texture hoverGradienTexture;
     private Texture selecCanneTexture;
-    final private List<Vector2> slotsCoordonnees;
-    private int page;
     private Texture hoverTexture;
+
+    // Affiche le stockage ou les modules
+    private boolean whichTab;
+
+    // Liste des coordonnées des cases
+    final private List<Vector2> slotsCoordonnees;
+
+    private int page;
     private int caseCanne;
     private int timer;
+
+    // Detecte la souris sur l'écran
     private Vector3 mouseCoor;
     private Vector2 hoverCoord;
     private int whichHover;
 
     public AffichageInventaire(Bateau bateau) {
         this.bateau = bateau;
-        whichHover = 0;
+
+        // Crée les texture
         fondInventaire = new Texture("bg_inventory.png");
         tabMod = new Texture("boat_tab_inventory.png");
         tabStock = new Texture("fish_tab_inventory.png");
         selecCanneTexture = new Texture("contour_slot.png");
-        whichTab = false;
-        hoverCoord = new Vector2();
+        fishInv = new Texture("fish_tab_fish.png");
         hoverTexture = new Texture("mouse_hover_actif.png");
         hoverGradienTexture = new Texture("hover_alpha.png");
+
+        // Initialise les variables
         page = 0;
         caseCanne = 0;
-        fishInv = new Texture("fish_tab_fish.png");
+        whichTab = false;
+
+        // creer les variable de position souris
+        hoverCoord = new Vector2();
+        whichHover = 0;
+
         // ajout de coordonnées de slots pour les textures
         slotsCoordonnees = new ArrayList<Vector2>();
         slotsCoordonnees.add(new Vector2(369, 158));
@@ -52,6 +70,8 @@ public class AffichageInventaire implements SousFenetre {
         slotsCoordonnees.add(new Vector2(430, 98));
         slotsCoordonnees.add(new Vector2(369, 38));
         slotsCoordonnees.add(new Vector2(430, 38));
+
+        // Dans quelle case se situe la canne à pêche équipée
         int canneequip = bateau.getModules().indexOf(bateau.getEquipedCanne());
         switch (canneequip) {
             case 0:
@@ -80,13 +100,21 @@ public class AffichageInventaire implements SousFenetre {
 
     @Override
     public void input(PecheActiveScreen screen) {
+
+        // récupère les coordonnés de la souris tout le temps et quand clic pour
+        // Utiliser après dans le survol et les boutons
         mouseCoor = screen.jeu.viewport.getCamera()
                 .unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+
+            // test si il faut changer entre stockage et bateau
             if (425 < mouseCoor.x && mouseCoor.x < 494 && 246 < mouseCoor.y && mouseCoor.y < 265) {
                 whichTab = true;
             } else if (356 < mouseCoor.x && mouseCoor.x < 425 && 246 < mouseCoor.y && mouseCoor.y < 265) {
                 whichTab = false;
+
+                // Test si les boutons flèches sont cliqués
             } else if (436 < mouseCoor.x && mouseCoor.x < 451 && 32 < mouseCoor.y && mouseCoor.y < 44
                     && whichTab == true) {
                 if ((page < ((bateau.getContenu().size() - 1) / 9))) {
@@ -96,41 +124,19 @@ public class AffichageInventaire implements SousFenetre {
                     && whichTab == true) {
                 if (page > 0) {
                     page--;
-                } // test si canne à pêche cliqué
-            } else if (370 < mouseCoor.x && mouseCoor.x < 419 && 158 < mouseCoor.y && mouseCoor.y < 209) {
-                if (bateau.getModules().size() >= 1 && bateau.getModules().get(0) instanceof CanneAPeche) {
-                    bateau.setEquipedCanne((CanneAPeche) bateau.getModules().get(0));
-                    caseCanne = 1;
-                }
-            } else if (370 < mouseCoor.x && mouseCoor.x < 419 && 98 < mouseCoor.y && mouseCoor.y < 149) {
-                if (bateau.getModules().size() >= 3 && bateau.getModules().get(2) instanceof CanneAPeche) {
-                    bateau.setEquipedCanne((CanneAPeche) bateau.getModules().get(2));
-                    caseCanne = 2;
-                }
-            } else if (370 < mouseCoor.x && mouseCoor.x < 419 && 38 < mouseCoor.y && mouseCoor.y < 89) {
-                if (bateau.getModules().size() >= 5 && bateau.getModules().get(4) instanceof CanneAPeche) {
-                    bateau.setEquipedCanne((CanneAPeche) bateau.getModules().get(4));
-                    caseCanne = 3;
-                }
-            } else if (430 < mouseCoor.x && mouseCoor.x < 481 && 158 < mouseCoor.y && mouseCoor.y < 209) {
-                if (bateau.getModules().size() >= 2 && bateau.getModules().get(1) instanceof CanneAPeche) {
-                    bateau.setEquipedCanne((CanneAPeche) bateau.getModules().get(1));
-                    caseCanne = 11;
-                }
-            } else if (430 < mouseCoor.x && mouseCoor.x < 481 && 98 < mouseCoor.y && mouseCoor.y < 149) {
-                if (bateau.getModules().size() >= 4 && bateau.getModules().get(3) instanceof CanneAPeche) {
-                    bateau.setEquipedCanne((CanneAPeche) bateau.getModules().get(3));
-                    caseCanne = 12;
-                }
-            } else if (430 < mouseCoor.x && mouseCoor.x < 481 && 38 < mouseCoor.y && mouseCoor.y < 89) {
-                if (bateau.getModules().size() >= 6 && bateau.getModules().get(5) instanceof CanneAPeche) {
-                    bateau.setEquipedCanne((CanneAPeche) bateau.getModules().get(5));
-                    caseCanne = 13;
                 }
             }
 
+            // Equipe la canne à peche quand clique dessus
+            verifierEtEquiperModule(370, 419, 158, 209, 0, 1);
+            verifierEtEquiperModule(370, 419, 98, 149, 2, 2);
+            verifierEtEquiperModule(370, 419, 38, 89, 4, 3);
+            verifierEtEquiperModule(430, 481, 158, 209, 1, 11);
+            verifierEtEquiperModule(430, 481, 98, 149, 3, 12);
+            verifierEtEquiperModule(430, 481, 38, 89, 5, 13);
+
         }
-        // CHECK DE POSITION POUR LE HOVER
+        // CHECK DE POSITION POUR LE HOVER DES MODULES
         if (370 < mouseCoor.x && mouseCoor.x < 419 && 158 < mouseCoor.y && mouseCoor.y < 209
                 && bateau.getModules().size() >= 1 && whichTab == false) {
             if (timer > 0) {
@@ -167,10 +173,8 @@ public class AffichageInventaire implements SousFenetre {
                 timer--;
                 hoverCoord.set(mouseCoor.x, mouseCoor.y);
             }
-            // TEST STOCKAGE HOVER
-            //
-            //
-            //
+
+            // CHECK DE POSITION POUR LE HOVER DES POISSONS
         } else if (362 < mouseCoor.x && mouseCoor.x < 488 && 199 < mouseCoor.y && mouseCoor.y < 216
                 && bateau.getContenu().size() >= 1 + 9 * page && whichTab == true) {
             if (timer > 0) {
@@ -235,12 +239,24 @@ public class AffichageInventaire implements SousFenetre {
                 whichHover = 9;
             }
         } else {
+            // Reset le timer si rien n'est survolé
             timer = 45;
             whichHover = 0;
         }
 
     }
 
+    // Permet de factoriser le code de check de position
+    private void verifierEtEquiperModule(int minX, int maxX, int minY, int maxY, int index, int caseValue) {
+        if (mouseCoor.x >= minX && mouseCoor.x < maxX && mouseCoor.y >= minY && mouseCoor.y < maxY) {
+            if (bateau.getModules().size() > index && bateau.getModules().get(index) instanceof CanneAPeche) {
+                bateau.setEquipedCanne((CanneAPeche) bateau.getModules().get(index));
+                caseCanne = caseValue;
+            }
+        }
+    }
+
+    // Pas de logic
     @Override
     public void logic(PecheActiveScreen screen) {
     }
@@ -248,7 +264,8 @@ public class AffichageInventaire implements SousFenetre {
     @Override
     public void draw(PecheActiveScreen screen) {
         screen.jeu.batch.draw(fondInventaire, 356, 25);
-        // stock
+
+        // Affiche le stockage
         if (whichTab) {
             screen.jeu.batch.draw(tabStock, 356, 25);
             // Draw inventaire
@@ -260,17 +277,15 @@ public class AffichageInventaire implements SousFenetre {
                     screen.jeu.HebertBold.draw(screen.jeu.batch, temp.get(i).getNom(), 368f, 210.5f - ((i % 9) * 19));
                 }
             }
-            // print le nb de page
-            // screen.jeu.HebertBold.getRegion().getTexture().setFilter(TextureFilter.Linear,
-            // TextureFilter.Linear);
+
+            // Affiche le numéro de page et la place disponible
             screen.jeu.HebertBold.draw(screen.jeu.batch, Integer.toString(page + 1), 419.5f, 43f);
             screen.jeu.HebertBold.draw(screen.jeu.batch, "/", 423.6f, 42f);
             screen.jeu.HebertBold.draw(screen.jeu.batch, Integer.toString(((len - 1) / 9) + 1), 426f, 40f);
-
             screen.jeu.HebertBold.draw(screen.jeu.batch, "Utilise : " + Integer.toString(bateau.getContenu().size())
                     + "/" + Integer.toString(bateau.getTailleStockage()), 362f, 236f);
 
-            // modules
+            // Affiche les modules
         } else {
             screen.jeu.batch.draw(tabMod, 356, 25);
             // draw les modules du bateau
@@ -288,6 +303,8 @@ public class AffichageInventaire implements SousFenetre {
                 screen.jeu.batch.draw(selecCanneTexture, 369 + 61 * colonne,
                         158 - ((caseCanne - 10 * colonne) - 1) * 60);
             }
+
+            // Met l'en-tête du bateau
             screen.jeu.HebertBold.draw(screen.jeu.batch, "Nom : \n" + bateau.getName(), 362f, 242f);
             screen.jeu.HebertBold.draw(screen.jeu.batch, "Modele : \n" + bateau.getModeleName(), 425f, 242f);
 
@@ -296,6 +313,8 @@ public class AffichageInventaire implements SousFenetre {
         // draw hover tab
         if (timer < 1) {
             screen.jeu.batch.draw(hoverTexture, hoverCoord.x - 106, hoverCoord.y);
+
+            // affiche les caractériqtiques du poissons
             if (whichTab) {
                 screen.jeu.batch.draw(bateau.getContenu().get(whichHover + 9 * page - 1).getHoverText(),
                         hoverCoord.x - 105, hoverCoord.y + 1);

@@ -1,5 +1,6 @@
 package io.github.ProjetLong;
 
+//Batiment vide
 public class noBat implements Batiment {
     public void input(VilleScreen screen) {
     }

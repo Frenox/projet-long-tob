@@ -3,25 +3,32 @@ package io.github.ProjetLong;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-import io.github.ProjetLong.ZonesPeche.SousZoneCotePort;
-
 public class Fregate extends Bateau {
     private Sprite boatSprite;
 
     public Fregate() {
+        // crée un bateau par défaut
         super(5);
+
+        // Met les noms par défaut du module
         setName("Fregate");
         setModeleName("Fregate");
+
+        // Gestion du sprite du bateau
         boatSprite = new Sprite(new Texture("voilier.png"));
         boatSprite.setPosition(227, 118);
+
+        // Met le logo
         setLogo(new Texture("boat_logo4.png"));
     }
 
+    // Deplacement en x
     @Override
     public void addSpriteX(float x) {
         boatSprite.translateX(x);
     }
 
+    // Deplacement en y
     @Override
     public void addSpriteY(float y) {
         boatSprite.translateY(y);

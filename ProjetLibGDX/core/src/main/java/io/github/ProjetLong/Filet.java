@@ -11,9 +11,9 @@ public class Filet implements ModuleBateau, Equipement {
     private String nom;
     private final String categorie = "Filet"; // fixe
 
-    private boolean aLaVente; 
+    private boolean aLaVente;
     private final static int prixInitial = 35; // Plus cher qu'une canne car plus efficace
-    private final static int prixParNiveau = 8; 
+    private final static int prixParNiveau = 8;
 
     private int capaciteCapture; // Capacité de capture de poissons
 
@@ -22,10 +22,10 @@ public class Filet implements ModuleBateau, Equipement {
         this.Niveau = Niveau;
         this.nom = "Filet";
         this.aLaVente = false;
-        
+
         // Capacité de capture augmente avec le niveau
         this.capaciteCapture = 2 + Niveau; // Niveau 1 = 3 poissons max, etc.
-        
+
         // Texture selon le niveau
         switch (Niveau) {
             case 1:
@@ -50,7 +50,7 @@ public class Filet implements ModuleBateau, Equipement {
         this.nom = "Filet";
         this.aLaVente = true; // pour la vente
         this.capaciteCapture = 2 + Niveau;
-        
+
         // Texture selon le niveau
         switch (Niveau) {
             case 1:
@@ -70,11 +70,12 @@ public class Filet implements ModuleBateau, Equipement {
         }
     }
 
+    // Constructeur pour la vente
     public Filet() {
         this(1);
     }
 
-    @Override 
+    @Override
     public Texture getTexture() {
         return filetTexture;
     }
@@ -124,6 +125,7 @@ public class Filet implements ModuleBateau, Equipement {
         return (aLaVente) ? prixInitial + (Niveau - 1) * prixParNiveau : -1;
     }
 
+    // Enleve de la possibilité d'acheter
     @Override
     public void enleverDeLaVente() {
         aLaVente = false;
@@ -131,7 +133,7 @@ public class Filet implements ModuleBateau, Equipement {
 
     @Override
     public Equipement dupliquer() {
-        Equipement e =  new Filet(this.Niveau, this.zone);
+        Equipement e = new Filet(this.Niveau, this.zone);
         e.setNom(this.nom);
         e.enleverDeLaVente(); // Duplique sans la vente
         return e;
