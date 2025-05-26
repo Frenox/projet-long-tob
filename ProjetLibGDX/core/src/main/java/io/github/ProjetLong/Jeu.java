@@ -11,6 +11,7 @@ import io.github.ProjetLong.DataManager.DataManager;
 import io.github.ProjetLong.ZonesPeche.Poisson;
 import io.github.ProjetLong.ZonesPeche.SousZoneCotePort;
 
+
 /**
  * {@link com.badlogic.gdx.ApplicationListener} implementation shared by all
  * platforms.
@@ -20,6 +21,7 @@ public class Jeu extends Game {
     public FitViewport viewport;
     public BitmapFont HebertBold;
     public DataManager data;
+    private AmbientSoundManager soundManager;
 
     // temporaire tant que pas de serializer de bat
     private Batiment market;
@@ -32,6 +34,7 @@ public class Jeu extends Game {
     public void create() {
         batch = new SpriteBatch();
         data = new DataManager();
+        soundManager = new AmbientSoundManager();
 
         viewport = new FitViewport(512, 288);
         Graphics.DisplayMode currentMode = Gdx.graphics.getDisplayMode();
