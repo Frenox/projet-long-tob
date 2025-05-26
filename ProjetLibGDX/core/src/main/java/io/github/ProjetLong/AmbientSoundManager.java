@@ -11,12 +11,15 @@ public class AmbientSoundManager {
 
     private static final Sound wavesSfx = Gdx.audio.newSound(Gdx.files.internal("audio/AmbientWater.mp3"));
     private static final Sound seagullSfx = Gdx.audio.newSound(Gdx.files.internal("audio/Seagull.mp3"));
+    private static final Sound minigameMusic = Gdx.audio.newSound(Gdx.files.internal("audio/Music.mp3"));
     private ScheduledExecutorService seagullScheduler;
+
+    private boolean isPlayingMinigame;
 
     private boolean isPaused;
 
     public AmbientSoundManager() {
-        wavesSfx.loop(); // Lance l'audio de vagues
+        wavesSfx.loop(); // Lance l'audio de vagues en loop
         startSeagullLoop(); // Lance la boucle de sfx de mouette
     }
 
@@ -42,7 +45,11 @@ public class AmbientSoundManager {
         isPaused = true;
 
         wavesSfx.pause();
-        seagullSfx.pause();   
+        seagullSfx.pause();
+        
+        if (isPlayingMinigame){
+            minigameMusic.pause();
+        }
     }
     
     public void resumeAudio() {
@@ -50,6 +57,22 @@ public class AmbientSoundManager {
 
         wavesSfx.resume();
         seagullSfx.resume();
+
+        if (isPlayingMinigame){
+            minigameMusic.resume();
+        }
+    }
+
+    public void startMinigameMusic() {
+        isPlayingMinigame = true;
+
+        minigameMusic.loop(); // Lance l'audio de vagues en loop
+    }
+
+    public void stopMinigameMusic() {
+        isPlayingMinigame = false;
+
+        minigameMusic.stop();
     }
 
 }
