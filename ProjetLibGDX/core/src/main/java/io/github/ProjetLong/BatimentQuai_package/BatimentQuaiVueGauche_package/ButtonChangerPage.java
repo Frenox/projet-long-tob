@@ -5,7 +5,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import io.github.ProjetLong.BatimentQuai_package.BatimentQuaiModele;
-
+/*Bouton pour changer de page
+ */
 public class ButtonChangerPage extends Button {
 
         public ButtonChangerPage(ButtonStyle buttonStyle, BatimentQuaiModele modele, int pas) {

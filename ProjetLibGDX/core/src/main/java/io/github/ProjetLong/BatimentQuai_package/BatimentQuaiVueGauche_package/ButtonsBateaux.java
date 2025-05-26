@@ -7,6 +7,9 @@ import io.github.ProjetLong.BatimentQuai;
 import io.github.ProjetLong.BatimentQuai_package.BatimentQuaiVue;
 import io.github.ProjetLong.BatimentQuai_package.BatimentQuaiModele;
 
+/*
+ * Partie de l'interface regroupant l'ensemble
+ */
 public class ButtonsBateaux extends Table{
     public ButtonsBateaux(BatimentQuai quai, BatimentQuaiModele modele) {
         super();
