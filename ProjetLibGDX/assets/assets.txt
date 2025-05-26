@@ -27,6 +27,12 @@ animations/joueur_run/frame_2.png
 animations/joueur_run/frame_3.png
 animations/joueur_run/frame_4.png
 animations/joueur_run/frame_5.png
+audio/AmbientWater.mp3
+audio/BubblePop.mp3
+audio/ButtonClick.mp3
+audio/CashSound.mp3
+audio/Footstep.mp3
+audio/Seagull.mp3
 bat1.png
 bg_actif.png
 bg_fishing_1.png

@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
@@ -49,6 +50,8 @@ public class BatimentMarket implements Batiment {
 
     // a supprimer quand implémente
     private List<Poisson> poissons;
+
+    private static final Sound cashSfx = Gdx.audio.newSound(Gdx.files.internal("audio/CashSound.mp3"));
 
     // 512 par 288
 
@@ -145,6 +148,7 @@ public class BatimentMarket implements Batiment {
             if (mouse.x > 280 && mouse.x < 310 && mouse.y > 90 && mouse.y < 120) {
                 // on crédite le joueur
                 screen.jeu.data.ajouterArgent(this.poissons.get(selectedfish).getPrix());
+                cashSfx.play();
 
                 // on enlève le poisson dans la session ET dans le data manager
                 this.poissons.remove(selectedfish);

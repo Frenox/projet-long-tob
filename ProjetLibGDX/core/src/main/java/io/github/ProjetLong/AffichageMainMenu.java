@@ -1,12 +1,12 @@
 package io.github.ProjetLong;
 
+import java.io.File;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
-
-import java.io.File;
 
 public class AffichageMainMenu {
     private int state;
@@ -25,6 +25,8 @@ public class AffichageMainMenu {
     private boolean hover;
     private int idMenu; // quel menu afficher
     private boolean[] estVide = new boolean[3];
+
+    private static final Sound buttonSfx = Gdx.audio.newSound(Gdx.files.internal("audio/ButtonClick.mp3"));
 
     public AffichageMainMenu() {
         state = 1;
@@ -85,27 +87,29 @@ public class AffichageMainMenu {
                     || (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && hover))) {
                 idMenu = 1;
                 state = 0;
+                buttonSfx.play();
             }
         } else if (idMenu == 1) {
             if (state == 4 && (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)
                     || (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && hover))) {
                 idMenu = 0;
                 state = 0;
+                buttonSfx.play();
             } else if (state == 1 && (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)
                     || (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && hover))) {
                 // slot 1 lancement
-
+                buttonSfx.play();
                 boolean reussi = screen.jeu.data.loadGame("slot1");
                 if (!reussi) {
                     screen.jeu.data.saveGame("slot1");
                     screen.jeu.data.loadGame("slot1");
                 }
-
                 screen.jeu.setScreen(new VilleScreen(screen.jeu));
 
             } else if (state == 2 && (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)
                     || (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && hover))) {
                 // slot 2 lancement
+                buttonSfx.play();
                 boolean reussi = screen.jeu.data.loadGame("slot2");
                 if (!reussi) {
                     screen.jeu.data.saveGame("slot2");
@@ -116,7 +120,7 @@ public class AffichageMainMenu {
             } else if (state == 3 && (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)
                     || (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && hover))) {
                 // slot 3 lancement
-
+                buttonSfx.play();
                 boolean reussi = screen.jeu.data.loadGame("slot3");
                 if (!reussi) {
                     screen.jeu.data.saveGame("slot3");
