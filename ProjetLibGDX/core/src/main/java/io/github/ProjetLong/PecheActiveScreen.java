@@ -124,6 +124,7 @@ public class PecheActiveScreen implements Screen {
             menu.input(this);
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             menuShow = true;
+            jeu.soundManager.pauseAudio();
         }
 
         actualMinigame.input(this);

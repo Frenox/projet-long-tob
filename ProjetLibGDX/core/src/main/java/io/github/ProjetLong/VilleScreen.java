@@ -78,6 +78,7 @@ public class VilleScreen implements Screen {
             menu.input(this);
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             menuShow = true;
+            jeu.soundManager.pauseAudio();
         }
         handler.input(this);
     }

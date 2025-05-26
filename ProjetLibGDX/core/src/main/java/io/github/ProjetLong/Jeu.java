@@ -21,7 +21,7 @@ public class Jeu extends Game {
     public FitViewport viewport;
     public BitmapFont HebertBold;
     public DataManager data;
-    private AmbientSoundManager soundManager;
+    public AmbientSoundManager soundManager;
 
     // temporaire tant que pas de serializer de bat
     private Batiment market;

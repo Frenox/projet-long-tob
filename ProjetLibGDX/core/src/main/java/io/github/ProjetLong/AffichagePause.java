@@ -102,6 +102,7 @@ public class AffichagePause implements SousFenetre {
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             screen.menuShow = false;
+            screen.jeu.soundManager.resumeAudio();
         }
         if (state == 3 && (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)
                 || (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && hover))) {
