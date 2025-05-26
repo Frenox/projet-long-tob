@@ -6,7 +6,6 @@ import java.util.Map;
 
 import io.github.ProjetLong.Bateau;
 import io.github.ProjetLong.CanneAPeche;
-import io.github.ProjetLong.ModuleBateau;
 import io.github.ProjetLong.Stockage;
 import io.github.ProjetLong.Voile;
 import io.github.ProjetLong.Barque;

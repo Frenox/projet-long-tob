@@ -134,5 +134,6 @@ stockage_lvl1.png
 sun.png
 valider.png
 vide.png
+voile_lvl_1.png
 voilier.png
 water.png

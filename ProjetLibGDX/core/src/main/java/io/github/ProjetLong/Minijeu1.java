@@ -59,14 +59,14 @@ public class Minijeu1 extends ApplicationAdapter implements Minijeu {
         // Sprite du poisson
         fishSprite = new Sprite(poisson);
         fishSprite.setPosition(POISSON_X, POISSON_Y);
-        fishFishingSprite = new Sprite(fishFishing);
-        fishFishingSprite.setPosition(BAR_X + 4, BAR_Y + 22);
-
+        
         // Barre setup
         loadingBarBackground = new Texture("minigame1_bar_fishing.png");
         loadingBarProgress = new Texture("minigame1_indicator_fishing.png");
         fishFishing = new Texture("minigame1_fish_fishing.png");
-
+        
+        fishFishingSprite = new Sprite(fishFishing);
+        fishFishingSprite.setPosition(BAR_X + 4, BAR_Y + 22);
         ecartTexture = (loadingBarBackground.getHeight() - loadingBarProgress.getHeight());
 
         // sprites de la barre

@@ -23,7 +23,7 @@ public class Voile implements ModuleBateau, Equipement {
 
     @Override
     public Texture getTexture() {
-        return new Texture("cregut.png");
+        return new Texture("voile_lvl_1.png");
     }
 
     // Créé la voile par défaut
