@@ -11,6 +11,10 @@ import io.github.ProjetLong.Bateau;
 import io.github.ProjetLong.BatimentQuai_package.BatimentQuaiModele;
 import io.github.ProjetLong.BatimentQuai_package.BatimentQuaiVue;
 
+/*
+ * Partie de l'interface qui regroupe les informations principales du bateau
+ * comme, le nom du bateau, son modele et sa taille de stockage
+ */
 public class InformationsPrincipales extends Table {
     Label nom_bateau;
     Label modele_bateau;

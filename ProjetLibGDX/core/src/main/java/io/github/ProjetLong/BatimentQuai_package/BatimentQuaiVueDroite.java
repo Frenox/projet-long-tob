@@ -12,10 +12,14 @@ import io.github.ProjetLong.Bateau;
 import io.github.ProjetLong.ModuleBateau;
 import io.github.ProjetLong.ZonesPeche.Poisson;
 
+/*
+ * Regroupe les éléments affichés à droite de l'interface quai
+ */
 public class BatimentQuaiVueDroite extends Table {
     public BatimentQuaiVueDroite(BatimentQuaiModele modele) {
         super();
 
+        //Poissons et éléments dans l'espace de stockage affichés 
         Table poissons_table = new Table();
         Table stockage_table = new Table();
 
@@ -30,6 +34,7 @@ public class BatimentQuaiVueDroite extends Table {
         this.add(scrollpane_poissons).center().bottom().expand().height(BatimentQuaiVue.fishInv.getWidth() * 1.618f * 0.3f).pad(5)
                 .padTop(5);
 
+        //Lorsque l'on veut afficher un nouveau bateau, la table des poissons et du stockage se mettent à jour
         modele.addPropertyChangeListener("Nouveau bateau affiché", new PropertyChangeListener() {
 
             @Override

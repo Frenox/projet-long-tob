@@ -68,7 +68,7 @@ public class BatimentQuai implements Batiment {
     public void logic(VilleScreen screen) {
         //Les données sont mises à jour
         this.data = screen.jeu.data;
-        //On met à jour le modèle en fonction des modifications sur les données
+        //On met à jour le modèle en fonction des modifications sur data
         modele.miseAJour();
     }
 

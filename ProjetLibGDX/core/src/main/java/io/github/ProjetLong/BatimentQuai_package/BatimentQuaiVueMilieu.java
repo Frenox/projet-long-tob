@@ -11,6 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import io.github.ProjetLong.Bateau;
 
+/*
+ * Regroupe les éléments affichés au milieu de l'interface quai
+ */
 public class BatimentQuaiVueMilieu extends Table {
     public BatimentQuaiVueMilieu(BatimentQuaiModele modele){
         super();
