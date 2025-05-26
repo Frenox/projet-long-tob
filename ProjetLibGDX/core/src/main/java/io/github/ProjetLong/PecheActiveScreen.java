@@ -153,30 +153,32 @@ public class PecheActiveScreen implements Screen {
     }
 
     public void lancerMiniJeu() {
-        Random rn = new Random();
-        switch (rn.nextInt(4)) {
-            case 0:
-                actualMinigame = new Minijeu1();
-                minigameShow = true;// Minijeu1();
-                // Récupère la fin du mini jeu (succes ou non)
+        if (bateau.getEquipedCanne() != null) {
+            Random rn = new Random();
+            switch (rn.nextInt(4)) {
+                case 0:
+                    actualMinigame = new Minijeu1();
+                    minigameShow = true;// Minijeu1();
+                    // Récupère la fin du mini jeu (succes ou non)
 
-                break;
-            case 1:
-                // Minijeu2();
-                // lancer le mini jeu 2 et récupère la fin
-                actualMinigame = new Minijeu2();
-                minigameShow = true;
-                break;
-            case 2:
-                // Minijeu3();
-                // lancer le mini jeu 3 et récupère la fin
-                actualMinigame = new Minijeu3();
-                minigameShow = true;
-                break;
-            default:
-                actualMinigame = new Minijeu4();
-                minigameShow = true;
-                break;
+                    break;
+                case 1:
+                    // Minijeu2();
+                    // lancer le mini jeu 2 et récupère la fin
+                    actualMinigame = new Minijeu2();
+                    minigameShow = true;
+                    break;
+                case 2:
+                    // Minijeu3();
+                    // lancer le mini jeu 3 et récupère la fin
+                    actualMinigame = new Minijeu3();
+                    minigameShow = true;
+                    break;
+                default:
+                    actualMinigame = new Minijeu4();
+                    minigameShow = true;
+                    break;
+            }
         }
     }
 
