@@ -82,7 +82,7 @@ public class BatimentCapitainerie implements Batiment {
 
         this.page = 0;
 
-        // A Supprimer
+      
 
     }
 
