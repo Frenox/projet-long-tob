@@ -20,6 +20,7 @@ public class BatimentQuai implements Batiment {
 
     Stage stage;
     Table root;
+    BatimentQuaiModele modele;
 
     boolean poissonDessin;
     Texture poisson_texture_hover;
@@ -46,7 +47,7 @@ public class BatimentQuai implements Batiment {
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
 
-        BatimentQuaiModele modele = new BatimentQuaiModele(this.data);
+        modele = new BatimentQuaiModele(this.data);
         root = new BatimentQuaiVue(this, modele);
 
         stage.addActor(root);
@@ -62,6 +63,7 @@ public class BatimentQuai implements Batiment {
     @Override
     public void logic(VilleScreen screen) {
         this.data = screen.jeu.data;
+        modele.miseAJour();
     }
 
     @Override
