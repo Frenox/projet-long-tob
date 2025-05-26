@@ -59,6 +59,15 @@ skin.atlas
 skin.json
 skin.png
 skin.scmp
+<<<<<<< Updated upstream
+=======
+slot1.json
+slot1.png
+slot2.png
+slot3.png
+slotn.png
+slotret.png
+>>>>>>> Stashed changes
 stockage_lvl1.png
 sun.png
 valider.png

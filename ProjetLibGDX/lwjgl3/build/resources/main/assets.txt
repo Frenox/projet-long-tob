@@ -8,6 +8,34 @@ Menu_bg.png
 Menu_options.png
 Menu_quitter.png
 Menu_reprendre.png
+<<<<<<< Updated upstream
+=======
+animations/joueur_idle/Frame_0.png
+animations/joueur_idle/Frame_1.png
+animations/joueur_idle/Frame_10.png
+animations/joueur_idle/Frame_11.png
+animations/joueur_idle/Frame_2.png
+animations/joueur_idle/Frame_3.png
+animations/joueur_idle/Frame_4.png
+animations/joueur_idle/Frame_5.png
+animations/joueur_idle/Frame_6.png
+animations/joueur_idle/Frame_7.png
+animations/joueur_idle/Frame_8.png
+animations/joueur_idle/Frame_9.png
+animations/joueur_run/frame_0.png
+animations/joueur_run/frame_1.png
+animations/joueur_run/frame_2.png
+animations/joueur_run/frame_3.png
+animations/joueur_run/frame_4.png
+animations/joueur_run/frame_5.png
+audio/AmbientWater.mp3
+audio/BubblePop.mp3
+audio/ButtonClick.mp3
+audio/CashSound.mp3
+audio/Footstep.mp3
+audio/Music.mp3
+audio/Seagull.mp3
+>>>>>>> Stashed changes
 bat1.png
 bg_actif.png
 bg_fishing_1.png
@@ -59,6 +87,15 @@ skin.atlas
 skin.json
 skin.png
 skin.scmp
+<<<<<<< Updated upstream
+=======
+slot1.json
+slot1.png
+slot2.png
+slot3.png
+slotn.png
+slotret.png
+>>>>>>> Stashed changes
 stockage_lvl1.png
 sun.png
 valider.png
