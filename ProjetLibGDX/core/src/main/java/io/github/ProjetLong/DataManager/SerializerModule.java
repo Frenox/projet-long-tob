@@ -32,6 +32,14 @@ public class SerializerModule extends SerializerBaseClass<ModuleBateau> {
     }
     
 
+    /**
+     * Serialise un objet de type ModuleBateau sous la forme :
+     * type|[CHAINE DU MODULE SERIALISE]
+     * 
+     * @param element (ModuleBateau) : Objet a serialiser
+     * @param compositionLevel (int) : Niveau de composition de l'objet
+     * @return _______ (String) : Chaine de caractere serialisee
+     */
     @Override
     public String serializeElement(ModuleBateau element, int compositionLevel) {
         if (element == null) {
@@ -41,6 +49,15 @@ public class SerializerModule extends SerializerBaseClass<ModuleBateau> {
         String type = getType(element);
         return type + "|" + serializeGeneric(element, type, compositionLevel);
     }
+
+    /**
+     * Deserialise un objet de type ModuleBateau etant sous la forme :
+     * type|[CHAINE DU MODULE SERIALISE]
+     * 
+     * @param element (String) : Chaine de caractere serialisee
+     * @param compositionLevel (int) : Niveau de composition de l'objet
+     * @return _______ (ModuleBateau) : Objet deserialise
+     */
     @Override
     public ModuleBateau deserializeElement(String element, int compositionLevel) {
         try {

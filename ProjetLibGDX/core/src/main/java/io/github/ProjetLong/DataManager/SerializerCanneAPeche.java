@@ -13,6 +13,14 @@ public class SerializerCanneAPeche extends SerializerBaseClass<CanneAPeche> {
         sousZoneSerializer = new SerializerSousZone();
     }
 
+    /**
+     * Serialise un objet de type CanneAPeche sous la forme :
+     * Zone#1#Niveau
+     * 
+     * @param element (CanneAPeche) : Objet a serialiser
+     * @param compositionLevel (int) : Niveau de composition de l'objet
+     * @return _______ (String) : Chaine de caractere serialisee
+     */
     @Override
     public String serializeElement(CanneAPeche element, int compositionLevel) {
         if (element == null) {
@@ -23,6 +31,15 @@ public class SerializerCanneAPeche extends SerializerBaseClass<CanneAPeche> {
         String zoneString = sousZoneSerializer.serializeElement(element.getZone().getClass(), compositionLevel+1);
         return zoneString + separateur + element.getNiveau();
     }
+
+    /**
+     * Deserialise un objet de type CanneAPeche etant sous la forme :
+     * Zone#1#Niveau
+     * 
+     * @param element (String) : Chaine de caractere serialisee
+     * @param compositionLevel (int) : Niveau de composition de l'objet
+     * @return _______ (CanneAPeche) : Objet deserialise
+     */
     @Override
     public CanneAPeche deserializeElement(String element, int compositionLevel) {
         try {

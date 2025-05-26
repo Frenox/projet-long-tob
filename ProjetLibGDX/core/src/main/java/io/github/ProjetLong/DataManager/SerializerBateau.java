@@ -40,6 +40,14 @@ public class SerializerBateau extends SerializerBaseClass<Bateau> {
         bateauxCodes.put(Voilier.class, "Voilier");
     }
     
+    /**
+     * Serialise un objet de type Bateau sous la forme :
+     * type|Nom#1#Modele#1#ListeStockage#1#CanneAPeche#1#ListeCannesAPeche#1#ListeVoiles
+     * 
+     * @param element (Bateau) : Objet a serialiser
+     * @param compositionLevel (int) : Niveau de composition de l'objet
+     * @return _______ (String) : Chaine de caractere serialisee
+     */
     @Override
     public String serializeElement(Bateau element, int compositionLevel) {
         if (element == null) {
@@ -56,9 +64,18 @@ public class SerializerBateau extends SerializerBaseClass<Bateau> {
         String listeVoiles = voileSerializer.serializeListData(element.getVoiles(), compositionLevel+1);
 
         return    type + "|" + element.getName() + separateur + element.getModeleName() + 
-                  separateur + element.getTailleMax() + separateur + stockage + separateur + canneAPeche + 
+                  separateur + stockage + separateur + canneAPeche + 
                   separateur + listeCanneAPeches + separateur + listeVoiles;
     }
+
+    /**
+     * Deserialise un objet de type Bateau etant sous la forme :
+     * type|Nom#1#Modele#1#ListeStockage#1#CanneAPeche#1#ListeCannesAPeche#1#ListeVoiles
+     * 
+     * @param element (String) : Chaine de caractere serialisee
+     * @param compositionLevel (int) : Niveau de composition de l'objet
+     * @return _______ (Bateau) : Objet deserialise
+     */
     @Override
     public Bateau deserializeElement(String element, int compositionLevel){
         try {
@@ -70,19 +87,19 @@ public class SerializerBateau extends SerializerBaseClass<Bateau> {
             newBateau.setModeleName(bateauData[1]);
 
             
-            List<Stockage> listeStockages = stockageSerializer.deserializeListData(bateauData[3], compositionLevel+1);
+            List<Stockage> listeStockages = stockageSerializer.deserializeListData(bateauData[2], compositionLevel+1);
             for (Stockage stockage : listeStockages) {
                 newBateau.addStockage(stockage);
             }
             
-            newBateau.setEquipedCanne(canneAPecheSerializer.deserializeElement(bateauData[4], compositionLevel+1));
+            newBateau.setEquipedCanne(canneAPecheSerializer.deserializeElement(bateauData[3], compositionLevel+1));
 
-            List<CanneAPeche> listeCannes = canneAPecheSerializer.deserializeListData(bateauData[5], compositionLevel+1);
+            List<CanneAPeche> listeCannes = canneAPecheSerializer.deserializeListData(bateauData[4], compositionLevel+1);
             for (CanneAPeche canne : listeCannes) {
                  newBateau.addCannes(canne);
             }
 
-            List<Voile> listeVoiles = voileSerializer.deserializeListData(bateauData[6], compositionLevel+1);
+            List<Voile> listeVoiles = voileSerializer.deserializeListData(bateauData[5], compositionLevel+1);
             for (Voile voile : listeVoiles) {
                  newBateau.addVoile(voile);
             }
