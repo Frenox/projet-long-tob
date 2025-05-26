@@ -45,6 +45,7 @@ public class BatimentEquipMarket implements Batiment {
 
     // a supprimer quand implémente
     private ArrayList<Equipement> equipements;
+    private int coinAmount;
 
     // 512 par 288
     @Override
@@ -123,8 +124,8 @@ public class BatimentEquipMarket implements Batiment {
     @Override
     public void logic(VilleScreen screen) {
 
-        // à décommenter quand ca sera implémenté
-        // this.coinAmount = screen.jeu.DataManagerJeu.getArgent();
+        
+        this.coinAmount = screen.jeu.data.getArgent();
         if (this.isOpened) {
 
             if (!this.isBuying) {
@@ -142,14 +143,14 @@ public class BatimentEquipMarket implements Batiment {
                     int prix = this.equipements.get(selectedItem).getPrix();
                     if (prix <= 0) {
                         System.out.println("Cet équipement n'est pas à vendre.");
-                    } else if (BatimentMarket.coinAmount < prix) {
+                    } else if (this.coinAmount < prix) {
                         System.out.println("Pas assez de coins pour acheter cet équipement.");
                     } else {
                         // on ajoute l'équipement à la session
                         // screen.jeu.DataManagerJeu.addEquipement(this.equipements.get(selectedItem).duplicate());
 
                         // on débite le joueur
-                        BatimentMarket.coinAmount -= prix;
+                        screen.jeu.data.retirerArgent(prix);
                     }
                     this.isBuying = false;
                     this.selectedItem = 0;
@@ -183,7 +184,7 @@ public class BatimentEquipMarket implements Batiment {
                         this.selectedItem = 0;
                     } else {
                         this.isBuying = true;
-                        this.isEnoughCoins = this.equipements.get(selectedItem).getPrix() <= BatimentMarket.coinAmount;
+                        this.isEnoughCoins = this.equipements.get(selectedItem).getPrix() <= this.coinAmount;
                     }
                 } else {
                     this.selectedItem = 0;
@@ -216,7 +217,7 @@ public class BatimentEquipMarket implements Batiment {
             // Affichage des coins
             // Mis en jaune, puis re en blanc
             screen.jeu.HebertBold.setColor(1, 1, 0, 1); // couleur jaune
-            screen.jeu.HebertBold.draw(screen.jeu.batch, "COINS : " + BatimentMarket.coinAmount, 300, 240);
+            screen.jeu.HebertBold.draw(screen.jeu.batch, "COINS : " + this.coinAmount, 300, 240);
             screen.jeu.HebertBold.setColor(1, 1, 1, 1);
 
             // Affichage des instructions
