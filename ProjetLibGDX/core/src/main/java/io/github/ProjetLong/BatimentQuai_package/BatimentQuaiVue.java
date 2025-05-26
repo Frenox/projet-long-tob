@@ -6,6 +6,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import io.github.ProjetLong.BatimentQuai;
 
+/*
+ * Regroupe l'ensemble des éléments affichés sur l'interface du quai
+ */
 public class BatimentQuaiVue extends Table {
     public static final Texture fishInv = new Texture("fish_tab_fish.png");
     public static final Skin skin = new Skin(Gdx.files.internal("skin.json"));

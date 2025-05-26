@@ -10,7 +10,7 @@ import io.github.ProjetLong.BatimentQuai_package.BatimentQuaiModele;
 import io.github.ProjetLong.BatimentQuai_package.BatimentQuaiVue;
 
 /*
- * Label affichant le nombre de pages et le numéro de pages maximale possible
+ * Label affichant le nombre de pages et le numéro de pages maximal possible
  */
 public class LabelPage extends Label{
     public LabelPage(BatimentQuaiModele modele) {

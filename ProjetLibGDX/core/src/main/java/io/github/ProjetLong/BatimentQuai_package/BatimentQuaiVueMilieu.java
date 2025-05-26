@@ -20,9 +20,11 @@ public class BatimentQuaiVueMilieu extends Table {
         
         Image Equipement_Texture = new Image();
 
+        //La canne à pêche équipée est affichée
         this.add(new Label("Equipement : ", BatimentQuaiVue.skin, "HebertSansBold", Color.WHITE)).top().left().pad(2).expand().row();
         this.add(Equipement_Texture).center().pad(2).expand();
 
+        //Lorsque l'on veut afficher un nouveau bateau, on met à jour l'affichage de la canne à pêche équipée
         modele.addPropertyChangeListener("Nouveau bateau affiché", new PropertyChangeListener() {
 
             @Override

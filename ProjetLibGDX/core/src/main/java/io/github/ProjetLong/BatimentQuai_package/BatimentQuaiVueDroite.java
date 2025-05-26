@@ -48,7 +48,7 @@ public class BatimentQuaiVueDroite extends Table {
                     poissons_table.add(new Image(poisson.getFishText())).row();
                 }
                 for (ModuleBateau module : bateau.getModules()) {
-                    poissons_table.add(new Image(module.getTexture())).row();
+                    stockage_table.add(new Image(module.getTexture())).row();
                 }
             }
             
