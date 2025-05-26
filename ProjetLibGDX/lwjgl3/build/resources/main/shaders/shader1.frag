@@ -13,8 +13,8 @@ void main() {
     vec2 uv = gl_FragCoord.xy / u_resolution;//position du pixel de 0à1
     float vrai = 1.0;
     if (uv.y > 0.539){
-    u_sunLocation = u_sunLocation / u_resolution; 
-    float dist = distance(uv, u_sunLocation);
+    vec2 sunloc = u_sunLocation / u_resolution; 
+    float dist = distance(uv, sunloc);
     //recupère la position du pixel et sa couleur
     vec4 texColor = texture2D(u_texture, v_texCoords);
     vec4 baseColor = v_color * texColor;

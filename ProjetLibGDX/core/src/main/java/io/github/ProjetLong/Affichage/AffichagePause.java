@@ -47,6 +47,7 @@ public class AffichagePause implements SousFenetre {
                 || (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && hover))) {
             buttonSfx.play();
             screen.jeu.data.saveGame(screen.jeu.data.getActData());
+            screen.jeu.soundManager.stopMinigameMusic();
             screen.jeu.soundManager.resumeAudio();
             screen.jeu.setScreen(new mainMenuScreen(screen.jeu));
         } else if (state == 1 && (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)
@@ -115,6 +116,7 @@ public class AffichagePause implements SousFenetre {
                 || (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && hover))) {
             buttonSfx.play();
             screen.jeu.data.saveGame(screen.jeu.data.getActData());
+            screen.jeu.soundManager.stopMinigameMusic();
             screen.jeu.soundManager.resumeAudio();
             screen.jeu.setScreen(new mainMenuScreen(screen.jeu));
         } else if (state == 1 && (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)

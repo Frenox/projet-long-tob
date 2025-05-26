@@ -81,7 +81,7 @@ public class BatimentHandler {
         }
         // load idle
         for (int i = 0; i < 12; i++) {
-            String fileName = "animations/joueur_idle/frame_" + (i) + ".png";
+            String fileName = "animations/joueur_idle/Frame_" + (i) + ".png";
             idleFrames[i] = new TextureRegion(new Texture(Gdx.files.internal(fileName)));
         }
         // animations

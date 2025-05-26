@@ -115,6 +115,7 @@ public class PecheActiveScreen implements Screen {
             while (jeu.data.reste1place() && this.bateau.getContenu().size() != 0) {
                 jeu.data.ajouterPoissonStockage(this.bateau.remFirstPoisson());
                 System.out.println(bateau.getContenu().size());
+                
 
             }
             jeu.soundManager.stopMinigameMusic();

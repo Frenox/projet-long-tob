@@ -108,8 +108,11 @@ public class Bateau {
 
     // Ajoute le poisson au stockage
     public void addPoisson(Poisson poisson) {
+        System.out.println("e");
         for (Stockage stock : Stockage) {
+            System.out.println("e");
             if (stock.getTailleDisponible() > 0) {
+                System.out.println("s");
                 stock.addPoisson(poisson);
                 StockageDispo -= 1;
                 break;
@@ -122,7 +125,9 @@ public class Bateau {
         Poisson temp = null;
         for (Stockage mod : this.Stockage) {
             if (mod.getContenu().size() != 0) {
+                mod.addPlace();
                 temp = mod.getContenu().removeFirst();
+                StockageDispo += 1;
                 break;
             }
         }

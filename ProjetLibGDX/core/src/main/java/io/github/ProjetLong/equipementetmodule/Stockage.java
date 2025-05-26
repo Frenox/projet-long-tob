@@ -58,4 +58,8 @@ public class Stockage implements ModuleBateau {
         TailleDisponible += 1;
     }
 
+    public void addPlace() {
+        TailleDisponible += 1;
+    }
+
 }

@@ -1,6 +1,5 @@
 package io.github.ProjetLong.batiments;
 
-import java.util.List;
 import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -10,14 +9,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import io.github.ProjetLong.DataManager.DataManager;
-import io.github.ProjetLong.ZonesPeche.Poisson;
 import io.github.ProjetLong.screen.VilleScreen;
-import io.github.ProjetLong.Jeu;
 import io.github.ProjetLong.equipementetmodule.*;
-
-
-
 
 public class BatimentEquipMarket implements Batiment {
 
@@ -56,7 +49,7 @@ public class BatimentEquipMarket implements Batiment {
     private ArrayList<Equipement> equipements;
     private int coinAmount;
 
-    //son
+    // son
     private static final Sound cashSfx = Gdx.audio.newSound(Gdx.files.internal("audio/CashSound.mp3"));
 
     // 512 par 288
@@ -136,7 +129,6 @@ public class BatimentEquipMarket implements Batiment {
     @Override
     public void logic(VilleScreen screen) {
 
-        
         this.coinAmount = screen.jeu.data.getArgent();
         if (this.isOpened) {
 
@@ -161,7 +153,7 @@ public class BatimentEquipMarket implements Batiment {
                         // on ajoute l'équipement à la session
                         screen.jeu.data.ajouterModule((ModuleBateau) this.equipements.get(selectedItem).dupliquer());
 
-                        //son vente
+                        // son vente
                         cashSfx.play();
                         // on débite le joueur
                         screen.jeu.data.retirerArgent(prix);
