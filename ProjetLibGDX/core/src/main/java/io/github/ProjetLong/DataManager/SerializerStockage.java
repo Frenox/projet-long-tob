@@ -14,6 +14,14 @@ public class SerializerStockage extends SerializerBaseClass<Stockage> {
         poissonSerializer = new SerializerPoisson();
     }
     
+    /**
+     * Serialise un objet de type Stockage sous la forme :
+     * Niveau#-1-#Contenu
+     * 
+     * @param element (Stockage) : Objet a serialiser
+     * @param compositionLevel (int) : Niveau de composition de l'objet
+     * @return _______ (String) : Chaine de caractere serialisee
+     */
     @Override
     public String serializeElement(Stockage element, int compositionLevel) {
         if (element == null) {
@@ -24,6 +32,15 @@ public class SerializerStockage extends SerializerBaseClass<Stockage> {
         String contenu = poissonSerializer.serializeListData(element.getContenu(), compositionLevel+1);
         return element.getNiveau() + separateur + contenu;
     }
+
+    /**
+     * Deserialise un objet de type Stockage etant sous la forme :
+     * Niveau#-1-#Contenu
+     * 
+     * @param element (String) : Chaine de caractere serialisee
+     * @param compositionLevel (int) : Niveau de composition de l'objet
+     * @return _______ (Stockage) : Objet deserialise
+     */
     @Override
     public Stockage deserializeElement(String element, int compositionLevel) {
         try {

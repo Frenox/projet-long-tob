@@ -6,12 +6,18 @@ import java.util.List;
 
 /*
  * Infos serialisation:
- *      Separateur d'elements : #niveauComposition#     -> #2#
+ *      Separateur d'elements : #-niveauComposition-#     -> #-2-#
  */
 
 
 public abstract class SerializerBaseClass<T> {
     
+    /**
+     * Renvoie la chaine du niveau de serialisation de l'objet sous la forme #NIVEAU# 
+     * (#-3-#, #-5-#, #-2-#, ...)
+     * @param compositionLevel (int) : Niveau de composition de la serialisation
+     * @return _______ (String) : Chaine de caractere formatee
+     */
     protected String getSeparateur(int compositionLevel) {
         return "#-" + compositionLevel + "-#";
     }

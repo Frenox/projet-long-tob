@@ -70,6 +70,8 @@ public class PecheActiveScreen implements Screen {
         shaderEau = new ShaderProgram(Gdx.files.internal("shaders/vertex.vert"),
                 Gdx.files.internal("shaders/shaderEau.frag"));
 
+        jeu.soundManager.startMinigameMusic();
+
     }
 
     @Override
@@ -111,6 +113,7 @@ public class PecheActiveScreen implements Screen {
                 System.out.println(bateau.getContenu().size());
 
             }
+            jeu.soundManager.stopMinigameMusic();
             jeu.setScreen(new VilleScreen(jeu));
         }
         // Permet d'afficher les coordonnées du clic souris gauche dans la console
@@ -124,6 +127,7 @@ public class PecheActiveScreen implements Screen {
             menu.input(this);
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             menuShow = true;
+            jeu.soundManager.pauseAudio();
         }
 
         actualMinigame.input(this);

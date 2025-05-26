@@ -42,6 +42,14 @@ public class SerializerSousZone extends SerializerBaseClass<Class<? extends Sous
         sousZoneCodes.put(SousZoneTropiqueAbysses.class.getName(), SousZoneTropiqueAbysses.class);     
     }
     
+    /**
+     * Serialise un objet de type SousZone sous la forme :
+     * [NOM DE LA CLASSE]
+     * 
+     * @param element (SousZone) : Objet a serialiser
+     * @param compositionLevel (int) : Niveau de composition de l'objet
+     * @return _______ (String) : Chaine de caractere serialisee
+     */
     @Override
     public String serializeElement(Class<? extends SousZone> element, int compositionLevel) {
         if (element == null) {
@@ -50,6 +58,15 @@ public class SerializerSousZone extends SerializerBaseClass<Class<? extends Sous
         return element.getName();
         
     }
+
+    /**
+     * Deserialise un objet de type SousZone etant sous la forme :
+     * [NOM DE LA CLASSE]
+     * 
+     * @param element (String) : Chaine de caractere serialisee
+     * @param compositionLevel (int) : Niveau de composition de l'objet
+     * @return _______ (SousZone) : Objet deserialise
+     */
     @Override
     public Class<? extends SousZone> deserializeElement(String element, int compositionLevel) {
         try {

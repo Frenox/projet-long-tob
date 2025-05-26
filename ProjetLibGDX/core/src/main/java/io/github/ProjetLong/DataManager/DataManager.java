@@ -41,7 +41,6 @@ public class DataManager {
         stockagePoissonMax = 100;
         batimentsMap = new HashMap<Batiment, Boolean>();
         actData = "";
-        // ...
 
         poissonSerializer = new SerializerPoisson();
         bateauSerializer = new SerializerBateau();
@@ -59,8 +58,6 @@ public class DataManager {
         modulesDispo = new ArrayList<ModuleBateau>();
         argent = 0;
         batimentsMap = new HashMap<Batiment, Boolean>();
-
-        // ...
 
         poissonSerializer = new SerializerPoisson();
         bateauSerializer = new SerializerBateau();
@@ -96,11 +93,7 @@ public class DataManager {
     }
 
     public boolean reste1place() {
-        if (this.stockagePoissons.size() < stockagePoissonMax) {
-            return true;
-        } else {
-            return false;
-        }
+        return this.stockagePoissons.size() < stockagePoissonMax;
     }
 
     public void supprimerPoissonStockage(Poisson poisson) {
