@@ -1,19 +1,23 @@
 package io.github.ProjetLong.batiments;
 
+import java.util.List;
 import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-
-import io.github.ProjetLong.equipementetmodule.CanneAPeche;
-import io.github.ProjetLong.equipementetmodule.Equipement;
-import io.github.ProjetLong.equipementetmodule.Filet;
+import io.github.ProjetLong.DataManager.DataManager;
+import io.github.ProjetLong.ZonesPeche.Poisson;
 import io.github.ProjetLong.screen.VilleScreen;
+import io.github.ProjetLong.Jeu;
+import io.github.ProjetLong.equipementetmodule.*;
+
+
+
 
 public class BatimentEquipMarket implements Batiment {
 
@@ -51,6 +55,9 @@ public class BatimentEquipMarket implements Batiment {
     // a supprimer quand implémente
     private ArrayList<Equipement> equipements;
     private int coinAmount;
+
+    //son
+    private static final Sound cashSfx = Gdx.audio.newSound(Gdx.files.internal("audio/CashSound.mp3"));
 
     // 512 par 288
     @Override
@@ -129,16 +136,17 @@ public class BatimentEquipMarket implements Batiment {
     @Override
     public void logic(VilleScreen screen) {
 
+        
         this.coinAmount = screen.jeu.data.getArgent();
         if (this.isOpened) {
 
             if (!this.isBuying) {
                 // changer de page
-                if (mouse.x >= 215 && mouse.x <= 230 && mouse.y >= 56 && mouse.y <= 67
+                if (mouse.x >= 215 && mouse.x <= 230 && mouse.y >= 66 && mouse.y <= 77
                         && page < (((equipements.size() - 1) / 7))) {
                     page++;
                 }
-                if (mouse.x >= 175 && mouse.x <= 190 && mouse.y >= 56 && mouse.y <= 67 && page > 0) {
+                if (mouse.x >= 175 && mouse.x <= 190 && mouse.y >= 66 && mouse.y <= 77 && page > 0) {
                     page--;
                 }
             } else if (isEnoughCoins) {
@@ -151,8 +159,10 @@ public class BatimentEquipMarket implements Batiment {
                         System.out.println("Pas assez de coins pour acheter cet équipement.");
                     } else {
                         // on ajoute l'équipement à la session
-                        // screen.jeu.DataManagerJeu.addEquipement(this.equipements.get(selectedItem).duplicate());
+                        screen.jeu.data.ajouterModule((ModuleBateau) this.equipements.get(selectedItem).dupliquer());
 
+                        //son vente
+                        cashSfx.play();
                         // on débite le joueur
                         screen.jeu.data.retirerArgent(prix);
                     }
@@ -171,17 +181,15 @@ public class BatimentEquipMarket implements Batiment {
             }
 
             // detection de la vente (identifiez quel equipement)
-            if (mouse.x >= 140 && mouse.x <= 265 && mouse.y >= 70 && mouse.y <= 200) {
+            if (mouse.x >= 140 && mouse.x <= 265 && mouse.y >= 77 && mouse.y <= 192) {
                 int old = this.selectedItem;
                 this.offsetSelectedItem = 0;
-                while (mouse.y > (70 + offsetSelectedItem * 18.5)) {
+                while (mouse.y > (77 + offsetSelectedItem * 16.5)) {
                     offsetSelectedItem++;
                 }
                 this.selectedItem = (7 - offsetSelectedItem) + page * 7;
                 // on verifie que le item est present
 
-                System.out.println(old);
-                System.out.println(selectedItem);
                 if (this.selectedItem < this.equipements.size()) {
                     if (isBuying && (old == selectedItem)) {
                         this.isBuying = false;

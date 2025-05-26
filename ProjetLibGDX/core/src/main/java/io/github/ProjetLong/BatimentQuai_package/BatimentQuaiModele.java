@@ -12,6 +12,7 @@ public class BatimentQuaiModele {
 
     private int page;
     private int maxPage;
+    private int nb_elements_bateaux;
 
     private DataManager data;
 
@@ -21,7 +22,9 @@ public class BatimentQuaiModele {
         this.page = 0;
         this.data = data;
 
-        this.maxPage = data.getBateaux().size() / 4;
+        this.nb_elements_bateaux = data.getBateaux().size();
+
+        this.maxPage = data.getBateaux().size() / CAPACITE_MAX_MENU;
         this.support = new PropertyChangeSupport(this);
     }
 
@@ -63,7 +66,7 @@ public class BatimentQuaiModele {
             }
 
         }
-        support.firePropertyChange("Nombre de bateaux différent", page + 1, page);
+        support.firePropertyChange("Nombre de bateaux différent", 0, 1);
     }
 
     public boolean element_affichable(int i) {
@@ -74,4 +77,10 @@ public class BatimentQuaiModele {
         return this.data.getBateaux().get((i + this.page * this.CAPACITE_MAX_MENU));
     }
 
+    public void miseAJour() {
+        if (this.nb_elements_bateaux != this.data.getBateaux().size()) {
+            this.maxPage = data.getBateaux().size() / CAPACITE_MAX_MENU;
+            this.support.firePropertyChange("Nombre de bateaux différent", this.nb_elements_bateaux, this.data.getBateaux().size());
+        }
+    }
 }
