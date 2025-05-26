@@ -49,6 +49,8 @@ public class BatimentCapitainerie implements Batiment {
     private Sprite interfaceOverlaybatCapitainerieSprite;
     private int Menu3pos = 0;
     private int Menu2pos = -1;
+    // A SUPPRIMER
+    private DataManager data;
 
     public BatimentCapitainerie() {
         this.isOpened = false;
@@ -77,12 +79,15 @@ public class BatimentCapitainerie implements Batiment {
         this.batCapitainerieSprite = new Sprite(batCapitainerieTexture);
         this.interfaceOverlaybatCapitainerieSprite = new Sprite(interfaceBatCapitainerieTexture);
 
-        this.batCapitainerieSprite.setPosition(0, 91);
+        this.batCapitainerieSprite.setPosition(0, 90);
         this.interfaceOverlaybatCapitainerieSprite.setPosition(130, 50);
 
         this.page = 0;
 
-      
+        // A Supprimer
+        data = new DataManager();
+        data.ajouterBateauPort(new Barque());
+        data.ajouterBateauPort(new Voilier());
 
     }
 
@@ -90,6 +95,13 @@ public class BatimentCapitainerie implements Batiment {
     public void input(VilleScreen screen) {
         this.mouseUnclick = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         screen.jeu.viewport.getCamera().unproject(mouseUnclick);
+        if (Gdx.input.isKeyJustPressed(Input.Keys.C)) {
+            if (this.isOpened == true) {
+                this.isOpened = false;
+            } else {
+                this.isOpened = true;
+            }
+        }
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
             this.mouse = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             screen.jeu.viewport.getCamera().unproject(mouse);
@@ -107,11 +119,11 @@ public class BatimentCapitainerie implements Batiment {
     }
 
     @Override
-    public void draw(VilleScreen screen, int position, int offset) {
+    public void draw(VilleScreen screen, int position) {
         // alwasy draw the batiment itself
         this.batCapitainerieSprite.draw(screen.jeu.batch);
-        this.batCapitainerieSprite.setPosition(64 * position + offset, 91);
-        screen.jeu.HebertBold.draw(screen.jeu.batch, "Capitainerie", 64 * position + offset, 180);
+        this.batCapitainerieSprite.setPosition(64 * position, 90);
+
     }
 
     @Override
@@ -125,7 +137,7 @@ public class BatimentCapitainerie implements Batiment {
             screen.jeu.HebertBold.draw(screen.jeu.batch, "Passif", 286, 229);
             screen.jeu.HebertBold.draw(screen.jeu.batch, "Lieu", 327, 229);
             // Draw bateau
-            List<Bateau> temp = screen.jeu.data.getBateaux();
+            List<Bateau> temp = data.getBateaux();
             int len = temp.size();
             for (int i = (page * 6); i != (6 * (page + 1)); i++) {
                 if (i < len) {
@@ -136,65 +148,54 @@ public class BatimentCapitainerie implements Batiment {
                     screen.jeu.batch.draw(temp.get(i).getLogo(), 219, 201 - ((i % 6) * 25));
 
                     // boutons
-                    screen.jeu.batch.draw(buttonCap1, 270, 201 - ((i % 6) * 25));
+                    screen.jeu.batch.draw(buttonCap1, 269, 201 - ((i % 6) * 25));
 
                     // bouton Temps
-                    if (mouseUnclick.x >= 287 && mouseUnclick.x <= 291 + 24 && mouseUnclick.y >= 201 - ((i % 6) * 25)
+                    if (mouseUnclick.x >= 286 && mouseUnclick.x <= 290 + 24 && mouseUnclick.y >= 201 - ((i % 6) * 25)
                             && mouseUnclick.y <= 216 - ((i % 6) * 25)) {
-                        screen.jeu.batch.draw(buttonCap2Shine, 287, 201 - ((i % 6) * 25));
+                        screen.jeu.batch.draw(buttonCap2Shine, 286, 201 - ((i % 6) * 25));
                         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                             // affichage selection menu
                             Menu2pos = i;
 
                         }
                     } else {
-                        screen.jeu.batch.draw(buttonCap2, 287, 201 - ((i % 6) * 25));
-
-                    }
-                    // draw actDuree
-                    if (temp.get(i).getDureeSelec() != 0) {
-                        screen.jeu.HebertBold.draw(screen.jeu.batch,
-                                String.valueOf(temp.get(i).getDureeSelec()) + " J", 290,
-                                212 - ((i % 6) * 25));
-                    } else {
-                        screen.jeu.HebertBold.draw(screen.jeu.batch, "Non", 290,
-                                212 - ((i % 6) * 25));
+                        screen.jeu.batch.draw(buttonCap2, 286, 201 - ((i % 6) * 25));
                     }
                     // bouton lieu
-                    if (mouseUnclick.x >= 317 && mouseUnclick.x <= 321 + 38 && mouseUnclick.y >= 201 - ((i % 6) * 25)
+                    if (mouseUnclick.x >= 316 && mouseUnclick.x <= 320 + 38 && mouseUnclick.y >= 201 - ((i % 6) * 25)
                             && mouseUnclick.y <= 216 - ((i % 6) * 25)) {
-                        screen.jeu.batch.draw(buttonCap3Shine, 317, 201 - ((i % 6) * 25));
+                        screen.jeu.batch.draw(buttonCap3Shine, 316, 201 - ((i % 6) * 25));
                         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                             List<Voile> tempVoile = temp.get(i).getVoiles();
                             Dispo = 0;
                             for (Voile voile : tempVoile) {
                                 if (voile.getNiveau() > Dispo) {
-                                    Dispo = voile.getNiveau() + 1;
+                                    Dispo = voile.getNiveau();
                                 }
                             }
                             if (temp.get(i) instanceof Barque && Dispo == 0) {
-                                Dispo = 2;
+                                Dispo = 1;
                             }
                             // affichage selection menu
                             Menu3pos = i;
 
                         }
                     } else {
-                        screen.jeu.batch.draw(buttonCap3, 317, 201 - ((i % 6) * 25));
+                        screen.jeu.batch.draw(buttonCap3, 316, 201 - ((i % 6) * 25));
                     }
                     // bouton bateau raccourcis
-                    screen.jeu.batch.draw(buttonCap4, 361, 199 - ((i % 6) * 25));
+                    screen.jeu.batch.draw(buttonCap4, 360, 199 - ((i % 6) * 25));
                     // bouton partir
                     if (temp.get(i).getState() == "A quai") {
-                        if (mouseUnclick.x >= 270 && mouseUnclick.x <= 287 && mouseUnclick.y >= 201 - ((i % 6) * 25)
+                        if (mouseUnclick.x >= 269 && mouseUnclick.x <= 286 && mouseUnclick.y >= 201 - ((i % 6) * 25)
                                 && mouseUnclick.y <= 216 - ((i % 6) * 25)) {
-                            screen.jeu.batch.draw(buttonCap11Shine, 272, 203 - ((i % 6) * 25));
+                            screen.jeu.batch.draw(buttonCap11Shine, 271, 203 - ((i % 6) * 25));
                             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-                                screen.jeu.setScreen(
-                                        new PecheActiveScreen(screen.jeu, screen.jeu.data.getBateaux().get(i)));
+                                screen.jeu.setScreen(new PecheActiveScreen(screen.jeu, data.getBateaux().get(i)));
                             }
                         } else {
-                            screen.jeu.batch.draw(buttonCap11, 272, 203 - ((i % 6) * 25));
+                            screen.jeu.batch.draw(buttonCap11, 271, 203 - ((i % 6) * 25));
                         }
                     }
 
@@ -202,20 +203,20 @@ public class BatimentCapitainerie implements Batiment {
             }
             // menu déroulant lieu
             if (Dispo != 0) {
-                String[] nom = { "Aucun", "Cote", "Ocean", "Tropique", "Arctique" };
+                String[] nom = { "Cote", "Ocean", "Tropique", "Arctique" };
 
-                screen.jeu.batch.draw(buttonCap31h, 317, 190 - ((Menu3pos % 6) * 25));
+                screen.jeu.batch.draw(buttonCap31h, 316, 190 - ((Menu3pos % 6) * 25));
                 for (int i = 0; i < Dispo - 1; i++) {
-                    screen.jeu.batch.draw(buttonCap31, 317, 190 - ((Menu3pos % 6) * 25) - 12 * (i + 1));
+                    screen.jeu.batch.draw(buttonCap31, 316, 190 - ((Menu3pos % 6) * 25) - 12 * (i + 1));
                 }
-                screen.jeu.batch.draw(buttonCap31b, 317, 190 - ((Menu3pos % 6) * 25) - 12 * (Dispo - 1));
+                screen.jeu.batch.draw(buttonCap31b, 316, 190 - ((Menu3pos % 6) * 25) - 12 * (Dispo - 1));
 
                 for (int i = 0; i < Dispo; i++) {
-                    screen.jeu.HebertBold.draw(screen.jeu.batch, nom[i], 319,
+                    screen.jeu.HebertBold.draw(screen.jeu.batch, nom[i], 318,
                             212 - ((Menu3pos % 6) * 25) - 12 * (i + 1));
                 }
 
-                if (mouseUnclick.x > 321 + 38 || mouseUnclick.x < 317 || mouseUnclick.y > 216 - ((Menu3pos % 6) * 25)
+                if (mouseUnclick.x > 320 + 38 || mouseUnclick.x < 316 || mouseUnclick.y > 216 - ((Menu3pos % 6) * 25)
                         || mouseUnclick.y < 190 - ((Menu3pos % 6) * 25) - 12 * (Dispo - 1)) {
                     Dispo = 0;
                     Menu3pos = 0;
@@ -224,25 +225,25 @@ public class BatimentCapitainerie implements Batiment {
             } else if (Menu2pos != -1) {
                 String[] nom = { "Non", "1", "2", "3", "5", "10", "20" };
 
-                screen.jeu.batch.draw(buttonCap21h, 287, 190 - ((Menu2pos % 6) * 25));
+                screen.jeu.batch.draw(buttonCap21h, 286, 190 - ((Menu2pos % 6) * 25));
                 for (int i = 0; i < nom.length - 1; i++) {
-                    screen.jeu.batch.draw(buttonCap21, 287, 190 - ((Menu2pos % 6) * 25) - 12 * (i + 1));
+                    screen.jeu.batch.draw(buttonCap21, 286, 190 - ((Menu2pos % 6) * 25) - 12 * (i + 1));
                 }
-                screen.jeu.batch.draw(buttonCap21b, 287, 190 - ((Menu2pos % 6) * 25) - 12 * (nom.length - 1));
+                screen.jeu.batch.draw(buttonCap21b, 286, 190 - ((Menu2pos % 6) * 25) - 12 * (nom.length - 1));
 
                 for (int i = 0; i < nom.length; i++) {
-                    screen.jeu.HebertBold.draw(screen.jeu.batch, nom[i], 290,
+                    screen.jeu.HebertBold.draw(screen.jeu.batch, nom[i], 289,
                             212 - ((Menu2pos % 6) * 25) - 12 * (i + 1));
                     if (i > 4) {
-                        screen.jeu.HebertBold.draw(screen.jeu.batch, "J", 299,
+                        screen.jeu.HebertBold.draw(screen.jeu.batch, "J", 298,
                                 213 - ((Menu2pos % 6) * 25) - 12 * (i + 1));
                     } else if (i > 0) {
-                        screen.jeu.HebertBold.draw(screen.jeu.batch, "J", 294,
+                        screen.jeu.HebertBold.draw(screen.jeu.batch, "J", 293,
                                 213 - ((Menu2pos % 6) * 25) - 12 * (i + 1));
                     }
                 }
 
-                if (mouseUnclick.x > 291 + 24 || mouseUnclick.x < 287 || mouseUnclick.y > 216 - ((Menu2pos % 6) * 25)
+                if (mouseUnclick.x > 290 + 24 || mouseUnclick.x < 286 || mouseUnclick.y > 216 - ((Menu2pos % 6) * 25)
                         || mouseUnclick.y < 190 - ((Menu2pos % 6) * 25) - 12 * (nom.length - 1)) {
 
                     Menu2pos = -1;
@@ -252,17 +253,4 @@ public class BatimentCapitainerie implements Batiment {
         }
     }
 
-    public boolean getIsOpened() {
-        return this.isOpened;
-    }
-
-    public void setIsOpened(boolean value) {
-        this.isOpened = value;
-    }
-
-    public void close() {
-    }
-
-    public void open() {
-    }
 }

@@ -26,15 +26,13 @@ public class Poisson {
     private final float taille;
     private final Texture fishText;
     private final Texture hoverText;
-    private final int prix;
 
     public Poisson(int inId, int inRarete, boolean aUneTaille) {
         this.nom = getIDNom(inId, inRarete);
         this.id = inId;
         this.rarete = inRarete;
-        taille = getIDTaille(inId, inRarete);
-        this.prix = getPrix(inId, inRarete);
         fishText = getiDTexture(inId, inRarete);
+        taille = getIDTaille(inId, inRarete);
         hoverText = getiDTextureHover(inId, inRarete);
 
     }
@@ -43,9 +41,8 @@ public class Poisson {
         this.nom = getIDNom(inId, inRarete);
         this.id = inId;
         this.rarete = inRarete;
-        this.taille = 0;
-        this.prix = getPrix(inId, inRarete);
         fishText = getiDTexture(inId, inRarete);
+        taille = 0;
         hoverText = getiDTextureHover(inId, inRarete);
 
     }
@@ -60,10 +57,6 @@ public class Poisson {
 
     public int getId() {
         return this.id;
-    }
-
-    public int getPrix() {
-        return this.prix;
     }
 
     public int getRarete() {
@@ -132,30 +125,6 @@ public class Poisson {
 
         } else {
             return "Cregut";
-        }
-    }
-
-    private int getPrix(int id, int rarete) {
-        if (id == 1 && rarete == 0) {
-            return Math.round(100 + taille);
-
-        } else if (id == 1 && rarete == 1) {
-            return Math.round(1000 + taille);
-
-        } else if (id == 2 && rarete == 0) {
-            return Math.round(200 + taille);
-
-        } else if (id == 2 && rarete == 1) {
-            return Math.round(2000 + taille);
-
-        } else if (id == 3 && rarete == 0) {
-            return Math.round(300 + taille);
-
-        } else if (id == 3 && rarete == 1) {
-            return Math.round(3000 + taille);
-
-        } else {
-            return Math.round(10000 + taille);
         }
     }
 

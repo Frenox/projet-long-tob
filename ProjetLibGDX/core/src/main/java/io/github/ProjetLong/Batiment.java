@@ -10,16 +10,8 @@ public interface Batiment {
     // instructions de draw du minijeu
     // !!!!! déja entre le batch.begin et le batch.end pas besoin de le remettre
     // position en x de 0 à 7 à multiplier par 64px
-    void draw(VilleScreen screen, int position, int offset);
+    void draw(VilleScreen screen, int position);
 
     // draw de l'avant plan (Overlay)
     void affichageInterface(VilleScreen screen);
-
-    boolean getIsOpened();
-
-    void setIsOpened(boolean value);
-
-    void open();
-
-    void close();
 }

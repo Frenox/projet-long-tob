@@ -105,12 +105,6 @@ public class PecheActiveScreen implements Screen {
             lancerMiniJeu();
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
-            // avant de retourner à la ville
-            while (jeu.data.reste1place() && this.bateau.getContenu().size() != 0) {
-                jeu.data.ajouterPoissonStockage(this.bateau.remFirstPoisson());
-                System.out.println(bateau.getContenu().size());
-
-            }
             jeu.setScreen(new VilleScreen(jeu));
         }
         // Permet d'afficher les coordonnées du clic souris gauche dans la console

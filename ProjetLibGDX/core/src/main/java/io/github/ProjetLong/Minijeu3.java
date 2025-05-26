@@ -3,7 +3,6 @@ package io.github.ProjetLong;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
@@ -43,8 +42,6 @@ public class Minijeu3 implements Minijeu {
     private final float x_limit_max = 150;
     private final float y_limit_min = 100;
     private final float y_limit_max = 190;
-
-    private static final Sound popSfx = Gdx.audio.newSound(Gdx.files.internal("audio/BubblePop.mp3"));
 
     public Minijeu3() {
         skin = new Skin(Gdx.files.internal("metalui/metal-ui.json"));
@@ -126,11 +123,9 @@ public class Minijeu3 implements Minijeu {
 
         // Suppression de la bulle cliquée
         if (bubbleClique != -1) {
-            long id = popSfx.play();
-            popSfx.setPitch(id, 0.75f + (float) Math.random()/4);
             bubbles.removeIndex(bubbleClique);
             bubblesTime.removeIndex(bubbleClique);
-            speed_montee += 30f;
+            speed_montee += 25f;
             bubbleClique = -1;
         }
         float speed = 0.3f;

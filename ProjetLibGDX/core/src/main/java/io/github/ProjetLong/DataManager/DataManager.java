@@ -11,8 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.github.ProjetLong.Bateau;
-import io.github.ProjetLong.ModuleBateau;
-import io.github.ProjetLong.Batiment;
 import io.github.ProjetLong.ZonesPeche.Poisson;
 
 public class DataManager {
@@ -20,32 +18,22 @@ public class DataManager {
     private List<Bateau> bateaux;
     private List<Poisson> stockagePoissons;
     private int argent;
-    private List<ModuleBateau> modulesDispo;
-    private Map<Batiment, Boolean> batimentsMap;
 
-    private int stockagePoissonMax;
     private final SerializerPoisson poissonSerializer;
     private final SerializerBateau bateauSerializer;
-    private final SerializerModule moduleSerializer;
-    private String actData;
 
     /**
      * Charge un nouveau slot de jeu (sans donnees)
      */
     public DataManager() {
-
         bateaux = new ArrayList<Bateau>();
         stockagePoissons = new ArrayList<Poisson>();
-        modulesDispo = new ArrayList<ModuleBateau>();
         argent = 0;
-        stockagePoissonMax = 100;
-        batimentsMap = new HashMap<Batiment, Boolean>();
-        actData = "";
+
         // ...
 
         poissonSerializer = new SerializerPoisson();
         bateauSerializer = new SerializerBateau();
-        moduleSerializer = new SerializerModule();
     }
 
     /**
@@ -56,21 +44,14 @@ public class DataManager {
     public DataManager(String slot) {
         bateaux = new ArrayList<Bateau>();
         stockagePoissons = new ArrayList<Poisson>();
-        modulesDispo = new ArrayList<ModuleBateau>();
         argent = 0;
-        batimentsMap = new HashMap<Batiment, Boolean>();
 
         // ...
 
         poissonSerializer = new SerializerPoisson();
         bateauSerializer = new SerializerBateau();
-        moduleSerializer = new SerializerModule();
 
         loadGame(slot);
-    }
-
-    public int getStockagePoissonMax() {
-        return stockagePoissonMax;
     }
 
     public List<Bateau> getBateaux() {
@@ -90,33 +71,11 @@ public class DataManager {
     }
 
     public void ajouterPoissonStockage(Poisson poisson) {
-        if (reste1place()) {
-            stockagePoissons.add(poisson);
-        }
-    }
-
-    public boolean reste1place() {
-        if (this.stockagePoissons.size() < stockagePoissonMax) {
-            return true;
-        } else {
-            return false;
-        }
+        stockagePoissons.add(poisson);
     }
 
     public void supprimerPoissonStockage(Poisson poisson) {
         stockagePoissons.remove(poisson);
-    }
-
-    public List<ModuleBateau> getModules() {
-        return modulesDispo;
-    }
-
-    public void ajouterModule(ModuleBateau mod) {
-        modulesDispo.add(mod);
-    }
-
-    public void supprimerModule(ModuleBateau mod) {
-        modulesDispo.remove(mod);
     }
 
     public int getArgent() {
@@ -137,18 +96,6 @@ public class DataManager {
         argent -= montant;
     }
 
-    public Map<Batiment, Boolean> getBatimentsMap() {
-        return batimentsMap;
-    }
-
-    public void ajouterBatiment(Batiment batiment) {
-        batimentsMap.put(batiment, true);
-    }
-
-    public void supprimerBatiment(Batiment batiment) {
-        batimentsMap.remove(batiment);
-    }
-
     /**
      * Serialise et sauvegarde les donnees du jeu au format JSON
      * dans le fichier du slot de jeu actuel
@@ -163,7 +110,6 @@ public class DataManager {
             // Ajout des donnees a sauvegarder
             data.put("Bateaux", bateauSerializer.serializeListData(bateaux, 0));
             data.put("StockagePoissons", poissonSerializer.serializeListData(stockagePoissons, 0));
-            data.put("ModulesDisponibles", moduleSerializer.serializeListData(modulesDispo, 0));
             data.put("Argent", serializeArgent());
 
             ObjectMapper mapper = new ObjectMapper();
@@ -196,10 +142,9 @@ public class DataManager {
             ObjectMapper mapper = new ObjectMapper();
             // Lecture des donnees
             data = mapper.readValue(dataFile, Map.class);
-            actData = slot;
+
             bateaux = bateauSerializer.deserializeListData(data.get("Bateaux"), 0);
             stockagePoissons = poissonSerializer.deserializeListData(data.get("StockagePoissons"), 0);
-            modulesDispo = moduleSerializer.deserializeListData(data.get("ModulesDisponibles"), 0);
             deserializeArgent(data.get("Argent"));
 
             System.out.println("Jeu charge depuis " + slot + ".json");
@@ -209,10 +154,6 @@ public class DataManager {
         }
 
         return true;
-    }
-
-    public String getActData() {
-        return actData;
     }
 
     /**
