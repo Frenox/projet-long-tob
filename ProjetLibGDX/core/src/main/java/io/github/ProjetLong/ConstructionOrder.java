@@ -3,12 +3,10 @@ package io.github.ProjetLong;
 // Classe qui représente un ordre de construction dans la file d'attente
 public class ConstructionOrder {
     private final EquipementType type;
-    private final double totalTime; // temps total (après réduction) alloué à la construction
     private double remainingTime; // temps restant en secondes
 
     public ConstructionOrder(EquipementType type, int effectiveTime) {
         this.type = type;
-        this.totalTime = effectiveTime;
         this.remainingTime = effectiveTime;
     }
 

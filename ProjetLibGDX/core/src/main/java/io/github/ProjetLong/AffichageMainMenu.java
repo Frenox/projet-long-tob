@@ -9,7 +9,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 
 public class AffichageMainMenu {
+    // Dans quel sous menu on se situe
+    // Le principal ou le gestionnaire de save
+    // et quel bouton est survolé
     private int state;
+    private boolean hover;
+    private int idMenu; // quel menu afficher
+
+    // Textures du menu
     private Texture BG = new Texture("menu_princ_bg.png");
     private Texture reprendre;
     private Texture option;
@@ -22,16 +29,17 @@ public class AffichageMainMenu {
     private Texture slotret;
     private Texture vide;
     private Vector3 mouseCoor;
-    private boolean hover;
-    private int idMenu; // quel menu afficher
-    private boolean[] estVide = new boolean[3];
 
+    // Son de bouton
     private static final Sound buttonSfx = Gdx.audio.newSound(Gdx.files.internal("audio/ButtonClick.mp3"));
 
     public AffichageMainMenu() {
-        state = 1;
+
+        // Setup les paramètres
         idMenu = 0;
         state = 0;
+
+        // Textures du menu
         vide = new Texture("vide.png");
         reprendre = new Texture("menu_princ_bt3.png");
         option = new Texture("menu_princ_bt2.png");
@@ -42,17 +50,16 @@ public class AffichageMainMenu {
         slot3 = new Texture("slot3.png");
         slotr = new Texture("slotn.png");
         slotret = new Texture("slotret.png");
-        estVide[0] = slotExiste(1);
-        estVide[1] = slotExiste(2);
-        estVide[2] = slotExiste(3);
     }
 
+    // Renvoie si la sauvegarde existe
     private boolean slotExiste(int slotNb) {
         String slotName = "slot" + (String.valueOf(slotNb)) + ".json";
         File slotFile = new File(slotName);
         return slotFile.exists() && !slotFile.isDirectory();
     }
 
+    // Supprime la sauvegarde
     private void slotDelete(int slotNb) {
         String slotName = "slot" + (String.valueOf(slotNb)) + ".json";
         File slotFile = new File(slotName);
@@ -60,8 +67,12 @@ public class AffichageMainMenu {
     }
 
     public void input(mainMenuScreen screen) {
+
+        // Récupère les coordonnées de la souris
         mouseCoor = screen.jeu.viewport.getCamera()
                 .unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+
+        // Si on est dans le premier menu il y a 3 boutons
         if (idMenu == 0) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN) && state != 3) {
                 state += 1;
@@ -70,16 +81,6 @@ public class AffichageMainMenu {
                 if (state == 0)
                     state = 1;
             }
-        } else if (idMenu == 1) {
-            if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN) && state != 4) {
-                state += 1;
-            } else if (Gdx.input.isKeyJustPressed(Input.Keys.UP) && state != 1) {
-                state -= 1;
-                if (state == 0)
-                    state = 1;
-            }
-        }
-        if (idMenu == 0) {
             if (state == 3 && (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)
                     || (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && hover))) {
                 Gdx.app.exit();
@@ -89,12 +90,39 @@ public class AffichageMainMenu {
                 state = 0;
                 buttonSfx.play();
             }
+            // Test hover souris
+            if (226 < mouseCoor.x && mouseCoor.x < 286 && 200 - 103 < mouseCoor.y && mouseCoor.y < 212 - 103) {
+                state = 3;
+                hover = true;
+            } else if (226 < mouseCoor.x && mouseCoor.x < 286 && 221 - 103 < mouseCoor.y && mouseCoor.y < 233 - 103) {
+                state = 2;
+                hover = true;
+            } else if (226 < mouseCoor.x && mouseCoor.x < 286 && 242 - 103 < mouseCoor.y && mouseCoor.y < 254 - 103) {
+                state = 1;
+                hover = true;
+            } else {
+                hover = false;
+            }
+
+            // Si on est dans le premier menu il y a 4 boutons
+
         } else if (idMenu == 1) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN) && state != 4) {
+                state += 1;
+            } else if (Gdx.input.isKeyJustPressed(Input.Keys.UP) && state != 1) {
+                state -= 1;
+                if (state == 0)
+                    state = 1;
+            }
+
+            // Bouton retour
             if (state == 4 && (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)
                     || (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && hover))) {
                 idMenu = 0;
                 state = 0;
                 buttonSfx.play();
+
+                // Gestion des sauvegardes
             } else if (state == 1 && (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)
                     || (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && hover))) {
                 // slot 1 lancement
@@ -129,24 +157,8 @@ public class AffichageMainMenu {
                 screen.jeu.setScreen(new VilleScreen(screen.jeu));
 
             }
-        }
 
-        if (idMenu == 0) {
-            // Test hover souris
-            if (226 < mouseCoor.x && mouseCoor.x < 286 && 200 - 103 < mouseCoor.y && mouseCoor.y < 212 - 103) {
-                state = 3;
-                hover = true;
-            } else if (226 < mouseCoor.x && mouseCoor.x < 286 && 221 - 103 < mouseCoor.y && mouseCoor.y < 233 - 103) {
-                state = 2;
-                hover = true;
-            } else if (226 < mouseCoor.x && mouseCoor.x < 286 && 242 - 103 < mouseCoor.y && mouseCoor.y < 254 - 103) {
-                state = 1;
-                hover = true;
-            } else {
-                hover = false;
-            }
-        } else if (idMenu == 1) {
-            // Test hover souris
+            // Test hover souris sur les boutons
             if (191 < mouseCoor.x && mouseCoor.x < 320 && 89 < mouseCoor.y && mouseCoor.y < 114) {
                 state = 3;
                 hover = true;
@@ -166,11 +178,16 @@ public class AffichageMainMenu {
 
     }
 
+    // Pas de logic
     public void logic(mainMenuScreen screen) {
     }
 
     public void draw(mainMenuScreen screen) {
+
+        // Dessin du background
         screen.jeu.batch.draw(BG, 0, 0);
+
+        // Dessin du menu principal
         if (idMenu == 0) {
             if (state == 1) {
                 screen.jeu.batch.draw(reprendre, 0, 45);
@@ -181,8 +198,9 @@ public class AffichageMainMenu {
             } else {
                 screen.jeu.batch.draw(rienm, 0, 0);
             }
+
+            // Dessin du menu des sauvegardes
         } else if (idMenu == 1) {
-            // menu des slots
             if (state == 1) {
                 screen.jeu.batch.draw(slot1, 0, -6);
             } else if (state == 2) {
@@ -194,6 +212,9 @@ public class AffichageMainMenu {
             } else {
                 screen.jeu.batch.draw(slotr, 0, -6);
             }
+
+            // Dessin de l'indication "Vide"
+            // Et de suppression des slot
             if (!slotExiste(1)) {
                 screen.jeu.batch.draw(vide, 191, 149);
             } else {
@@ -211,7 +232,7 @@ public class AffichageMainMenu {
             if (!slotExiste(3)) {
                 screen.jeu.batch.draw(vide, 191, 89);
             } else {
-                if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
+                if (Gdx.input.isKeyJustPressed(Input.Keys.SEMICOLON)) {
                     slotDelete(3);
                 }
             }
