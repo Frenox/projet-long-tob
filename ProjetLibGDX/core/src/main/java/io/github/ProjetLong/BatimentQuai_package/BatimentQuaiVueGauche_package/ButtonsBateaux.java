@@ -16,7 +16,7 @@ public class ButtonsBateaux extends Table{
 
 
         for (int i = 0; i < modele.CAPACITE_MAX_MENU; i++) {
-                this.add(new ButtonBateau(quai, modele, buttonStylePoisson, i)).pad(2);
+                this.add(new ButtonBateauQuaiControleur(quai, modele, buttonStylePoisson, i)).pad(2);
                 this.row();
         }
     }
