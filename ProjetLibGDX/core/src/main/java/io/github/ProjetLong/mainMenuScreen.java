@@ -9,7 +9,11 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class mainMenuScreen implements Screen {
+
+    // Récupère le jeu (Avec le batch et la data)
     final Jeu jeu;
+
+    // Affichage du menu
     private AffichageMainMenu aff;
 
     public mainMenuScreen(final Jeu jeu) {
@@ -61,10 +65,10 @@ public class mainMenuScreen implements Screen {
         ScreenUtils.clear(Color.BLACK);
         jeu.viewport.apply();
         jeu.batch.setProjectionMatrix(jeu.viewport.getCamera().combined);
-        float worldWidth = jeu.viewport.getWorldWidth();
-        float worldHeight = jeu.viewport.getWorldHeight();
 
         jeu.batch.begin();
+
+        // Draw l'affichage
         aff.draw(this);
         jeu.batch.end();
 

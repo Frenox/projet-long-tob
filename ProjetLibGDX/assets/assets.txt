@@ -125,6 +125,7 @@ skin.png
 skin.scmp
 slot1.json
 slot1.png
+slot2.json
 slot2.png
 slot3.png
 slotn.png

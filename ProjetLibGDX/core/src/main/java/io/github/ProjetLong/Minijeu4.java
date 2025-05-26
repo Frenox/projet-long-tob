@@ -10,18 +10,23 @@ import com.badlogic.gdx.utils.Array;
 
 public class Minijeu4 implements Minijeu {
 
+    // Sprite à afficher
     private Array<Sprite> poissons;
     private Array<Float> directions; // direction de chaque poisson
     private Sprite hamecon;
+
+    // Textures utilisées
     private Texture poissonTexture;
     private Texture hameconTexture;
 
+    // Variables d'action
     private boolean hameconLance = false;
     private float hameconY;
 
     private int state = 1;
     private float speedPoisson;
     int dir = 1;
+
     // Coordonnées du cadre du minjeu
     private final float CADRE_X_MIN = 22.5f;
     private final float CADRE_X_MAX = 187.5f;
@@ -29,12 +34,18 @@ public class Minijeu4 implements Minijeu {
     private final float CADRE_Y_MAX = 211f;
 
     public Minijeu4() {
+
+        // setup des textures
         poissonTexture = new Texture("poisson.png");
         hameconTexture = new Texture("hamecon.png"); // image du hamecon
+
+        // setup des sprite
         poissons = new Array<>();
         directions = new Array<>();
         speedPoisson = 0.65f + new Random().nextFloat() * 0.25f;
-        // Ajouter 3 poissons avec direction initiale aléatoire
+        hamecon = new Sprite(hameconTexture);
+
+        // Ajouter 1 poisson avec direction initiale aléatoire
         Random rand = new Random();
 
         Sprite fish = new Sprite(poissonTexture);
@@ -45,11 +56,10 @@ public class Minijeu4 implements Minijeu {
 
         directions.add(1f);
 
-        hamecon = new Sprite(hameconTexture);
-
         resetHamecon();
     }
 
+    // Permet de remettre l'hameçon en haut en cas d'échec
     private void resetHamecon() {
         float centerX = (CADRE_X_MIN + CADRE_X_MAX) / 2f;
         hamecon.setPosition(centerX - hamecon.getWidth() / 2f, CADRE_Y_MAX);
@@ -60,6 +70,8 @@ public class Minijeu4 implements Minijeu {
 
     @Override
     public void input(PecheActiveScreen screen) {
+
+        // Récupère l'input du bouton d'interraction utilisateur
         if (!hameconLance && Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             hameconLance = true;
         }
@@ -70,6 +82,7 @@ public class Minijeu4 implements Minijeu {
 
         float speedHamecon = 0.85f;
 
+        // Déplace le poisson horizontalement
         for (int i = 0; i < poissons.size; i++) {
             Sprite poisson = poissons.get(i);
             float direction = directions.get(i);
@@ -90,24 +103,24 @@ public class Minijeu4 implements Minijeu {
             }
         }
 
+        // Modifie le déplacement de l'hameçon
         if (hameconLance) {
             hameconY -= speedHamecon;
             hamecon.setY(hameconY);
 
             for (Sprite poisson : poissons) {
-
+                // Vérifie si c'est réussi
                 if (hamecon.getY() + 3 > poisson.getY() && hamecon.getY() + 3 < poisson.getY() + 12
                         && hamecon.getX() + 3 > poisson.getX() + 16 * dir
                         && hamecon.getX() + 3 < poisson.getX() + 15 + 16 * dir) {
-                    System.out.println(" Poisson attrapé !");
                     state = 2;
                     hameconLance = false;
                     return;
                 }
             }
-
+            // Sinon on reset
             if (hamecon.getY() < CADRE_Y_MIN) {
-                System.out.println(" Raté !");
+
                 resetHamecon();
                 hameconLance = false;
             }
@@ -117,12 +130,11 @@ public class Minijeu4 implements Minijeu {
 
     @Override
     public void draw(PecheActiveScreen screen) {
+        // Dessine le poisson et l'hameçon
         for (Sprite poisson : poissons) {
             poisson.draw(screen.jeu.batch);
         }
-
         hamecon.draw(screen.jeu.batch);
-
     }
 
     @Override

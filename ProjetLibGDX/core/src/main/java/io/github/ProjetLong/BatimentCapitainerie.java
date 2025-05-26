@@ -1,6 +1,5 @@
 package io.github.ProjetLong;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
@@ -9,25 +8,27 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-
-import io.github.ProjetLong.DataManager.DataManager;
-import io.github.ProjetLong.ZonesPeche.Poisson;
-import io.github.ProjetLong.ZonesPeche.Zone;
 
 public class BatimentCapitainerie implements Batiment {
+    // Es-ce que le batiment est ouvert
     private boolean isOpened;
 
+    // Numéro de page
     private int page;
 
+    // Coordonnés de la souris
     private Vector3 mouse;
     private Vector3 mouseUnclick;
 
-    private Texture batCapitainerieTexture;
+    // Sprite du batiment et de l'overlay
     private Sprite batCapitainerieSprite;
+    private Sprite interfaceOverlaybatCapitainerieSprite;
 
+    // Layout pour centrer le texte
     private GlyphLayout layout = new GlyphLayout();
+
+    // Textures nécessaires
+    private Texture batCapitainerieTexture;
     private Texture NomBat;
     private Texture buttonCap1;
     private Texture buttonCap11;
@@ -43,18 +44,21 @@ public class BatimentCapitainerie implements Batiment {
     private Texture buttonCap3Shine;
     private Texture buttonCap2Shine;
     private Texture buttonCap4;
-    private int Dispo = 0;
     private Texture boatCard;
     private Texture interfaceBatCapitainerieTexture;
-    private Sprite interfaceOverlaybatCapitainerieSprite;
+
+    // Variable de position des menus
     private int Menu3pos = 0;
+    private int Dispo = 0;
     private int Menu2pos = -1;
 
     public BatimentCapitainerie() {
         this.isOpened = false;
 
+        // Position de la souris
         this.mouse = new Vector3(0, 0, 0);
 
+        // Import des textures
         this.batCapitainerieTexture = new Texture("bat1.png");
         this.interfaceBatCapitainerieTexture = new Texture("overlayMarche.png");
         this.NomBat = new Texture("nom_cap.png");
@@ -74,20 +78,22 @@ public class BatimentCapitainerie implements Batiment {
         this.buttonCap2Shine = new Texture("button_cap2shine.png");
         this.buttonCap4 = new Texture("button_cap4.png");
 
+        // setup des sprite
         this.batCapitainerieSprite = new Sprite(batCapitainerieTexture);
         this.interfaceOverlaybatCapitainerieSprite = new Sprite(interfaceBatCapitainerieTexture);
 
         this.batCapitainerieSprite.setPosition(0, 91);
         this.interfaceOverlaybatCapitainerieSprite.setPosition(130, 50);
 
+        // Initialisation de la page
         this.page = 0;
-
-      
 
     }
 
     @Override
     public void input(VilleScreen screen) {
+
+        // Récupération de la position de la souris
         this.mouseUnclick = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         screen.jeu.viewport.getCamera().unproject(mouseUnclick);
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
@@ -100,10 +106,6 @@ public class BatimentCapitainerie implements Batiment {
 
     @Override
     public void logic(VilleScreen screen) {
-
-        if (this.isOpened) {
-
-        }
     }
 
     @Override
@@ -117,6 +119,7 @@ public class BatimentCapitainerie implements Batiment {
     @Override
     public void affichageInterface(VilleScreen screen) {
         if (isOpened) {
+
             // Affichage de l'overlay
             this.interfaceOverlaybatCapitainerieSprite.draw(screen.jeu.batch);
             screen.jeu.batch.draw(NomBat, 130, 231);
@@ -124,11 +127,14 @@ public class BatimentCapitainerie implements Batiment {
             screen.jeu.HebertBold.draw(screen.jeu.batch, "Etat", 243, 229);
             screen.jeu.HebertBold.draw(screen.jeu.batch, "Passif", 286, 229);
             screen.jeu.HebertBold.draw(screen.jeu.batch, "Lieu", 327, 229);
+
             // Draw bateau
             List<Bateau> temp = screen.jeu.data.getBateaux();
             int len = temp.size();
             for (int i = (page * 6); i != (6 * (page + 1)); i++) {
                 if (i < len) {
+
+                    // Draw infos bateau
                     screen.jeu.batch.draw(boatCard, 136, 197 - ((i % 6) * 25));
                     screen.jeu.HebertBold.draw(screen.jeu.batch, temp.get(i).getName(), 142, 212 - ((i % 6) * 25));
                     layout.setText(screen.jeu.HebertBold, temp.get(i).getState());
@@ -151,7 +157,8 @@ public class BatimentCapitainerie implements Batiment {
                         screen.jeu.batch.draw(buttonCap2, 287, 201 - ((i % 6) * 25));
 
                     }
-                    // draw actDuree
+
+                    // draw Durée sélectionnée
                     if (temp.get(i).getDureeSelec() != 0) {
                         screen.jeu.HebertBold.draw(screen.jeu.batch,
                                 String.valueOf(temp.get(i).getDureeSelec()) + " J", 290,
@@ -160,7 +167,8 @@ public class BatimentCapitainerie implements Batiment {
                         screen.jeu.HebertBold.draw(screen.jeu.batch, "Non", 290,
                                 212 - ((i % 6) * 25));
                     }
-                    // bouton lieu
+
+                    // Bouton lieu
                     if (mouseUnclick.x >= 317 && mouseUnclick.x <= 321 + 38 && mouseUnclick.y >= 201 - ((i % 6) * 25)
                             && mouseUnclick.y <= 216 - ((i % 6) * 25)) {
                         screen.jeu.batch.draw(buttonCap3Shine, 317, 201 - ((i % 6) * 25));
@@ -182,8 +190,10 @@ public class BatimentCapitainerie implements Batiment {
                     } else {
                         screen.jeu.batch.draw(buttonCap3, 317, 201 - ((i % 6) * 25));
                     }
+
                     // bouton bateau raccourcis
                     screen.jeu.batch.draw(buttonCap4, 361, 199 - ((i % 6) * 25));
+
                     // bouton partir
                     if (temp.get(i).getState() == "A quai") {
                         if (mouseUnclick.x >= 270 && mouseUnclick.x <= 287 && mouseUnclick.y >= 201 - ((i % 6) * 25)
@@ -200,6 +210,7 @@ public class BatimentCapitainerie implements Batiment {
 
                 }
             }
+
             // menu déroulant lieu
             if (Dispo != 0) {
                 String[] nom = { "Aucun", "Cote", "Ocean", "Tropique", "Arctique" };
@@ -220,6 +231,7 @@ public class BatimentCapitainerie implements Batiment {
                     Dispo = 0;
                     Menu3pos = 0;
                 }
+
                 // menu déroulant temps
             } else if (Menu2pos != -1) {
                 String[] nom = { "Non", "1", "2", "3", "5", "10", "20" };
@@ -242,6 +254,7 @@ public class BatimentCapitainerie implements Batiment {
                     }
                 }
 
+                // Je sais plus ce que ça fait
                 if (mouseUnclick.x > 291 + 24 || mouseUnclick.x < 287 || mouseUnclick.y > 216 - ((Menu2pos % 6) * 25)
                         || mouseUnclick.y < 190 - ((Menu2pos % 6) * 25) - 12 * (nom.length - 1)) {
 
@@ -252,17 +265,21 @@ public class BatimentCapitainerie implements Batiment {
         }
     }
 
+    @Override
     public boolean getIsOpened() {
         return this.isOpened;
     }
 
+    @Override
     public void setIsOpened(boolean value) {
         this.isOpened = value;
     }
 
+    @Override
     public void close() {
     }
 
+    @Override
     public void open() {
     }
 }

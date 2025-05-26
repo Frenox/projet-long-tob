@@ -18,18 +18,29 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 public class VilleScreen implements Screen {
     final Jeu jeu;
+
+    // Sprite du soleil
     private Sprite sun;
+
+    // Textures utilisées
     private Texture sunTexture;
-    public Texture backgroundTexture;
-    public Texture backgroundTexture2;
-    public Texture backgroundTexture3;
-    public Texture backgroundTexture4;
+    private Texture backgroundTexture;
+    private Texture backgroundTexture2;
+    private Texture backgroundTexture3;
+    private Texture backgroundTexture4;
+
+    // Shader pour le rayonnement du soleil
     private ShaderProgram shader;
+
+    // Affichage du menu
     public boolean menuShow;
+
     private AffichagePause menu = new AffichagePause();
 
+    // Gestionnaire de l'affichage des batiment
     private BatimentHandler handler;
 
+    // Son et musique d'ambience
     private static final Sound wavesSfx = Gdx.audio.newSound(Gdx.files.internal("audio/AmbientWater.mp3"));
     private static final Sound seagullSfx = Gdx.audio.newSound(Gdx.files.internal("audio/Seagull.mp3"));
     private ScheduledExecutorService seagullScheduler;
@@ -38,17 +49,24 @@ public class VilleScreen implements Screen {
         this.jeu = jeu;
         handler = new BatimentHandler(jeu);
         menuShow = false;
+
+        // Texture setup
         backgroundTexture = new Texture("bg_port.png");
         backgroundTexture2 = new Texture("bg_port_2.png");
         backgroundTexture3 = new Texture("bg_port_3.png");
         backgroundTexture4 = new Texture("bg_port_4.png");
         sunTexture = new Texture("sun.png");
+
+        // setup du sprite
         sun = new Sprite(sunTexture);
         sun.setPosition(256 - 25, 200 - 25);
+
+        // Setup du shader
         ShaderProgram.pedantic = false;
         shader = new ShaderProgram(Gdx.files.internal("shaders/vertex.vert"),
                 Gdx.files.internal("shaders/shaderCielPort.frag"));
 
+        // Setup de l'audio
         wavesSfx.loop(); // Lance l'audio de vagues
         startSeagullLoop(); // Lance la boucle de sfx de mouette
 
@@ -83,16 +101,19 @@ public class VilleScreen implements Screen {
                     .unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
             System.out.println(mouseCoor.x + " " + mouseCoor.y);
         }
+
         // INPUT MENU
         if (menuShow) {
             menu.input(this);
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             menuShow = true;
         }
+        // input affichage des bâtiments
         handler.input(this);
     }
 
     public void logic() {
+        // Logique des bâtiments
         handler.logic(this);
     }
 
@@ -103,7 +124,9 @@ public class VilleScreen implements Screen {
         float worldWidth = jeu.viewport.getWorldWidth();
         float worldHeight = jeu.viewport.getWorldHeight();
 
+        // Met le shader
         jeu.batch.setShader(shader);
+
         // MAJ SHADER
         Vector3 tempProj = new Vector3(sun.getX() + 25, sun.getY() + 25, 0);
         jeu.viewport.getCamera().project(tempProj);
@@ -140,9 +163,10 @@ public class VilleScreen implements Screen {
         }
 
         jeu.batch.end();
+
+        // Re set du shader (Marche pas sinon, sais pas pourquoi)
         jeu.batch.setShader(shader);
         jeu.batch.begin();
-
         jeu.batch.end();
 
     }
@@ -179,7 +203,7 @@ public class VilleScreen implements Screen {
         jeu.viewport.update(width, height, true);
     }
 
-    /*Initialise la boucle d'audio pour le sfx de mouette */
+    /* Initialise la boucle d'audio pour le sfx de mouette */
     private void startSeagullLoop() {
         seagullScheduler = Executors.newSingleThreadScheduledExecutor();
         scheduleSeagullSound();

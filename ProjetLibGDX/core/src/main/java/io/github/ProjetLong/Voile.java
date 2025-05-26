@@ -16,6 +16,7 @@ public class Voile implements ModuleBateau, Equipement {
             "Arctique" // niveau 4
     };
 
+    // Achetable ou non
     private boolean aLaVente = false; // pas à la vente
     private final static int prixInitial = 100;
     private final static int prixParNiveau = 50;
@@ -25,11 +26,13 @@ public class Voile implements ModuleBateau, Equipement {
         return new Texture("cregut.png");
     }
 
+    // Créé la voile par défaut
     public Voile(String nom) {
         this.nom = nom;
         this.niveau = 1;
     }
 
+    // Créé la voile avec un niveau donné
     public Voile(String nom, int niveau) {
         if (niveau < 1 || niveau > 4) {
             throw new IllegalArgumentException("Le niveau doit être entre 1 et 4.");
@@ -38,12 +41,10 @@ public class Voile implements ModuleBateau, Equipement {
         this.niveau = niveau;
     }
 
+    // Améliore la voile jusqu'au niveau 4 maximum
     public void ameliorer() {
         if (niveau < 4) {
             niveau++;
-            System.out.println("Voile améliorée au niveau " + niveau + " (" + getZoneActuelle() + ")");
-        } else {
-            System.out.println("La voile est déjà au niveau maximum.");
         }
     }
 
@@ -86,6 +87,7 @@ public class Voile implements ModuleBateau, Equipement {
         return (aLaVente) ? prixInitial + (niveau - 1) * prixParNiveau : -1; // -1 si pas à la vente
     }
 
+    // Enlève la voile des items disponible à la vente
     public void enleverDeLaVente() {
         this.aLaVente = false;
     }

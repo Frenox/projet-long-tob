@@ -1,7 +1,4 @@
-package io.github;
-
-import io.github.ProjetLong.Minijeu;
-import io.github.ProjetLong.PecheActiveScreen;
+package io.github.ProjetLong;
 
 public class NoMinigame implements Minijeu {
     @Override
