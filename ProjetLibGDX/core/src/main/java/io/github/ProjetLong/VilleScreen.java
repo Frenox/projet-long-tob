@@ -1,9 +1,14 @@
 package io.github.ProjetLong;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -22,12 +27,16 @@ public class VilleScreen implements Screen {
     private ShaderProgram shader;
     public boolean menuShow;
     private AffichagePause menu = new AffichagePause();
-    private Batiment market = new BatimentMarket();
-    private Batiment capitainerie = new BatimentCapitainerie();
-    private Batiment quai;
+
+    private BatimentHandler handler;
+
+    private static final Sound wavesSfx = Gdx.audio.newSound(Gdx.files.internal("audio/AmbientWater.mp3"));
+    private static final Sound seagullSfx = Gdx.audio.newSound(Gdx.files.internal("audio/Seagull.mp3"));
+    private ScheduledExecutorService seagullScheduler;
 
     public VilleScreen(final Jeu jeu) {
         this.jeu = jeu;
+        handler = new BatimentHandler(jeu);
         menuShow = false;
         backgroundTexture = new Texture("bg_port.png");
         backgroundTexture2 = new Texture("bg_port_2.png");
@@ -40,7 +49,9 @@ public class VilleScreen implements Screen {
         shader = new ShaderProgram(Gdx.files.internal("shaders/vertex.vert"),
                 Gdx.files.internal("shaders/shaderCielPort.frag"));
 
-        quai = new BatimentQuai(jeu.viewport);
+        wavesSfx.loop(); // Lance l'audio de vagues
+        startSeagullLoop(); // Lance la boucle de sfx de mouette
+
     }
 
     @Override
@@ -78,15 +89,11 @@ public class VilleScreen implements Screen {
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             menuShow = true;
         }
-        market.input(this);
-        capitainerie.input(this);
-        quai.input(this);
+        handler.input(this);
     }
 
     public void logic() {
-        market.logic(this);
-        capitainerie.logic(this);
-        quai.logic(this);
+        handler.logic(this);
     }
 
     public void draw() {
@@ -113,19 +120,20 @@ public class VilleScreen implements Screen {
         jeu.batch.begin();
 
         // AFFICHAGE DU RESTE
-        this.jeu.batch.draw(backgroundTexture2, 0, 0);
-        this.jeu.batch.draw(backgroundTexture3, 0, 0);
+        for (int i = 0; i < 2; i++) {
+            this.jeu.batch.draw(backgroundTexture2, 0 - handler.getOffset() / 4 + 1024 * i, 0);
+        }
+        for (int i = 0; i < 4; i++) {
+            this.jeu.batch.draw(backgroundTexture3, 0 - handler.getOffset() + 512 * i, 0);
+        }
         // DRAW DU BAT
-        this.market.draw(this, 0);
-        this.capitainerie.draw(this, 1);
-        this.quai.draw(this, 2);
+        this.handler.draw(this);
         // avant plan bat
-        this.jeu.batch.draw(backgroundTexture4, 0, 0);
+        for (int i = 0; i < 4; i++) {
+            this.jeu.batch.draw(backgroundTexture4, 0 - handler.getOffset() + 512 * i, 0);
+        }
         // overlays
-        market.affichageInterface(this);
-        capitainerie.affichageInterface(this);
-        quai.affichageInterface(this);
-
+        this.handler.affichageInterface(this);
         // menu pause
         if (menuShow) {
             menu.draw(this);
@@ -146,7 +154,9 @@ public class VilleScreen implements Screen {
 
     @Override
     public void hide() {
-
+        wavesSfx.stop(); // Stoppe l'audio de vagues
+        seagullSfx.stop(); // Stoppe l'audio de mouette
+        seagullScheduler.shutdownNow(); // Stope la boucle de sfx de mouette
     }
 
     @Override
@@ -167,5 +177,21 @@ public class VilleScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         jeu.viewport.update(width, height, true);
+    }
+
+    /*Initialise la boucle d'audio pour le sfx de mouette */
+    private void startSeagullLoop() {
+        seagullScheduler = Executors.newSingleThreadScheduledExecutor();
+        scheduleSeagullSound();
+    }
+
+    private void scheduleSeagullSound() {
+        int delay = 20 + (int) (Math.random() * 35);
+
+        // Joue l'audio apres [delay] secondes
+        seagullScheduler.schedule(() -> {
+            seagullSfx.play();
+            scheduleSeagullSound();
+        }, delay, TimeUnit.SECONDS);
     }
 }

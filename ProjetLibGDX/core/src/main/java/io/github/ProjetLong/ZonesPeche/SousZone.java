@@ -28,7 +28,11 @@ public abstract class SousZone {
     }
 
     protected void setBackground(String backgroundPath) {
-        this.background = new Sprite(new Texture(backgroundPath));
+        try {
+            this.background = new Sprite(new Texture(backgroundPath));
+        } catch (Exception e) {
+            this.background = new Sprite(new Texture("BG_Port.png"));
+        }
     }
 
     /**

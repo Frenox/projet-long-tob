@@ -2,6 +2,7 @@ package io.github.ProjetLong;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 
@@ -13,6 +14,8 @@ public class AffichagePause implements SousFenetre {
     private Texture quitter;
     private Vector3 mouseCoor;
     private boolean hover;
+
+    private static final Sound buttonSfx = Gdx.audio.newSound(Gdx.files.internal("audio/ButtonClick.mp3"));
 
     public AffichagePause() {
         state = 1;
@@ -36,9 +39,12 @@ public class AffichagePause implements SousFenetre {
         }
         if (state == 3 && (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)
                 || (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && hover))) {
-            Gdx.app.exit();
+            buttonSfx.play();
+            screen.jeu.data.saveGame(screen.jeu.data.getActData());
+            screen.jeu.setScreen(new mainMenuScreen(screen.jeu));
         } else if (state == 1 && (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)
                 || (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && hover))) {
+            buttonSfx.play();
             screen.menuShow = false;
         }
 
@@ -99,9 +105,12 @@ public class AffichagePause implements SousFenetre {
         }
         if (state == 3 && (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)
                 || (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && hover))) {
-            Gdx.app.exit();
+            buttonSfx.play();
+            screen.jeu.data.saveGame(screen.jeu.data.getActData());
+            screen.jeu.setScreen(new mainMenuScreen(screen.jeu));
         } else if (state == 1 && (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)
                 || (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && hover))) {
+            buttonSfx.play();
             screen.menuShow = false;
         }
 
