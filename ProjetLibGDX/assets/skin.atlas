@@ -1,27 +1,34 @@
 
 skin.png
-size: 512, 512
+size: 1024, 1024
 format: RGBA8888
 filter: Linear, Linear
 repeat: none
+HebertSansBold
+  rotate: false
+  xy: 1, 34
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
 fish_tab_fish
   rotate: false
-  xy: 228, 436
+  xy: 1, 15
   size: 126, 17
   orig: 126, 17
   offset: 0, 0
   index: -1
-Sans titre1
+left_arrow
   rotate: false
-  xy: 1, 228
-  size: 225, 225
-  orig: 225, 225
+  xy: 515, 534
+  size: 15, 12
+  orig: 15, 12
   offset: 0, 0
   index: -1
-Sans titreX
+right_arrow
   rotate: false
   xy: 1, 1
-  size: 225, 225
-  orig: 225, 225
+  size: 15, 12
+  orig: 15, 12
   offset: 0, 0
   index: -1

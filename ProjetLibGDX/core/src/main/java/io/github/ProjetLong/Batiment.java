@@ -1,32 +1,27 @@
 package io.github.ProjetLong;
 
-import com.badlogic.gdx.utils.viewport.FitViewport;
-
 public interface Batiment {
-<<<<<<< Updated upstream
-    // Instructions d'input du minijeu
-=======
-    FitViewport viewport = null;
-
     // Instructions d'input du Batiment
->>>>>>> Stashed changes
     void input(VilleScreen screen);
 
-    // instructions de logic du minijeu
+    // instructions de logic du Batiment
     void logic(VilleScreen screen);
 
-    // instructions de draw du minijeu
+    // instructions de draw du Batiment
     // !!!!! déja entre le batch.begin et le batch.end pas besoin de le remettre
     // position en x de 0 à 7 à multiplier par 64px
-    void draw(VilleScreen screen, int position);
-<<<<<<< Updated upstream
-=======
+    void draw(VilleScreen screen, int position, int offset);
 
     // draw de l'avant plan (Overlay)
     void affichageInterface(VilleScreen screen);
 
-    String getNom();
+    boolean getIsOpened();
 
-    void agir();
->>>>>>> Stashed changes
+    void setIsOpened(boolean value);
+
+    // Code à éxécuter à l'affichage de l'overlay
+    void open();
+
+    // Code à éxécuter au désaffichage de l'overlay
+    void close();
 }

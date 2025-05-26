@@ -1,75 +1,61 @@
 package io.github.ProjetLong;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Null;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class VilleScreen implements Screen {
     final Jeu jeu;
+
+    // Sprite du soleil
     private Sprite sun;
+
+    // Textures utilisées
     private Texture sunTexture;
-    public Texture backgroundTexture;
+    private Texture backgroundTexture;
+    private Texture backgroundTexture2;
+    private Texture backgroundTexture3;
+    private Texture backgroundTexture4;
+
+    // Shader pour le rayonnement du soleil
     private ShaderProgram shader;
+
+    // Affichage du menu
     public boolean menuShow;
+
     private AffichagePause menu = new AffichagePause();
-    private Batiment market = new BatimentMarket();
-    private Batiment quai;
 
-    private ArrayList<Batiment> batiments = new ArrayList<>();
-    private ArrayList<ButtonBatiment> batimentsButtons = new ArrayList<>();
-    private int nb_batiments = 3;
-
-    private Texture batQuaiTexture = new Texture("bat1.png");
-    Stage stage;
+    // Gestionnaire de l'affichage des batiment
+    private BatimentHandler handler;
 
     public VilleScreen(final Jeu jeu) {
         this.jeu = jeu;
+        handler = new BatimentHandler(jeu);
         menuShow = false;
+
+        // Texture setup
         backgroundTexture = new Texture("bg_port.png");
+        backgroundTexture2 = new Texture("bg_port_2.png");
+        backgroundTexture3 = new Texture("bg_port_3.png");
+        backgroundTexture4 = new Texture("bg_port_4.png");
         sunTexture = new Texture("sun.png");
+
+        // setup du sprite
         sun = new Sprite(sunTexture);
         sun.setPosition(256 - 25, 200 - 25);
+
+        // Setup du shader
         ShaderProgram.pedantic = false;
         shader = new ShaderProgram(Gdx.files.internal("shaders/vertex.vert"),
-                Gdx.files.internal("shaders/shader1.frag"));
+                Gdx.files.internal("shaders/shaderCielPort.frag"));
 
-        quai = new BatimentQuai(jeu.viewport);
-        batiments.add(market);
-        batiments.add(capitainerie);
-        batiments.add(quai);
-        
-        Skin skin = new Skin();
-        skin.add("Moulin", batQuaiTexture);
-        ButtonStyle style = new ButtonStyle(skin.getDrawable("Moulin"), skin.getDrawable("Moulin"),skin.getDrawable("Moulin"));
-    
-        stage = new Stage(jeu.viewport);
-
-        for(int i = 0;i < nb_batiments;i++) {
-            batimentsButtons.add(new ButtonBatiment(style, i, jeu.HebertBold));
-            stage.addActor(batimentsButtons.get(i));
-        }
     }
 
     @Override
@@ -101,32 +87,21 @@ public class VilleScreen implements Screen {
                     .unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
             System.out.println(mouseCoor.x + " " + mouseCoor.y);
         }
+
         // INPUT MENU
         if (menuShow) {
             menu.input(this);
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             menuShow = true;
+            jeu.soundManager.pauseAudio();
         }
-<<<<<<< Updated upstream
-        market.input(this);
-        quai.input(this);
+        // input affichage des bâtiments
+        handler.input(this);
     }
 
     public void logic() {
-        market.logic(this);
-        quai.logic(this);
-=======
-
-        for (int i = 0;i < nb_batiments;i++) {
-            batiments.get(i).input(this);
-        }
-    }
-
-    public void logic() {
-        for (int i = 0;i < nb_batiments;i++) {
-            batiments.get(i).logic(this);
-        }
->>>>>>> Stashed changes
+        // Logique des bâtiments
+        handler.logic(this);
     }
 
     public void draw() {
@@ -136,7 +111,9 @@ public class VilleScreen implements Screen {
         float worldWidth = jeu.viewport.getWorldWidth();
         float worldHeight = jeu.viewport.getWorldHeight();
 
-        jeu.batch.setShader(null);
+        // Met le shader
+        jeu.batch.setShader(shader);
+
         // MAJ SHADER
         Vector3 tempProj = new Vector3(sun.getX() + 25, sun.getY() + 25, 0);
         jeu.viewport.getCamera().project(tempProj);
@@ -153,36 +130,30 @@ public class VilleScreen implements Screen {
         jeu.batch.begin();
 
         // AFFICHAGE DU RESTE
-<<<<<<< Updated upstream
-=======
-        this.jeu.batch.draw(backgroundTexture2, 0, 0);
-        this.jeu.batch.draw(backgroundTexture3, 0, 0);
-        // avant plan bat
-        this.jeu.batch.draw(backgroundTexture4, 0, 0);
-        // overlays
-        
-        
-        Gdx.input.setInputProcessor(stage);
-
-        stage.getViewport().apply();
-        stage.act();
-        stage.draw();
-
-        for (int i = 0;i < nb_batiments;i++) {
-            batiments.get(i).affichageInterface(this);
-            batiments.get(i).draw(this, i);
+        for (int i = 0; i < 2; i++) {
+            this.jeu.batch.draw(backgroundTexture2, 0 - handler.getOffset() / 4 + 1024 * i, 0);
         }
->>>>>>> Stashed changes
-
+        for (int i = 0; i < 4; i++) {
+            this.jeu.batch.draw(backgroundTexture3, 0 - handler.getOffset() + 512 * i, 0);
+        }
+        // DRAW DU BAT
+        this.handler.draw(this);
+        // avant plan bat
+        for (int i = 0; i < 4; i++) {
+            this.jeu.batch.draw(backgroundTexture4, 0 - handler.getOffset() + 512 * i, 0);
+        }
+        // overlays
+        this.handler.affichageInterface(this);
+        // menu pause
         if (menuShow) {
             menu.draw(this);
         }
 
-        // DRAW DU BAT
-        this.market.draw(this, 0);
+        jeu.batch.end();
 
-        // DRAW DU QUAI/BATEAUX
-        this.quai.draw(this, 1);
+        // Re set du shader (Marche pas sinon, sais pas pourquoi)
+        jeu.batch.setShader(shader);
+        jeu.batch.begin();
         jeu.batch.end();
 
     }
@@ -217,44 +188,4 @@ public class VilleScreen implements Screen {
         jeu.viewport.update(width, height, true);
     }
 
-    public class ButtonBatiment extends Button {
-        private int i;
-        private Label textAbove;
-
-        public ButtonBatiment(ButtonStyle buttonStyle, int i, BitmapFont font) {
-            super(buttonStyle);
-
-            this.i = i;
-            this.setPosition(64 * i, 90);
-            this.setVisible(true);
-
-            LabelStyle label_style = new LabelStyle(font, Color.WHITE);
-            textAbove = new Label(batiments.get(i).getNom(), label_style);
-            textAbove.setPosition(64 * i + 16, 200);
-            textAbove.setVisible(false);
-            stage.addActor(textAbove);
-
-            this.addListener(new ClickListener() {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    batiments.get(i).agir();
-                }
-                
-                @Override
-                public void enter(InputEvent event, float x, float y, int pointer, @Null Actor fromActor) {
-                    textAbove.setVisible(true);
-                }
-                
-                @Override
-                public void exit(InputEvent event, float x, float y, int pointer, @Null Actor fromActor) {
-                    textAbove.setVisible(false);
-                }
-            });
-        }
-
-        @Override
-        public void draw(Batch batch, float parentAlpha) {
-            super.draw(batch, parentAlpha);
-        }
-    }
 }
